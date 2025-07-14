@@ -4,4 +4,4 @@ import { authRouter } from "./routes/auth";
 
 export const router = Router();
 
-router.use("/auth/", authRouter);
+router.use("/auth", authRouter);
