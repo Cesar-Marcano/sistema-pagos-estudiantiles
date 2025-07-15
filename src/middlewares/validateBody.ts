@@ -17,7 +17,7 @@ export const validateBodyMiddleware = (schema: ZodType) => {
         return;
       }
 
-      res.status(500);
+      res.status(500).json({ error: "Internal server error" });
 
       executeInDev(() => {
         res.json({ error });
