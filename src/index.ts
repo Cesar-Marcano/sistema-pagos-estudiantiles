@@ -13,6 +13,7 @@ import helmet from "helmet";
 const app = express();
 
 // middlewares
+app.use(express.json());
 app.use(helmet());
 
 // dev middlewares
