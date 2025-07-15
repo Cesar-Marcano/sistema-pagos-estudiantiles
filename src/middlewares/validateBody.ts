@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodError, ZodType, treeifyError } from "zod";
+import { ZodError, ZodType } from "zod";
 import { executeInDev } from "../config/envVariables";
 
 export const validateBodyMiddleware = (schema: ZodType) => {
