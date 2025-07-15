@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodAny, ZodError } from "zod";
+import { ZodError, ZodType } from "zod";
 import { executeInDev } from "../config/envVariables";
 
-export const validateBodyMiddleware = (schema: ZodAny) => {
+export const validateBodyMiddleware = (schema: ZodType) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const parsedBody = await schema.parseAsync(req.body);
