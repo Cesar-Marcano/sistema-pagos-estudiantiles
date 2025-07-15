@@ -1,16 +1,19 @@
 import { validateBodyWrapper } from "../../utils/validateBodyWrapper";
-import { CreateUserSchema } from "../../dtos/createUser.dto";
 import { UserService } from "../../services/user.service";
 import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
+import { LoginUserSchema } from "../../dtos/loginUser.dto";
 
-export const registerContrller = (
+export const loginController = (
   userService: UserService,
   authService: AuthService
 ) =>
-  validateBodyWrapper(CreateUserSchema, async (req, res) => {
+  validateBodyWrapper(LoginUserSchema, async (req, res) => {
     try {
-      const user = await userService.createUser(req.body);
+      const user = await userService.loginUser(
+        req.body.username,
+        req.body.password
+      );
 
       const refreshToken = authService.retrieveRefreshToken({
         id: user.id,

@@ -4,6 +4,7 @@ import { registerContrller } from "../controllers/auth/register";
 import { prisma } from "../prisma";
 import { UserService } from "../services/user.service";
 import { AuthService } from "../services/auth.service";
+import { loginController } from "../controllers/auth/login";
 
 export const authRouter = Router();
 
@@ -13,3 +14,4 @@ const authService = new AuthService();
 
 // routes initialization
 authRouter.post("/register", registerContrller(userService, authService));
+authRouter.post("/login", loginController(userService, authService));
