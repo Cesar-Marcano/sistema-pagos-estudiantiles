@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodError, ZodType } from "zod";
+import { ZodError, ZodType, treeifyError } from "zod";
 import { executeInDev } from "../config/envVariables";
 
 export const validateBodyMiddleware = (schema: ZodType) => {
@@ -12,7 +12,7 @@ export const validateBodyMiddleware = (schema: ZodType) => {
     } catch (error) {
       if (error instanceof ZodError) {
         res.status(400).json({
-          message: error.message,
+          message: error.issues,
         });
         return;
       }
