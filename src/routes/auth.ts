@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { registerContrller } from "../controllers/auth/register";
 import { prisma } from "../prisma";
 import { UserService } from "../services/user.service";
