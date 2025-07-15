@@ -21,4 +21,36 @@ export class UserService {
       },
     });
   }
+
+  public async getUserLoginInfo(username: string) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        username,
+      },
+      select: {
+        name: true,
+        password: true,
+        id: true,
+        role: true,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found"); // TODO: replace with a custom error
+    }
+
+    return user;
+  }
+
+  public async loginUser(username: string, password: string) {
+    const user = await this.getUserLoginInfo(username);
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      throw new Error("Incorrect password"); // TODO: replace with a custom error
+    }
+
+    return user;
+  }
 }
