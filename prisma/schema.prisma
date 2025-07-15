@@ -7,3 +7,18 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  READONLY
+  ADMIN
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  role     Role
+  username String
+  name     String
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
