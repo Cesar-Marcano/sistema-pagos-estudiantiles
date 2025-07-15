@@ -1,3 +1,4 @@
+import { Role } from "@prisma/client";
 import { z } from "zod";
 
 export const CreateUserSchema = z.object({
@@ -12,6 +13,10 @@ export const CreateUserSchema = z.object({
     .regex(/[a-z]/, "La contraseña debe contener al menos una letra minúscula.")
     .regex(/[0-9]/, "La contraseña debe contener al menos un número.")
     .regex(/[^a-zA-Z0-9]/, "La contraseña debe contener al menos un carácter especial (por ejemplo: !@#$%^&*)."),
+  name: z.string()
+    .min(1, "El nombre no puede estar vacío.")
+    .max(100, "El nombre no puede exceder los 100 caracteres."),
+  role: z.enum(Role),
 });
 
 export type CreateUserDto = z.infer<typeof CreateUserSchema>;
