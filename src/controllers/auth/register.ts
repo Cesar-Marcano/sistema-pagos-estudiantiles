@@ -1,18 +1,25 @@
-import { validateBodyWrapper } from "../../utils/validateBodyWrapper";
-import { CreateUserSchema } from "../../dtos/createUser.dto";
+import { CreateUserDto, CreateUserSchema } from "../../dtos/createUser.dto";
 import { UserService } from "../../services/user.service";
 import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
+import { validateBodyMiddleware } from "../../middlewares/validateBody";
+import { Controller, Handler, Middleware } from "../../utils/controller";
 
-export const registerContrller = (
-  userService: UserService,
-  authService: AuthService
-) =>
-  validateBodyWrapper(CreateUserSchema, async (req, res) => {
+export class RegisterController extends Controller<CreateUserDto> {
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService
+  ) {
+    super();
+  }
+
+  public middlewares: Middleware[] = [validateBodyMiddleware(CreateUserSchema)];
+
+  public handler: Handler<CreateUserDto> = async (req, res) => {
     try {
-      const user = await userService.createUser(req.body);
+      const user = await this.userService.createUser(req.body);
 
-      const refreshToken = authService.retrieveRefreshToken({
+      const refreshToken = this.authService.retrieveRefreshToken({
         id: user.id,
         name: user.name,
         role: user.role,
@@ -32,4 +39,5 @@ export const registerContrller = (
 
       res.status(500);
     }
-  });
+  };
+}
