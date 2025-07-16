@@ -1,5 +1,4 @@
 import { UserService } from "../../services/user.service";
-import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
 import { LoginUserDto, LoginUserSchema } from "../../dtos/loginUser.dto";
 import { Controller, Handler, Middleware } from "../../utils/controller";

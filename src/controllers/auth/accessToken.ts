@@ -1,4 +1,3 @@
-import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
 import { AccessTokenDto, AccessTokenSchema } from "../../dtos/accessToken.dto";
 import { Controller, Handler, Middleware } from "../../utils/controller";
