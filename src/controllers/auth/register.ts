@@ -1,9 +1,10 @@
 import { CreateUserDto, CreateUserSchema } from "../../dtos/createUser.dto";
 import { UserService } from "../../services/user.service";
-import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
 import { Controller, Handler, Middleware } from "../../utils/controller";
+import { authGuard } from "../../middlewares/authGuard";
+import { Role } from "@prisma/client";
 
 export class RegisterController extends Controller<CreateUserDto> {
   constructor(
@@ -13,7 +14,10 @@ export class RegisterController extends Controller<CreateUserDto> {
     super();
   }
 
-  public middlewares: Middleware[] = [validateBodyMiddleware(CreateUserSchema)];
+  public middlewares: Middleware[] = [
+    authGuard(this.authService, Role.ADMIN),
+    validateBodyMiddleware(CreateUserSchema),
+  ];
 
   public handler: Handler<CreateUserDto> = async (req, res) => {
     const user = await this.userService.createUser(req.body);
