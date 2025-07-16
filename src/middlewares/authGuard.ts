@@ -24,7 +24,7 @@ export const authGuard = (authService: AuthService, role?: Role) => {
 
       req.user = payload;
     } catch (error) {
-      res.status(403).json({ message: "Unauthorized" });
+      throw new Error("Unauthorized"); // TODO: use custom error
     }
   };
 };

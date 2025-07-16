@@ -4,24 +4,9 @@ import { executeInDev } from "../config/envVariables";
 
 export const validateBodyMiddleware = (schema: ZodType) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const parsedBody = await schema.parseAsync(req.body);
+    const parsedBody = await schema.parseAsync(req.body);
 
-      req.body = parsedBody;
-      next();
-    } catch (error) {
-      if (error instanceof ZodError) {
-        res.status(400).json({
-          message: error.issues,
-        });
-        return;
-      }
-
-      res.status(500).json({ error: "Internal server error" });
-
-      executeInDev(() => {
-        res.json({ error });
-      });
-    }
+    req.body = parsedBody;
+    next();
   };
 };

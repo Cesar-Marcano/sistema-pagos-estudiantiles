@@ -8,6 +8,7 @@ import morgan from "morgan";
 import { router } from "./router";
 import { executeInDev } from "./config/envVariables";
 import helmet from "helmet";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 // express instance
 const app = express();
@@ -23,6 +24,9 @@ executeInDev(() => {
 
 // router
 app.use("/api", router);
+
+// global error handler
+app.use(globalErrorHandler);
 
 // express start
 app.listen(3000, () => {
