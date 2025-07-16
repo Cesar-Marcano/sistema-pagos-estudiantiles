@@ -1,14 +1,23 @@
-import { validateBodyWrapper } from "../../utils/validateBodyWrapper";
 import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
-import { AccessTokenSchema } from "../../dtos/accessToken.dto";
+import { AccessTokenDto, AccessTokenSchema } from "../../dtos/accessToken.dto";
+import { Controller, Handler, Middleware } from "../../utils/controller";
+import { validateBodyMiddleware } from "../../middlewares/validateBody";
 
-export const accessTokenController = (authService: AuthService) =>
-  validateBodyWrapper(AccessTokenSchema, async (req, res) => {
+export class AccessTokenController extends Controller<AccessTokenDto> {
+  constructor(
+    private readonly authService: AuthService
+  ) {
+    super();
+  }
+
+  public middlewares: Middleware[] = [validateBodyMiddleware(AccessTokenSchema)];
+
+  public handler: Handler<AccessTokenDto> = (req, res) => {
     try {
-      const payload = authService.decodeRefreshToken(req.body.refreshToken);
+      const payload = this.authService.decodeRefreshToken(req.body.refreshToken);
 
-      const accessToken = authService.retrieveAccessToken({
+      const accessToken = this.authService.retrieveAccessToken({
         id: payload.id,
         name: payload.name,
         role: payload.role,
@@ -28,4 +37,5 @@ export const accessTokenController = (authService: AuthService) =>
 
       res.status(500);
     }
-  });
+  };
+}
