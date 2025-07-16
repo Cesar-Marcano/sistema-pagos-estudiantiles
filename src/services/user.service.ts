@@ -53,4 +53,48 @@ export class UserService {
 
     return user;
   }
+
+  public async adminExists() {
+    const adminsCount = await this.prisma.user.count({
+      where: {
+        role: Role.ADMIN,
+      },
+    });
+
+    return adminsCount > 0;
+  }
+
+  public async createSuperuser(
+    username: string,
+    password: string,
+    name: string
+  ) {
+    const adminAlreadyExists = await this.adminExists();
+
+    if (adminAlreadyExists) {
+      throw new Error(
+        "An admin user already exists. Cannot create another initial admin."
+      );
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newAdmin = await this.prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword,
+        name,
+        role: Role.ADMIN,
+      },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        role: true,
+      },
+    });
+
+    return newAdmin;
+  }
 }
