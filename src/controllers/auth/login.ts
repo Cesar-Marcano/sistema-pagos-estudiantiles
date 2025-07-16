@@ -1,21 +1,28 @@
-import { validateBodyWrapper } from "../../utils/validateBodyWrapper";
 import { UserService } from "../../services/user.service";
 import { executeInDev } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
-import { LoginUserSchema } from "../../dtos/loginUser.dto";
+import { LoginUserDto, LoginUserSchema } from "../../dtos/loginUser.dto";
+import { Controller, Handler, Middleware } from "../../utils/controller";
+import { validateBodyMiddleware } from "../../middlewares/validateBody";
 
-export const loginController = (
-  userService: UserService,
-  authService: AuthService
-) =>
-  validateBodyWrapper(LoginUserSchema, async (req, res) => {
+export class LoginController extends Controller<LoginUserDto> {
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService
+  ) {
+    super();
+  }
+
+  public middlewares: Middleware[] = [validateBodyMiddleware(LoginUserSchema)];
+
+  public handler: Handler<LoginUserDto> = async (req, res) => {
     try {
-      const user = await userService.loginUser(
+      const user = await this.userService.loginUser(
         req.body.username,
         req.body.password
       );
 
-      const refreshToken = authService.retrieveRefreshToken({
+      const refreshToken = this.authService.retrieveRefreshToken({
         id: user.id,
         name: user.name,
         role: user.role,
@@ -35,4 +42,5 @@ export const loginController = (
 
       res.status(500);
     }
-  });
+  };
+}
