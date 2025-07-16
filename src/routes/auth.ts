@@ -1,11 +1,11 @@
 import { Router } from "express";
 
-import { registerContrller } from "../controllers/auth/register";
+import { RegisterController } from "../controllers/auth/register";
 import { prisma } from "../prisma";
 import { UserService } from "../services/user.service";
 import { AuthService } from "../services/auth.service";
-import { loginController } from "../controllers/auth/login";
-import { accessTokenController } from "../controllers/auth/accessToken";
+import { LoginController } from "../controllers/auth/login";
+import { AccessTokenController } from "../controllers/auth/accessToken";
 
 export const authRouter = Router();
 
@@ -13,7 +13,12 @@ export const authRouter = Router();
 const userService = new UserService(prisma);
 const authService = new AuthService();
 
+// controllers
+const registerController = new RegisterController(userService, authService);
+const loginController = new LoginController(userService, authService);
+const accessTokenController = new AccessTokenController(authService);
+
 // routes initialization
-authRouter.post("/register", registerContrller(userService, authService));
-authRouter.post("/login", loginController(userService, authService));
-authRouter.post("/access", accessTokenController(authService));
+authRouter.post("/register", registerController.build());
+authRouter.post("/login", loginController.build());
+authRouter.post("/access", accessTokenController.build());
