@@ -1,19 +1,21 @@
 import { AuthService } from "../../services/auth.service";
-import { AccessTokenDto, AccessTokenSchema } from "../../dtos/accessToken.dto";
 import { Controller, Handler, Middleware } from "../../utils/controller";
-import { validateBodyMiddleware } from "../../middlewares/validateBody";
 
-export class AccessTokenController extends Controller<AccessTokenDto> {
+export class AccessTokenController extends Controller {
   constructor(private readonly authService: AuthService) {
     super();
   }
 
-  public middlewares: Middleware[] = [
-    validateBodyMiddleware(AccessTokenSchema),
-  ];
+  public middlewares: Middleware[] = [];
 
-  public handler: Handler<AccessTokenDto> = (req, res) => {
-    const payload = this.authService.decodeRefreshToken(req.body.refreshToken);
+  public handler: Handler = (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      throw new Error("No token provided"); // TODO: Throw custom error
+    }
+
+    const payload = this.authService.decodeRefreshToken(refreshToken);
 
     const accessToken = this.authService.retrieveAccessToken({
       id: payload.id,

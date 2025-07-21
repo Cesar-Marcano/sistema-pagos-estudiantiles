@@ -5,6 +5,8 @@ import { validateBodyMiddleware } from "../../middlewares/validateBody";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
+import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";
+import ms from "ms";
 
 export class RegisterController extends Controller<CreateUserDto> {
   constructor(
@@ -29,6 +31,13 @@ export class RegisterController extends Controller<CreateUserDto> {
       username: user.name,
     });
 
-    res.status(201).json({ refreshToken });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: !isDevelopment,
+      sameSite: "strict",
+      maxAge: ms(REFRESH_TOKEN_EXP),
+    });
+
+    res.status(201).json({ user });
   };
 }

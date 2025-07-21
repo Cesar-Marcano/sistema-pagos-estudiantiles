@@ -3,11 +3,12 @@ import "./config/loadEnv";
 
 import express from "express";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 // local imports
 import { router } from "./router";
 import { executeInDev } from "./config/envVariables";
-import helmet from "helmet";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 // express instance
@@ -16,6 +17,7 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(helmet());
+app.use(cookieParser());
 
 // dev middlewares
 executeInDev(() => {

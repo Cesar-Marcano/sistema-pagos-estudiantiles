@@ -11,22 +11,22 @@ export const authGuard = (authService: AuthService, role?: Role) => {
     const authHeader = req.header("Authorization");
     const token = authHeader?.split(" ")[1];
 
-    try {
-      if (!token) {
-        throw new Error("Unauthorized");
-      }
+    if (!token) {
+      throw new Error("Unauthorized");
+    }
 
-      const payload = authService.decodeAccessToken(token);
+    const payload = authService.decodeAccessToken(token);
 
-      if (role !== payload.role) {
-        throw new Error("Unauthorized: role mismatch");
-      }
+    if (role !== payload.role) {
+      throw new Error("Unauthorized: role mismatch"); // TODO: use custom error
+    }
 
-      req.user = payload;
-
-      next();
-    } catch (error) {
+    if (!payload) {
       throw new Error("Unauthorized"); // TODO: use custom error
     }
+
+    req.user = payload;
+
+    next();
   };
 };

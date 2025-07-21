@@ -3,6 +3,8 @@ import { AuthService } from "../../services/auth.service";
 import { LoginUserDto, LoginUserSchema } from "../../dtos/loginUser.dto";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
+import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";
+import ms from "ms";
 
 export class LoginController extends Controller<LoginUserDto> {
   constructor(
@@ -27,6 +29,13 @@ export class LoginController extends Controller<LoginUserDto> {
       username: user.name,
     });
 
-    res.status(201).json({ refreshToken });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: !isDevelopment,
+      sameSite: "strict",
+      maxAge: ms(REFRESH_TOKEN_EXP),
+    });
+
+    res.status(201).json({ user });
   };
 }

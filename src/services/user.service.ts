@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient, Role, User } from "@prisma/client";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 
@@ -26,13 +26,7 @@ export class UserService {
     const user = await this.prisma.user.findFirst({
       where: {
         username,
-      },
-      select: {
-        name: true,
-        password: true,
-        id: true,
-        role: true,
-      },
+      }
     });
 
     if (!user) {
@@ -42,7 +36,10 @@ export class UserService {
     return user;
   }
 
-  public async loginUser(username: string, password: string) {
+  public async loginUser(
+    username: string,
+    password: string
+  ): Promise<Omit<User, "password">> {
     const user = await this.getUserLoginInfo(username);
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -51,7 +48,9 @@ export class UserService {
       throw new Error("Incorrect password"); // TODO: replace with a custom error
     }
 
-    return user;
+    const { password: _, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
   }
 
   public async adminExists() {
