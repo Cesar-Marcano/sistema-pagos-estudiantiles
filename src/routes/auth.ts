@@ -8,6 +8,7 @@ import { LoginController } from "../controllers/auth/login";
 import { AccessTokenController } from "../controllers/auth/accessToken";
 import { CreateSuperUserController } from "../controllers/auth/createSuperuser";
 import { NeedsSuperUserController } from "../controllers/auth/needsSuperUser";
+import { LogoutController } from "../controllers/auth/logout";
 
 export const authRouter = Router();
 
@@ -24,11 +25,13 @@ const createSuperUserController = new CreateSuperUserController(
   authService
 );
 const needsSuperUser = new NeedsSuperUserController(userService);
+const logoutController = new LogoutController();
 
 // routes initialization
 authRouter.post("/register", registerController.build());
 authRouter.post("/login", loginController.build());
 authRouter.post("/access", accessTokenController.build());
 authRouter.post("/create-super-user", createSuperUserController.build());
+authRouter.post("/logout", logoutController.build())
 
 authRouter.get("/needs-super-user", needsSuperUser.build());
