@@ -1,6 +1,7 @@
 import { Role } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { AuthService, UserPayload } from "../services/auth.service";
+import { UnauthorizedError } from "../errors/unauthorized.error";
 
 interface AuthenticatedRequest extends Request {
   user?: UserPayload;
@@ -12,17 +13,17 @@ export const authGuard = (authService: AuthService, role?: Role) => {
     const token = authHeader?.split(" ")[1];
 
     if (!token) {
-      throw new Error("Unauthorized");
+      throw new UnauthorizedError();
     }
 
     const payload = authService.decodeAccessToken(token);
 
     if (role !== payload.role) {
-      throw new Error("Unauthorized: role mismatch"); // TODO: use custom error
+      throw new UnauthorizedError("Role mismatch");
     }
 
     if (!payload) {
-      throw new Error("Unauthorized"); // TODO: use custom error
+      throw new UnauthorizedError();
     }
 
     req.user = payload;
