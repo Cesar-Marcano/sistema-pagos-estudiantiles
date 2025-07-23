@@ -12,12 +12,207 @@ enum Role {
   ADMIN
 }
 
+enum InvoiceStatus {
+  PENDING
+  PARTIAL_PAID
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  GRADUATED
+  WITHDRAWN
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   role     Role
   username String @unique
   name     String
   password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  Parent           Parent[]
+  Grade            Grade[]
+  Student          Student[]
+  PaymentMethod    PaymentMethod[]
+  Payment          Payment[]       @relation("AddedPayments")
+  Discount         Discount[]
+  Invoice          Invoice[]
+  AuditLog         AuditLog[]
+  VerifiedPayments Payment[]       @relation("VerifiedPayments")
+}
+
+model Parent {
+  id          Int     @id @default(autoincrement())
+  fullname    String
+  document    String  @unique
+  phoneNumber String? @unique
+  email       String? @unique
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  students Student[]
+  Payment  Payment[]
+
+  userId  Int
+  addedBy User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+model Grade {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  hasLevels   Boolean
+  maxLevel    Int?
+  fee         Decimal
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  Student Student[]
+
+  userId  Int
+  addedBy User @relation(fields: [userId], references: [id])
+}
+
+model Student {
+  id         Int           @id @default(autoincrement())
+  fullname   String
+  birthday   DateTime
+  gradeLevel Int?
+  section    String?
+  document   String?       @unique
+  status     StudentStatus @default(ACTIVE)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  grade     Grade      @relation(fields: [gradeId], references: [id])
+  discounts Discount[]
+  Payment   Payment[]
+  Invoice   Invoice[]
+
+  Parent Parent? @relation(fields: [parentId], references: [id])
+
+  userId   Int
+  parentId Int?
+  gradeId  Int
+
+  addedBy User @relation(fields: [userId], references: [id])
+}
+
+model Discount {
+  id           Int     @id @default(autoincrement())
+  name         String  @unique
+  description  String?
+  value        Decimal
+  isPercentage Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  studentId Int?
+  Student   Student? @relation(fields: [studentId], references: [id])
+
+  userId  Int
+  addedBy User @relation(fields: [userId], references: [id])
+}
+
+model Invoice {
+  id             Int           @id @default(autoincrement())
+  invoiceNumber  String        @unique
+  issueDate      DateTime      @default(now())
+  dueDate        DateTime
+  periodStart    DateTime
+  periodEnd      DateTime
+  originalAmount Decimal
+  discountAmount Decimal       @default(0)
+  totalDue       Decimal
+  amountPaid     Decimal       @default(0)
+  balanceDue     Decimal       @default(0)
+  status         InvoiceStatus @default(PENDING)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  studentId Int
+  userId    Int
+
+  student  Student   @relation(fields: [studentId], references: [id])
+  payments Payment[]
+  addedBy  User      @relation(fields: [userId], references: [id])
+
+  @@index([studentId, issueDate])
+}
+
+model PaymentMethod {
+  id                         Int     @id @default(autoincrement())
+  name                       String  @unique
+  description                String?
+  requiresManualVerification Boolean @default(true)
+  requiresReferenceNumber    Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  Payment Payment[]
+
+  userId  Int
+  addedBy User @relation(fields: [userId], references: [id])
+}
+
+model Payment {
+  id              Int       @id @default(autoincrement())
+  amount          Decimal
+  verified        Boolean   @default(false)
+  verifiedAt      DateTime?
+  referenceNumber String?   @unique
+  denied          Boolean   @default(false)
+  notes           String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  paymentMethodId Int
+  studentId       Int
+  parentId        Int
+  invoiceId       Int?
+  verifiedById    Int?
+  userId          Int
+
+  method     PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  forStudent Student       @relation(fields: [studentId], references: [id])
+  parent     Parent        @relation(fields: [parentId], references: [id])
+  Invoice    Invoice?      @relation(fields: [invoiceId], references: [id])
+  verifiedBy User?         @relation("VerifiedPayments", fields: [verifiedById], references: [id])
+  addedBy    User          @relation("AddedPayments", fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  entity      String
+  entityId    Int
+  action      String
+  performedBy Int
+  changes     String?
+  createdAt   DateTime @default(now())
+
+  User User @relation(fields: [performedBy], references: [id])
 }
