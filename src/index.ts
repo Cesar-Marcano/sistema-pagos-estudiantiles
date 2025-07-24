@@ -10,6 +10,7 @@ import helmet from "helmet";
 import { router } from "./router";
 import { executeInDev } from "./config/envVariables";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
+import { i18n } from "./lang/i18n";
 
 // express instance
 const app = express();
@@ -32,5 +33,5 @@ app.use(globalErrorHandler);
 
 // express start
 app.listen(3000, () => {
-  console.log("Server on port 3000");
+  console.log(i18n`server.listening(${3000})`);
 });
