@@ -3,6 +3,8 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.unauthorized.details": "No autorizado: {0}",
   "errors.unauthorized.rolemismatch": "Rol incorrecto",
   "errors.internal_server_error": "Error interno del servidor",
+  "errors.bad_request": "Solicitud Incorrecta",
+  "errors.bad_request.details": "Solicitud Incorrecta: {0}",
 
   "server.listening": "Servidor escuchando peticiones en el puerto {0}",
 

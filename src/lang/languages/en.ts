@@ -3,6 +3,8 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.unauthorized.details": "Unauthorized: {0}",
   "errors.unauthorized.rolemismatch": "Role mismatch",
   "errors.internal_server_error": "Internal Server Error",
+  "errors.bad_request": "Bad Request",
+  "errors.bad_request.details": "Bad Request: {0}",
 
   "server.listening": "Server listening on port {0}",
 
