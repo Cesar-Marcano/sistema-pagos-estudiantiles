@@ -4,11 +4,18 @@ import { spanishTranslations } from "./languages/sp";
 
 const langs = {
   en: englishTranslations,
-  es: spanishTranslations,
+  sp: spanishTranslations,
 };
 
 export function i18n(strings: TemplateStringsArray, ...values: any[]): string {
-  const input = strings[0].trim();
+  let input = "";
+
+  for (let i = 0; i < strings.length; i++) {
+    input += strings[i];
+    if (i < values.length) {
+      input += `__VAL_${i}__`;
+    }
+  }
 
   const match = input.match(/^([\w.]+)(?:\((.*)\))?$/);
 
@@ -17,17 +24,7 @@ export function i18n(strings: TemplateStringsArray, ...values: any[]): string {
   }
 
   const key = match[1];
-  const argsString = match[2];
-
-  let args: any[] = [];
-
-  if (argsString) {
-    try {
-      args = new Function(`return [${argsString}];`)();
-    } catch {
-      throw new Error("Error while parsing args");
-    }
-  }
+  const argString = match[2];
 
   const translations = langs[DEFAULT_LANG];
 
@@ -39,7 +36,7 @@ export function i18n(strings: TemplateStringsArray, ...values: any[]): string {
 
   const result = template.replace(/\{(\d+)\}/g, (_, index) => {
     const i = Number(index);
-    return args[i] !== undefined ? args[i] : `{${i}}`;
+    return values[i] !== undefined ? values[i] : `{${i}}`;
   });
 
   return result;
