@@ -6,6 +6,7 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.bad_request": "Bad Request",
   "errors.bad_request.details": "Bad Request: {0}",
   "errors.no_token_provided": "No token provided",
+  "errors.invalid_expired_token": "Invalid or expired token",
 
   "server.listening": "Server listening on port {0}",
 
