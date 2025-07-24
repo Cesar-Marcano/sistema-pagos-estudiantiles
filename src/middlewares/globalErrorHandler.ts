@@ -6,6 +6,7 @@ import { JWTErrorHandler } from "../errors/handlers/JWTErrorHandler";
 import { PrismaErrorHandler } from "../errors/handlers/PrismaErrorHandler";
 import { BaseErrorHandler } from "../errors/handlers/BaseErrorHandler";
 import { IErrorHandler } from "../interfaces/IErrorHandler";
+import { i18n } from "../lang/i18n";
 
 const errorHandlers: IErrorHandler[] = [
   new ZodErrorHandler(),
@@ -28,7 +29,7 @@ export function globalErrorHandler(
 ) {
   let response: ErrorResponse = {
     statusCode: 500,
-    message: "Internal Server Error",
+    message: i18n`errors.internal_server_error`,
     details: undefined,
   };
 
