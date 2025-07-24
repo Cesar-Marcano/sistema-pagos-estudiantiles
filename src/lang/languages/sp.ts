@@ -18,6 +18,9 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.validation.user_not_found": "Usuario no encontrado",
   "errors.validation.super_user_exists": "Ya existe un administrador. No se puede crear otro super usuario.",
 
+  "errors.invalid_session": "Sesión inválida",
+  "errors.already_logged_in": "El usuario ya tiene una sesión activa en este mismo equipo",
+
   "server.listening": "Servidor escuchando peticiones en el puerto {0}",
 
   "errors.validation.username.min":

@@ -28,7 +28,7 @@ export class CreateSuperUserController extends Controller<CreateSuperUserDto> {
       req.body.name
     );
 
-    const refreshToken = this.authService.retrieveRefreshToken({
+    const refreshToken = await this.authService.retrieveRefreshToken({
       id: user.id,
       name: user.name,
       role: user.role,

@@ -14,7 +14,7 @@ export const authRouter = Router();
 
 // services
 const userService = new UserService(prisma);
-const authService = new AuthService();
+const authService = new AuthService(prisma);
 
 // controllers
 const registerController = new RegisterController(userService, authService);
@@ -25,13 +25,13 @@ const createSuperUserController = new CreateSuperUserController(
   authService
 );
 const needsSuperUser = new NeedsSuperUserController(userService);
-const logoutController = new LogoutController();
+const logoutController = new LogoutController(authService);
 
 // routes initialization
 authRouter.post("/register", registerController.build());
 authRouter.post("/login", loginController.build());
 authRouter.post("/access", accessTokenController.build());
 authRouter.post("/create-super-user", createSuperUserController.build());
-authRouter.post("/logout", logoutController.build())
+authRouter.post("/logout", logoutController.build());
 
 authRouter.get("/needs-super-user", needsSuperUser.build());

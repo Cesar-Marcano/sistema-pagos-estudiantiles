@@ -10,20 +10,21 @@ export class AccessTokenController extends Controller {
 
   public middlewares: Middleware[] = [];
 
-  public handler: Handler = (req, res) => {
+  public handler: Handler = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
       throw new BadRequestError(i18n`errors.no_token_provided`);
     }
 
-    const payload = this.authService.decodeRefreshToken(refreshToken);
+    const payload = await this.authService.decodeRefreshToken(refreshToken);
 
-    const accessToken = this.authService.retrieveAccessToken({
+    const accessToken = await this.authService.retrieveAccessToken({
       id: payload.id,
       name: payload.name,
       role: payload.role,
       username: payload.username,
+      jti: payload.jti,
     });
 
     res.status(201).json({ accessToken });

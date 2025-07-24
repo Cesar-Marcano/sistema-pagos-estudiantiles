@@ -24,7 +24,7 @@ export class RegisterController extends Controller<CreateUserDto> {
   public handler: Handler<CreateUserDto> = async (req, res) => {
     const user = await this.userService.createUser(req.body);
 
-    const refreshToken = this.authService.retrieveRefreshToken({
+    const refreshToken = await this.authService.retrieveRefreshToken({
       id: user.id,
       name: user.name,
       role: user.role,

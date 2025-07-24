@@ -9,7 +9,7 @@ interface AuthenticatedRequest extends Request {
 }
 
 export const authGuard = (authService: AuthService, role?: Role) => {
-  return (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
+  return async (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
     const authHeader = req.header("Authorization");
     const token = authHeader?.split(" ")[1];
 
@@ -17,9 +17,9 @@ export const authGuard = (authService: AuthService, role?: Role) => {
       throw new UnauthorizedError();
     }
 
-    const payload = authService.decodeAccessToken(token);
+    const payload = await authService.decodeAccessToken(token);
 
-    if (role !== payload.role) {
+    if (role && role !== payload.role) {
       throw new UnauthorizedError(i18n`errors.unauthorized.rolemismatch`);
     }
 
