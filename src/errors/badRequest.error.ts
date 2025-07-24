@@ -7,7 +7,7 @@ export class BadRequestError extends BaseError {
       message
         ? i18n`errors.bad_request.details(${message})`
         : i18n`errors.bad_request`,
-      401
+      400
     );
   }
 }
