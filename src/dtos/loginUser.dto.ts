@@ -1,18 +1,20 @@
-import { Role } from "@prisma/client";
 import { z } from "zod";
+import { i18n } from "../lang/i18n";
 
 export const LoginUserSchema = z.object({
-  username: z.string()
-    .min(3, "El nombre de usuario debe tener al menos 3 caracteres.")
-    .max(20, "El nombre de usuario no puede exceder los 20 caracteres.")
-    .regex(/^[a-zA-Z0-9_]+$/, "El nombre de usuario solo puede contener letras, números y guiones bajos."),
-  password: z.string()
-    .min(8, "La contraseña debe tener al menos 8 caracteres.")
-    .max(100, "La contraseña no puede exceder los 100 caracteres.")
-    .regex(/[A-Z]/, "La contraseña debe contener al menos una letra mayúscula.")
-    .regex(/[a-z]/, "La contraseña debe contener al menos una letra minúscula.")
-    .regex(/[0-9]/, "La contraseña debe contener al menos un número.")
-    .regex(/[^a-zA-Z0-9]/, "La contraseña debe contener al menos un carácter especial (por ejemplo: !@#$%^&*)."),
+  username: z
+    .string()
+    .min(3, i18n`errors.validation.username.min(${3})`)
+    .max(20, i18n`errors.validation.username.max(${20})`)
+    .regex(/^[a-zA-Z0-9_]+$/, i18n`errors.validation.username.regex`),
+  password: z
+    .string()
+    .min(8, i18n`errors.validation.password.min(${8})`)
+    .max(100, i18n`errors.validation.password.max(${100})`)
+    .regex(/[A-Z]/, i18n`errors.validation.password.uppercase`)
+    .regex(/[a-z]/, i18n`errors.validation.password.lowercase`)
+    .regex(/[0-9]/, i18n`errors.validation.password.number`)
+    .regex(/[^a-zA-Z0-9]/, i18n`errors.validation.password.specialChar`),
 });
 
 export type LoginUserDto = z.infer<typeof LoginUserSchema>;
