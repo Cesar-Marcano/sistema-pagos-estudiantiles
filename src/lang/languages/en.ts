@@ -13,13 +13,18 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.prisma.database_error": "Database error",
   "errors.prisma.field_fallback": "field(s)",
   "errors.zod.validation_failed": "Validation Failed",
+  "errors.conflict": "Conflict",
+  "errors.conflict.details": "Conflict: {0}",
 
   "errors.validation.incorrect_password": "Incorrect password",
   "errors.validation.user_not_found": "User not found",
-  "errors.validation.super_user_exists": "An admin user already exists. Cannot create another initial admin.",
-  
+  "errors.validation.super_user_exists":
+    "An admin user already exists. Cannot create another initial admin.",
+
   "errors.invalid_session": "Invalid session",
   "errors.already_logged_in": "The user is already logged-in on this device",
+  "errors.not_logged_in": "The user is not logged-in on this device",
+  "errors.cannot_close_self_session": "You can't close your active session. Please use the logout button instead.",
 
   "server.listening": "Server listening on port {0}",
 

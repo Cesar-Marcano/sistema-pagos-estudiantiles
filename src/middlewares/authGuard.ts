@@ -8,8 +8,20 @@ interface AuthenticatedRequest extends Request {
   user?: UserPayload;
 }
 
-export const authGuard = (authService: AuthService, role?: Role) => {
-  return async (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
+export const authGuard = (
+  authService: AuthService,
+  role?: Role | "any",
+  failOnMissingRefresh = false
+) => {
+  return async (
+    req: AuthenticatedRequest,
+    _res: Response,
+    next: NextFunction
+  ) => {
+    if (!req.cookies.refreshToken && failOnMissingRefresh) {
+      throw new UnauthorizedError(i18n`errors.invalid_session`)
+    }
+
     const authHeader = req.header("Authorization");
     const token = authHeader?.split(" ")[1];
 
@@ -19,7 +31,7 @@ export const authGuard = (authService: AuthService, role?: Role) => {
 
     const payload = await authService.decodeAccessToken(token);
 
-    if (role && role !== payload.role) {
+    if (role && role !== "any" && role !== payload.role) {
       throw new UnauthorizedError(i18n`errors.unauthorized.rolemismatch`);
     }
 

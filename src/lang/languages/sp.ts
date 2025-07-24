@@ -13,6 +13,8 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.prisma.database_error": "Error de base de datos",
   "errors.prisma.field_fallback": "campo(s)",
   "errors.zod.validation_failed": "Validación Fallida",
+  "errors.conflict": "Conflicto",
+  "errors.conflict.details": "Conflicto: {0}",
 
   "errors.validation.incorrect_password": "Contraseña incorrecta",
   "errors.validation.user_not_found": "Usuario no encontrado",
@@ -20,6 +22,8 @@ export const spanishTranslations: { [key: string]: string } = {
 
   "errors.invalid_session": "Sesión inválida",
   "errors.already_logged_in": "El usuario ya tiene una sesión activa en este mismo equipo",
+  "errors.not_logged_in": "El usuario no tiene una sesión iniciada",
+  "errors.cannot_close_self_session": "No puedes cerrar la sesión activa. Si deseas cerrar sesión, utiliza el botón 'Cerrar sesión'.",
 
   "server.listening": "Servidor escuchando peticiones en el puerto {0}",
 

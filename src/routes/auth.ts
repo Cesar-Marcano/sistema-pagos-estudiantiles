@@ -9,6 +9,8 @@ import { AccessTokenController } from "../controllers/auth/accessToken";
 import { CreateSuperUserController } from "../controllers/auth/createSuperuser";
 import { NeedsSuperUserController } from "../controllers/auth/needsSuperUser";
 import { LogoutController } from "../controllers/auth/logout";
+import { GetUserSessionsController } from "../controllers/auth/getUserSessions";
+import { CloseSessionController } from "../controllers/auth/closeSession";
 
 export const authRouter = Router();
 
@@ -26,6 +28,8 @@ const createSuperUserController = new CreateSuperUserController(
 );
 const needsSuperUser = new NeedsSuperUserController(userService);
 const logoutController = new LogoutController(authService);
+const getUserSessionsController = new GetUserSessionsController(authService);
+const closeSessionController = new CloseSessionController(authService);
 
 // routes initialization
 authRouter.post("/register", registerController.build());
@@ -35,3 +39,6 @@ authRouter.post("/create-super-user", createSuperUserController.build());
 authRouter.post("/logout", logoutController.build());
 
 authRouter.get("/needs-super-user", needsSuperUser.build());
+authRouter.get("/active-sessions", getUserSessionsController.build());
+
+authRouter.delete("/close-session/:sessionId", closeSessionController.build());

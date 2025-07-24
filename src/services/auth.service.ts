@@ -104,6 +104,36 @@ export class AuthService {
           id: userId,
         },
       },
+      select: {
+        id: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  public async closeSession(sessionId: number, userId: number) {
+    return await this.prisma.session.delete({
+      where: {
+        id: sessionId,
+        user: {
+          id: userId,
+        },
+      },
+      select: {
+        id: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  public async getSession(sessionId: number) {
+    return await this.prisma.session.findUnique({
+      where: {
+        id: sessionId,
+      },
+      select: {
+        jti: true,
+      },
     });
   }
 }
