@@ -1,9 +1,10 @@
-import { AuthService, UserPayload } from "../../services/auth.service";
+import { AuthService } from "../../services/auth.service";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import z from "zod";
 import { ConflictError } from "../../errors/conflict.error";
 import { i18n } from "../../lang/i18n";
+import { UserPayload } from "../../interfaces/tokenPayload";
 
 export class CloseSessionController extends Controller<null, UserPayload> {
   constructor(private readonly authService: AuthService) {

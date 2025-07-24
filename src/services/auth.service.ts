@@ -7,17 +7,7 @@ import {
 } from "../config/envVariables";
 import { UnauthorizedError } from "../errors/unauthorized.error";
 import { i18n } from "../lang/i18n";
-
-export interface RawUserPayload {
-  name: string;
-  role: Role;
-  username: string;
-  id: number;
-}
-
-export interface UserPayload extends RawUserPayload {
-  jti: string;
-}
+import { RawUserPayload, UserPayload } from "../interfaces/tokenPayload";
 
 export class AuthService {
   constructor(private readonly prisma: PrismaClient) {}
