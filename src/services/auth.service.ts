@@ -96,4 +96,14 @@ export class AuthService {
     if (!isSessionValid)
       throw new UnauthorizedError(i18n`errors.invalid_session`);
   }
+
+  public async getUserSessions(userId: number) {
+    return await this.prisma.session.findMany({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    });
+  }
 }
