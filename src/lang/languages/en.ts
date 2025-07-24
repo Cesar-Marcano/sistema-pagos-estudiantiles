@@ -7,6 +7,11 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.bad_request.details": "Bad Request: {0}",
   "errors.no_token_provided": "No token provided",
   "errors.invalid_expired_token": "Invalid or expired token",
+  "errors.prisma.duplicate_entry.message": "Duplicate entry for {0}.",
+  "errors.prisma.duplicate_entry.details":
+    "The provided value for {0} already exists.",
+  "errors.prisma.database_error": "Database error",
+  "errors.prisma.field_fallback": "field(s)",
 
   "server.listening": "Server listening on port {0}",
 
