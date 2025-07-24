@@ -5,6 +5,7 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.internal_server_error": "Error interno del servidor",
   "errors.bad_request": "Solicitud Incorrecta",
   "errors.bad_request.details": "Solicitud Incorrecta: {0}",
+  "errors.no_token_provided": "No se proporcionó un token",
 
   "server.listening": "Servidor escuchando peticiones en el puerto {0}",
 
@@ -27,6 +28,7 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.validation.password.specialChar":
     "La contraseña debe contener al menos un carácter especial (por ejemplo: !@#$%^&*).",
   "errors.validation.name.empty": "El nombre no puede estar vacío.",
+  "errors.validation.name.min": "El nombre no puede estar vacío.",
   "errors.validation.name.max":
     "El nombre no puede exceder los {0} caracteres.",
 };

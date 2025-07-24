@@ -1,3 +1,5 @@
+import { BadRequestError } from "../../errors/badRequest.error";
+import { i18n } from "../../lang/i18n";
 import { AuthService } from "../../services/auth.service";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 
@@ -12,7 +14,7 @@ export class AccessTokenController extends Controller {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-      throw new Error("No token provided"); // TODO: Throw custom error
+      throw new BadRequestError(i18n`errors.no_token_provided`);
     }
 
     const payload = this.authService.decodeRefreshToken(refreshToken);
