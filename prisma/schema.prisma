@@ -47,6 +47,7 @@ model User {
   Invoice          Invoice[]
   AuditLog         AuditLog[]
   VerifiedPayments Payment[]       @relation("VerifiedPayments")
+  Session          Session[]
 }
 
 model Parent {
@@ -215,4 +216,14 @@ model AuditLog {
   createdAt   DateTime @default(now())
 
   User User @relation(fields: [performedBy], references: [id])
+}
+
+model Session {
+  id   Int    @id @default(autoincrement())
+  jti  String @unique @default(uuid())
+
+  user User   @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  userId Int
 }
