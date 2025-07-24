@@ -12,6 +12,7 @@ export const englishTranslations: { [key: string]: string } = {
     "The provided value for {0} already exists.",
   "errors.prisma.database_error": "Database error",
   "errors.prisma.field_fallback": "field(s)",
+  "errors.zod.validation_failed": "Validation Failed",
 
   "server.listening": "Server listening on port {0}",
 
