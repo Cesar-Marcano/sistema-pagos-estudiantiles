@@ -3,6 +3,8 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 
 import { CreateUserSchema } from "../dtos/createUser.dto";
+import { BadRequestError } from "../errors/badRequest.error";
+import { i18n } from "../lang/i18n";
 
 export class UserService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -26,11 +28,11 @@ export class UserService {
     const user = await this.prisma.user.findFirst({
       where: {
         username,
-      }
+      },
     });
 
     if (!user) {
-      throw new Error("User not found"); // TODO: replace with a custom error
+      throw new BadRequestError(i18n`errors.validation.user_not_found`);
     }
 
     return user;
@@ -45,7 +47,7 @@ export class UserService {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      throw new Error("Incorrect password"); // TODO: replace with a custom error
+      throw new BadRequestError(i18n`errors.validation.incorrect_password`);
     }
 
     const { password: _, ...userWithoutPassword } = user;
@@ -71,9 +73,7 @@ export class UserService {
     const adminAlreadyExists = await this.adminExists();
 
     if (adminAlreadyExists) {
-      throw new Error(
-        "An admin user already exists. Cannot create another initial admin."
-      );
+      throw new BadRequestError(i18n`errors.validation.super_user_exists`);
     }
 
     const salt = await bcrypt.genSalt(10);

@@ -14,6 +14,10 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.prisma.field_fallback": "field(s)",
   "errors.zod.validation_failed": "Validation Failed",
 
+  "errors.validation.incorrect_password": "Incorrect password",
+  "errors.validation.user_not_found": "User not found",
+  "errors.validation.super_user_exists": "An admin user already exists. Cannot create another initial admin.",
+
   "server.listening": "Server listening on port {0}",
 
   "errors.validation.username.min":

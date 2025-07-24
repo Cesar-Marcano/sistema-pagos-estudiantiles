@@ -14,6 +14,10 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.prisma.field_fallback": "campo(s)",
   "errors.zod.validation_failed": "Validación Fallida",
 
+  "errors.validation.incorrect_password": "Contraseña incorrecta",
+  "errors.validation.user_not_found": "Usuario no encontrado",
+  "errors.validation.super_user_exists": "Ya existe un administrador. No se puede crear otro super usuario.",
+
   "server.listening": "Servidor escuchando peticiones en el puerto {0}",
 
   "errors.validation.username.min":
