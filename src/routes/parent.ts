@@ -7,6 +7,7 @@ import { CreateParentController } from "../controllers/parent/createParent";
 import { UpdateParentController } from "../controllers/parent/updateParent";
 import { DeleteParentController } from "../controllers/parent/deleteParent";
 import { GetParentsController } from "../controllers/parent/getParents";
+import { GetParentController } from "../controllers/parent/getParent";
 
 export const parentRouter = Router();
 
@@ -31,6 +32,10 @@ const getParentsController = new GetParentsController(
   parentService,
   authService
 );
+const getParentController = new GetParentController(
+  parentService,
+  authService
+);
 
 // routes initialization
 parentRouter.post("/", createParentController.build());
@@ -38,3 +43,4 @@ parentRouter.patch("/:id", updateParentController.build());
 parentRouter.delete("/:id", deleteParentController.build());
 
 parentRouter.get("/", getParentsController.build());
+parentRouter.get("/:id", getParentController.build());
