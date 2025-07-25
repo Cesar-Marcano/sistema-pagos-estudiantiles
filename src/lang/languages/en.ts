@@ -24,7 +24,8 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.invalid_session": "Invalid session",
   "errors.already_logged_in": "The user is already logged-in on this device",
   "errors.not_logged_in": "The user is not logged-in on this device",
-  "errors.cannot_close_self_session": "You can't close your active session. Please use the logout button instead.",
+  "errors.cannot_close_self_session":
+    "You can't close your active session. Please use the logout button instead.",
 
   "server.listening": "Server listening on port {0}",
 
@@ -47,4 +48,15 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.validation.name.empty": "Name cannot be empty.",
   "errors.validation.name.min": "Name cannot be empty.",
   "errors.validation.name.max": "Name cannot exceed {0} characters.",
+  "errors.validation.fullname.empty": "Full name cannot be empty.",
+  "errors.validation.fullname.max": "Full name cannot exceed {0} characters.",
+
+  "errors.validation.document.min": "Document must be at least {0} characters.",
+  "errors.validation.document.max": "Document cannot exceed {0} characters.",
+
+  "errors.validation.phoneNumber.min":
+    "Phone number must be at least {0} digits.",
+  "errors.validation.phoneNumber.max": "Phone number cannot exceed {0} digits.",
+
+  "errors.validation.email.invalid": "Invalid email format.",
 };

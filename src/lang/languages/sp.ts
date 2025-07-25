@@ -18,12 +18,15 @@ export const spanishTranslations: { [key: string]: string } = {
 
   "errors.validation.incorrect_password": "Contraseña incorrecta",
   "errors.validation.user_not_found": "Usuario no encontrado",
-  "errors.validation.super_user_exists": "Ya existe un administrador. No se puede crear otro super usuario.",
+  "errors.validation.super_user_exists":
+    "Ya existe un administrador. No se puede crear otro super usuario.",
 
   "errors.invalid_session": "Sesión inválida",
-  "errors.already_logged_in": "El usuario ya tiene una sesión activa en este mismo equipo",
+  "errors.already_logged_in":
+    "El usuario ya tiene una sesión activa en este mismo equipo",
   "errors.not_logged_in": "El usuario no tiene una sesión iniciada",
-  "errors.cannot_close_self_session": "No puedes cerrar la sesión activa. Si deseas cerrar sesión, utiliza el botón 'Cerrar sesión'.",
+  "errors.cannot_close_self_session":
+    "No puedes cerrar la sesión activa. Si deseas cerrar sesión, utiliza el botón 'Cerrar sesión'.",
 
   "server.listening": "Servidor escuchando peticiones en el puerto {0}",
 
@@ -49,4 +52,20 @@ export const spanishTranslations: { [key: string]: string } = {
   "errors.validation.name.min": "El nombre no puede estar vacío.",
   "errors.validation.name.max":
     "El nombre no puede exceder los {0} caracteres.",
+  "errors.validation.fullname.empty":
+    "El nombre completo no puede estar vacío.",
+  "errors.validation.fullname.max":
+    "El nombre completo no puede exceder los {0} caracteres.",
+
+  "errors.validation.document.min":
+    "El documento debe tener al menos {0} caracteres.",
+  "errors.validation.document.max":
+    "El documento no puede exceder los {0} caracteres.",
+
+  "errors.validation.phoneNumber.min":
+    "El número de teléfono debe tener al menos {0} dígitos.",
+  "errors.validation.phoneNumber.max":
+    "El número de teléfono no puede exceder los {0} dígitos.",
+
+  "errors.validation.email.invalid": "Formato de correo electrónico inválido.",
 };
