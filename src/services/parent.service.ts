@@ -19,15 +19,39 @@ export class ParentService {
     });
   }
 
-  public async getAllParents(): Promise<Parent[]> {
-    return await this.prisma.parent.findMany({
-      where: {
-        deletedAt: null,
+  public async getAllParents(params: { page: number; limit: number }) {
+    const { page, limit } = params;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.parent.findMany({
+        where: {
+          deletedAt: null,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.parent.count({
+        where: {
+          deletedAt: null,
+        },
+      }),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    };
   }
 
   public async updateParent(
