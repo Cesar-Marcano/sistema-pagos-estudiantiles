@@ -30,7 +30,7 @@ enum StudentStatus {
 model User {
   id       Int    @id @default(autoincrement())
   role     Role
-  username String @unique
+  username String
   name     String
   password String
 
@@ -48,6 +48,8 @@ model User {
   AuditLog         AuditLog[]
   VerifiedPayments Payment[]       @relation("VerifiedPayments")
   Session          Session[]
+
+  @@unique([username, deletedAt])
 }
 
 model Parent {
@@ -68,11 +70,15 @@ model Parent {
   addedBy User @relation(fields: [userId], references: [id])
 
   @@index([userId, createdAt])
+
+  @@unique([document, deletedAt])
+  @@unique([phoneNumber, deletedAt])
+  @@unique([email, deletedAt])
 }
 
 model Grade {
   id          Int     @id @default(autoincrement())
-  name        String  @unique
+  name        String
   description String?
   hasLevels   Boolean
   maxLevel    Int?
@@ -86,6 +92,8 @@ model Grade {
 
   userId  Int
   addedBy User @relation(fields: [userId], references: [id])
+
+  @@unique([name, deletedAt])
 }
 
 model Student {
@@ -94,7 +102,7 @@ model Student {
   birthday   DateTime
   gradeLevel Int?
   section    String?
-  document   String?       @unique
+  document   String?
   status     StudentStatus @default(ACTIVE)
 
   createdAt DateTime  @default(now())
@@ -113,11 +121,13 @@ model Student {
   gradeId  Int
 
   addedBy User @relation(fields: [userId], references: [id])
+
+  @@unique([document, deletedAt])
 }
 
 model Discount {
   id           Int     @id @default(autoincrement())
-  name         String  @unique
+  name         String
   description  String?
   value        Decimal
   isPercentage Boolean @default(false)
@@ -131,11 +141,13 @@ model Discount {
 
   userId  Int
   addedBy User @relation(fields: [userId], references: [id])
+
+  @@unique([name, deletedAt])
 }
 
 model Invoice {
   id             Int           @id @default(autoincrement())
-  invoiceNumber  String        @unique
+  invoiceNumber  String
   issueDate      DateTime      @default(now())
   dueDate        DateTime
   periodStart    DateTime
@@ -159,11 +171,13 @@ model Invoice {
   addedBy  User      @relation(fields: [userId], references: [id])
 
   @@index([studentId, issueDate])
+
+  @@unique([invoiceNumber, deletedAt])
 }
 
 model PaymentMethod {
   id                         Int     @id @default(autoincrement())
-  name                       String  @unique
+  name                       String
   description                String?
   requiresManualVerification Boolean @default(true)
   requiresReferenceNumber    Boolean @default(false)
@@ -176,6 +190,8 @@ model PaymentMethod {
 
   userId  Int
   addedBy User @relation(fields: [userId], references: [id])
+
+  @@unique([name, deletedAt])
 }
 
 model Payment {
@@ -183,7 +199,7 @@ model Payment {
   amount          Decimal
   verified        Boolean   @default(false)
   verifiedAt      DateTime?
-  referenceNumber String?   @unique
+  referenceNumber String?
   denied          Boolean   @default(false)
   notes           String?
 
@@ -204,6 +220,8 @@ model Payment {
   Invoice    Invoice?      @relation(fields: [invoiceId], references: [id])
   verifiedBy User?         @relation("VerifiedPayments", fields: [verifiedById], references: [id])
   addedBy    User          @relation("AddedPayments", fields: [userId], references: [id])
+
+  @@unique([referenceNumber, deletedAt])
 }
 
 model AuditLog {
