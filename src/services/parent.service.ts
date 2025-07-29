@@ -69,7 +69,7 @@ export class ParentService {
 
   public async deleteParent(id: number): Promise<Parent> {
     return await this.prisma.parent.update({
-      where: { id },
+      where: { id, deletedAt: null },
       data: {
         deletedAt: new Date(),
       },

@@ -15,7 +15,20 @@ export class AuthService {
   private refreshSecret = getEnv("JWT_REFRESH", "super-secret-refresh");
   private accessSecret = getEnv("JWT_ACCESS", "super-secret-access");
 
+  private async checkUser(userId: number) {
+    const userCount = await this.prisma.user.count({
+      where: {
+        id: userId,
+        deletedAt: null,
+      },
+    });
+
+    if (userCount < 1)
+      throw new UnauthorizedError(i18n`errors.auth.the_user_does_not_exist`);
+  }
+
   public async retrieveRefreshToken(user: RawUserPayload) {
+    await this.checkUser(user.id);
     const session = await this.prisma.session.create({
       data: {
         userId: user.id,
@@ -41,6 +54,8 @@ export class AuthService {
   }
 
   public async retrieveAccessToken(user: UserPayload) {
+    await this.checkUser(user.id);
+
     await this.checkSession(user.jti, user.id);
 
     return jwt.sign(user, this.accessSecret, {
@@ -81,6 +96,8 @@ export class AuthService {
   }
 
   private async checkSession(jti: string, userId: number) {
+    await this.checkUser(userId);
+
     const isSessionValid = await this.isSessionValid(jti, userId);
 
     if (!isSessionValid)

@@ -28,7 +28,7 @@ export class UserService {
     const user = await this.prisma.user.findFirst({
       where: {
         username,
-        deletedAt: null
+        deletedAt: null,
       },
     });
 
@@ -60,6 +60,7 @@ export class UserService {
     const adminsCount = await this.prisma.user.count({
       where: {
         role: Role.ADMIN,
+        deletedAt: null,
       },
     });
 
