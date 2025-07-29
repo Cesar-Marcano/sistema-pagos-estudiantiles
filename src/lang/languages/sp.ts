@@ -12,6 +12,15 @@ export const spanishTranslations: { [key: string]: string } = {
     "El valor proporcionado para {0} ya existe.",
   "errors.prisma.database_error": "Error de base de datos",
   "errors.prisma.field_fallback": "campo(s)",
+   "errors.prisma.record_not_found.message": "El registro solicitado no fue encontrado.",
+  "errors.prisma.record_not_found.details": "No se pudo encontrar el registro para la operación. Es posible que haya sido eliminado o el ID es incorrecto.",
+  "errors.prisma.invalid_input.message": "Error de validación en los datos de entrada.",
+  "errors.prisma.foreign_key_constraint.message": "Error de restricción de clave foránea.",
+  "errors.prisma.foreign_key_constraint.details": "No se puede realizar la operación debido a una relación dependiente. Asegúrate de que los registros relacionados existan o se manejen correctamente.",
+  "errors.prisma.relation_violation.message": "Violación de relación.",
+  "errors.prisma.relation_violation.details": "La operación que intentas realizar violaría una relación requerida entre los registros.",
+  "errors.prisma.database_connection_error.message": "Error de conexión con la base de datos.",
+  "errors.prisma.database_connection_error.details": "No se pudo establecer conexión con la base de datos. Por favor, inténtelo de nuevo más tarde o contacte al soporte.",
   "errors.zod.validation_failed": "Validación Fallida",
   "errors.conflict": "Conflicto",
   "errors.conflict.details": "Conflicto: {0}",
@@ -68,4 +77,6 @@ export const spanishTranslations: { [key: string]: string } = {
     "El número de teléfono no puede exceder los {0} dígitos.",
 
   "errors.validation.email.invalid": "Formato de correo electrónico inválido.",
+
+  "errors.auth.the_user_does_not_exist": "El usuario no existe",
 };

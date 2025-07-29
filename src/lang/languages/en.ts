@@ -12,6 +12,15 @@ export const englishTranslations: { [key: string]: string } = {
     "The provided value for {0} already exists.",
   "errors.prisma.database_error": "Database error",
   "errors.prisma.field_fallback": "field(s)",
+  "errors.prisma.record_not_found.message": "The requested record was not found.",
+  "errors.prisma.record_not_found.details": "Could not find the record for the operation. It might have been deleted or the ID is incorrect.",
+  "errors.prisma.invalid_input.message": "Input data validation error.",
+  "errors.prisma.foreign_key_constraint.message": "Foreign key constraint failed.",
+  "errors.prisma.foreign_key_constraint.details": "The operation cannot be performed due to a dependent relationship. Ensure related records exist or are handled correctly.",
+  "errors.prisma.relation_violation.message": "Relation violation.",
+  "errors.prisma.relation_violation.details": "The operation you are trying to perform would violate a required relation between records.",
+  "errors.prisma.database_connection_error.message": "Database connection error.",
+  "errors.prisma.database_connection_error.details": "Could not establish a connection to the database. Please try again later or contact support.",
   "errors.zod.validation_failed": "Validation Failed",
   "errors.conflict": "Conflict",
   "errors.conflict.details": "Conflict: {0}",
@@ -59,4 +68,6 @@ export const englishTranslations: { [key: string]: string } = {
   "errors.validation.phoneNumber.max": "Phone number cannot exceed {0} digits.",
 
   "errors.validation.email.invalid": "Invalid email format.",
+
+  "errors.auth.the_user_does_not_exist": "The user does not exist",
 };
