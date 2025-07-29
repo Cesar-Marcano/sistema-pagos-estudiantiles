@@ -71,9 +71,9 @@ model Parent {
 
   @@index([userId, createdAt])
 
-  @@unique([document, deletedAt])
-  @@unique([phoneNumber, deletedAt])
-  @@unique([email, deletedAt])
+  // @@unique([document, deletedAt])
+  // @@unique([phoneNumber, deletedAt])
+  // @@unique([email, deletedAt])
 }
 
 model Grade {
@@ -93,7 +93,7 @@ model Grade {
   userId  Int
   addedBy User @relation(fields: [userId], references: [id])
 
-  @@unique([name, deletedAt])
+  // @@unique([name, deletedAt])
 }
 
 model Student {
@@ -122,7 +122,7 @@ model Student {
 
   addedBy User @relation(fields: [userId], references: [id])
 
-  @@unique([document, deletedAt])
+  // @@unique([document, deletedAt])
 }
 
 model Discount {
@@ -142,7 +142,7 @@ model Discount {
   userId  Int
   addedBy User @relation(fields: [userId], references: [id])
 
-  @@unique([name, deletedAt])
+  // @@unique([name, deletedAt])
 }
 
 model Invoice {
@@ -172,7 +172,7 @@ model Invoice {
 
   @@index([studentId, issueDate])
 
-  @@unique([invoiceNumber, deletedAt])
+  // @@unique([invoiceNumber, deletedAt])
 }
 
 model PaymentMethod {
@@ -191,7 +191,7 @@ model PaymentMethod {
   userId  Int
   addedBy User @relation(fields: [userId], references: [id])
 
-  @@unique([name, deletedAt])
+  // @@unique([name, deletedAt])
 }
 
 model Payment {
@@ -221,7 +221,7 @@ model Payment {
   verifiedBy User?         @relation("VerifiedPayments", fields: [verifiedById], references: [id])
   addedBy    User          @relation("AddedPayments", fields: [userId], references: [id])
 
-  @@unique([referenceNumber, deletedAt])
+  // @@unique([referenceNumber, deletedAt])
 }
 
 model AuditLog {
