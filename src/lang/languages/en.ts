@@ -1,73 +1,106 @@
-export const englishTranslations: { [key: string]: string } = {
-  "errors.unauthorized": "Unauthorized",
-  "errors.unauthorized.details": "Unauthorized: {0}",
-  "errors.unauthorized.rolemismatch": "Role mismatch",
-  "errors.internal_server_error": "Internal Server Error",
-  "errors.bad_request": "Bad Request",
-  "errors.bad_request.details": "Bad Request: {0}",
-  "errors.no_token_provided": "No token provided",
-  "errors.invalid_expired_token": "Invalid or expired token",
-  "errors.prisma.duplicate_entry.message": "Duplicate entry for {0}.",
-  "errors.prisma.duplicate_entry.details":
-    "The provided value for {0} already exists.",
-  "errors.prisma.database_error": "Database error",
-  "errors.prisma.field_fallback": "field(s)",
-  "errors.prisma.record_not_found.message": "The requested record was not found.",
-  "errors.prisma.record_not_found.details": "Could not find the record for the operation. It might have been deleted or the ID is incorrect.",
-  "errors.prisma.invalid_input.message": "Input data validation error.",
-  "errors.prisma.foreign_key_constraint.message": "Foreign key constraint failed.",
-  "errors.prisma.foreign_key_constraint.details": "The operation cannot be performed due to a dependent relationship. Ensure related records exist or are handled correctly.",
-  "errors.prisma.relation_violation.message": "Relation violation.",
-  "errors.prisma.relation_violation.details": "The operation you are trying to perform would violate a required relation between records.",
-  "errors.prisma.database_connection_error.message": "Database connection error.",
-  "errors.prisma.database_connection_error.details": "Could not establish a connection to the database. Please try again later or contact support.",
-  "errors.zod.validation_failed": "Validation Failed",
-  "errors.conflict": "Conflict",
-  "errors.conflict.details": "Conflict: {0}",
+export const englishTranslations = {
+  errors: {
+    unauthorized: "Unauthorized",
+    unauthorizedDetails: "Unauthorized: {0}",
+    unauthorizedRolemismatch: "Role mismatch",
+    internal_server_error: "Internal Server Error",
+    bad_request: "Bad Request",
+    bad_request_details: "Bad Request: {0}",
+    no_token_provided: "No token provided",
+    invalid_expired_token: "Invalid or expired token",
 
-  "errors.validation.incorrect_password": "Incorrect password",
-  "errors.validation.user_not_found": "User not found",
-  "errors.validation.super_user_exists":
-    "An admin user already exists. Cannot create another initial admin.",
+    prisma: {
+      duplicate_entry: {
+        message: "Duplicate entry for {0}.",
+        details: "The provided value for {0} already exists.",
+      },
+      database_error: "Database error",
+      field_fallback: "field(s)",
+      record_not_found: {
+        message: "The requested record was not found.",
+        details:
+          "Could not find the record for the operation. It might have been deleted or the ID is incorrect.",
+      },
+      invalid_input: {
+        message: "Input data validation error.",
+      },
+      foreign_key_constraint: {
+        message: "Foreign key constraint failed.",
+        details:
+          "The operation cannot be performed due to a dependent relationship. Ensure related records exist or are handled correctly.",
+      },
+      relation_violation: {
+        message: "Relation violation.",
+        details:
+          "The operation you are trying to perform would violate a required relation between records.",
+      },
+      database_connection_error: {
+        message: "Database connection error.",
+        details:
+          "Could not establish a connection to the database. Please try again later or contact support.",
+      },
+    },
 
-  "errors.invalid_session": "Invalid session",
-  "errors.already_logged_in": "The user is already logged-in on this device",
-  "errors.not_logged_in": "The user is not logged-in on this device",
-  "errors.cannot_close_self_session":
-    "You can't close your active session. Please use the logout button instead.",
+    zod: {
+      validation_failed: "Validation Failed",
+    },
 
-  "server.listening": "Server listening on port {0}",
+    conflict: "Conflict",
+    conflict_details: "Conflict: {0}",
 
-  "errors.validation.username.min":
-    "Username must be at least {0} characters long.",
-  "errors.validation.username.max": "Username cannot exceed {0} characters.",
-  "errors.validation.username.regex":
-    "Username can only contain letters, numbers, and underscores.",
-  "errors.validation.password.min":
-    "Password must be at least {0} characters long.",
-  "errors.validation.password.max": "Password cannot exceed {0} characters.",
-  "errors.validation.password.uppercase":
-    "Password must contain at least one uppercase letter.",
-  "errors.validation.password.lowercase":
-    "Password must contain at least one lowercase letter.",
-  "errors.validation.password.number":
-    "Password must contain at least one number.",
-  "errors.validation.password.specialChar":
-    "Password must contain at least one special character (e.g., !@#$%^&*).",
-  "errors.validation.name.empty": "Name cannot be empty.",
-  "errors.validation.name.min": "Name cannot be empty.",
-  "errors.validation.name.max": "Name cannot exceed {0} characters.",
-  "errors.validation.fullname.empty": "Full name cannot be empty.",
-  "errors.validation.fullname.max": "Full name cannot exceed {0} characters.",
+    validation: {
+      incorrect_password: "Incorrect password",
+      user_not_found: "User not found",
+      super_user_exists:
+        "An admin user already exists. Cannot create another initial admin.",
+      username: {
+        min: "Username must be at least {0} characters long.",
+        max: "Username cannot exceed {0} characters.",
+        regex: "Username can only contain letters, numbers, and underscores.",
+      },
+      password: {
+        min: "Password must be at least {0} characters long.",
+        max: "Password cannot exceed {0} characters.",
+        uppercase: "Password must contain at least one uppercase letter.",
+        lowercase: "Password must contain at least one lowercase letter.",
+        number: "Password must contain at least one number.",
+        specialChar:
+          "Password must contain at least one special character (e.g., !@#$%^&*).",
+      },
+      name: {
+        empty: "Name cannot be empty.",
+        min: "Name cannot be empty.",
+        max: "Name cannot exceed {0} characters.",
+      },
+      fullname: {
+        empty: "Full name cannot be empty.",
+        max: "Full name cannot exceed {0} characters.",
+      },
+      document: {
+        min: "Document must be at least {0} characters.",
+        max: "Document cannot exceed {0} characters.",
+      },
+      phoneNumber: {
+        min: "Phone number must be at least {0} digits.",
+        max: "Phone number cannot exceed {0} digits.",
+      },
+      email: {
+        invalid: "Invalid email format.",
+      },
+    },
 
-  "errors.validation.document.min": "Document must be at least {0} characters.",
-  "errors.validation.document.max": "Document cannot exceed {0} characters.",
+    auth: {
+      the_user_does_not_exist: "The user does not exist",
+    },
 
-  "errors.validation.phoneNumber.min":
-    "Phone number must be at least {0} digits.",
-  "errors.validation.phoneNumber.max": "Phone number cannot exceed {0} digits.",
+    invalid_session: "Invalid session",
+    already_logged_in: "The user is already logged-in on this device",
+    not_logged_in: "The user is not logged-in on this device",
+    cannot_close_self_session:
+      "You can't close your active session. Please use the logout button instead.",
+  },
 
-  "errors.validation.email.invalid": "Invalid email format.",
-
-  "errors.auth.the_user_does_not_exist": "The user does not exist",
+  server: {
+    listening: "Server listening on port {0}",
+  },
 };

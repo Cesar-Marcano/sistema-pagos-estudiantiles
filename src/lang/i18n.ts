@@ -7,6 +7,10 @@ const langs = {
   sp: spanishTranslations,
 };
 
+function getNested(obj: any, path: string): any {
+  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+}
+
 export function i18n(strings: TemplateStringsArray, ...values: any[]): string {
   let input = "";
 
@@ -28,13 +32,13 @@ export function i18n(strings: TemplateStringsArray, ...values: any[]): string {
 
   const translations = langs[DEFAULT_LANG];
 
-  const template = translations[key];
+  const template = getNested(translations, key);
 
   if (!template) {
     throw new Error(`Translation for ${key} does not exist`);
   }
 
-  const result = template.replace(/\{(\d+)\}/g, (_, index) => {
+  const result = template.replace(/\{(\d+)\}/g, (_: string, index: string) => {
     const i = Number(index);
     return values[i] !== undefined ? values[i] : `{${i}}`;
   });
