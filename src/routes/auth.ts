@@ -11,11 +11,14 @@ import { NeedsSuperUserController } from "../controllers/auth/needsSuperUser";
 import { LogoutController } from "../controllers/auth/logout";
 import { GetUserSessionsController } from "../controllers/auth/getUserSessions";
 import { CloseSessionController } from "../controllers/auth/closeSession";
+import { AuditLogsService } from "../services/auditLogs.service";
 
 export const authRouter = Router();
 
 // services
-const userService = new UserService(prisma);
+const auditLogsService = new AuditLogsService(prisma);
+
+const userService = new UserService(prisma, auditLogsService);
 const authService = new AuthService(prisma);
 
 // controllers
