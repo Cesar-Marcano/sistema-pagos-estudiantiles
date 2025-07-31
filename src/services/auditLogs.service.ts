@@ -3,7 +3,7 @@ import { AuditLog, PrismaClient } from "@prisma/client";
 export class AuditLogsService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  public async registerLog(data: AuditLog) {
+  public async registerLog(data: Omit<AuditLog, "createdAt" | "id">) {
     return await this.prisma.auditLog.create({
       data,
     });
