@@ -4,6 +4,7 @@ import { AuthService } from "../services/auth.service";
 import { UnauthorizedError } from "../errors/unauthorized.error";
 import { i18n } from "../lang/i18n";
 import { UserPayload } from "../interfaces/tokenPayload";
+import { runWithUserContext } from "../asyncLocalStorage";
 
 interface AuthenticatedRequest extends Request {
   user?: UserPayload;
@@ -20,7 +21,7 @@ export const authGuard = (
     next: NextFunction
   ) => {
     if (!req.cookies.refreshToken && failOnMissingRefresh) {
-      throw new UnauthorizedError(i18n`errors.invalid_session`)
+      throw new UnauthorizedError(i18n`errors.invalid_session`);
     }
 
     const authHeader = req.header("Authorization");
@@ -42,6 +43,6 @@ export const authGuard = (
 
     req.user = payload;
 
-    next();
+    runWithUserContext(req.user.id, () => next());
   };
 };
