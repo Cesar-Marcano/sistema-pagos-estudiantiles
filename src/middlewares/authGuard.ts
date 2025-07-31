@@ -34,7 +34,7 @@ export const authGuard = (
     const payload = await authService.decodeAccessToken(token);
 
     if (role && role !== "any" && role !== payload.role) {
-      throw new UnauthorizedError(i18n`errors.unauthorized.rolemismatch`);
+      throw new UnauthorizedError(i18n`errors.unauthorized_rolemismatch`);
     }
 
     if (!payload) {

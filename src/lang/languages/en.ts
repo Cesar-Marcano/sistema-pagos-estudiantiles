@@ -2,7 +2,7 @@ export const englishTranslations = {
   errors: {
     unauthorized: "Unauthorized",
     unauthorized_details: "Unauthorized: {0}",
-    unauthorizedRolemismatch: "Role mismatch",
+    unauthorized_rolemismatch: "Role mismatch",
     internal_server_error: "Internal Server Error",
     bad_request: "Bad Request",
     bad_request_details: "Bad Request: {0}",

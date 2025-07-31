@@ -21,7 +21,7 @@ export class PrismaErrorHandler implements IErrorHandler {
 
     if (error.code === "P2025") {
       const errorMessage =
-        (error.meta?.cause as string) || i18n`errors.prisma.record_not_found`;
+        (error.meta?.cause as string) || i18n`errors.prisma.record_not_found.message`;
       return {
         statusCode: 404,
         message: i18n`errors.prisma.record_not_found.message`,

@@ -2,7 +2,7 @@ export const spanishTranslations = {
   errors: {
     unauthorized: "No autorizado",
     unauthorized_details: "No autorizado: {0}",
-    unauthorizedRolemismatch: "Rol incorrecto",
+    unauthorized_rolemismatch: "Rol incorrecto",
     internal_server_error: "Error interno del servidor",
     bad_request: "Solicitud Incorrecta",
     bad_request_details: "Solicitud Incorrecta: {0}",
@@ -56,7 +56,8 @@ export const spanishTranslations = {
       username: {
         min: "El nombre de usuario debe tener al menos {0} caracteres.",
         max: "El nombre de usuario no puede exceder los {0} caracteres.",
-        regex: "El nombre de usuario solo puede contener letras, números y guiones bajos.",
+        regex:
+          "El nombre de usuario solo puede contener letras, números y guiones bajos.",
       },
       password: {
         min: "La contraseña debe tener al menos {0} caracteres.",
@@ -95,7 +96,8 @@ export const spanishTranslations = {
     },
 
     invalid_session: "Sesión inválida",
-    already_logged_in: "El usuario ya tiene una sesión activa en este mismo equipo",
+    already_logged_in:
+      "El usuario ya tiene una sesión activa en este mismo equipo",
     not_logged_in: "El usuario no tiene una sesión iniciada",
     cannot_close_self_session:
       "No puedes cerrar la sesión activa. Si deseas cerrar sesión, utiliza el botón 'Cerrar sesión'.",
