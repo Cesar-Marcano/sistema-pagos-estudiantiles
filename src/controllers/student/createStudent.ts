@@ -32,7 +32,7 @@ export class CreateStudentController extends Controller<
       document: req.body.document!,
       fullname: req.body.fullname,
       gradeId: req.body.gradeId,
-      gradeLevel: req.body.gradeLevel,
+      gradeLevel: req.body.gradeLevel!,
       parentId: req.body.parentId,
       section: req.body.section!,
       status: req.body.status,

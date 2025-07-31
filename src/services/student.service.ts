@@ -13,6 +13,24 @@ export class StudentService {
   public async createStudent(
     data: Omit<Student, "id" | "createdAt" | "updatedAt" | "deletedAt">
   ): Promise<Student> {
+    const grade = await this.prisma.grade.findUnique({
+      where: {
+        id: data.gradeId,
+      },
+    });
+
+    if (!grade) {
+      throw new BadRequestError(i18n`errors.validation.grade.not_found`);
+    }
+
+    if (
+      !grade.hasLevels &&
+      data.gradeLevel !== undefined &&
+      data.gradeLevel !== null
+    ) {
+      throw new BadRequestError(i18n`errors.validation.grade.has_no_levels`);
+    }
+
     const newStudent = await this.prisma.student.create({ data });
 
     const userId = getUserId();
@@ -73,6 +91,28 @@ export class StudentService {
   ): Promise<Student> {
     if (Object.keys(updateData).length < 1) {
       throw new BadRequestError(i18n`errors.validation.no_data`);
+    }
+
+    if (updateData.gradeLevel !== undefined && updateData.gradeLevel !== null) {
+      const student = await this.getStudentById(id);
+
+      if (!student) {
+        throw new BadRequestError(i18n`errors.validation.student.not_found`);
+      }
+
+      const grade = await this.prisma.grade.findUnique({
+        where: {
+          id: student.gradeId,
+        },
+      });
+
+      if (!grade) {
+        throw new BadRequestError(i18n`errors.validation.grade.not_found`);
+      }
+
+      if (!grade.hasLevels) {
+        throw new BadRequestError(i18n`errors.validation.grade_has_no_levels`);
+      }
     }
 
     const updatedStudent = await this.prisma.student.update({

@@ -14,7 +14,10 @@ export const CreateStudentSchema = z.object({
 
   gradeId: z.number(),
 
-  gradeLevel: z.number(),
+  gradeLevel: z
+    .number()
+    .optional()
+    .or(z.literal("").transform(() => null)),
 
   section: z
     .string()

@@ -18,7 +18,7 @@ export const UpdateStudentSchema = z.object({
 
   gradeId: z.number().optional(),
   
-  gradeLevel: z.number(),
+  gradeLevel: z.number().optional(),
 
   section: z
     .string()
