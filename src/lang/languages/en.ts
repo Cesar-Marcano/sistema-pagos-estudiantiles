@@ -1,7 +1,7 @@
 export const englishTranslations = {
   errors: {
     unauthorized: "Unauthorized",
-    unauthorizedDetails: "Unauthorized: {0}",
+    unauthorized_details: "Unauthorized: {0}",
     unauthorizedRolemismatch: "Role mismatch",
     internal_server_error: "Internal Server Error",
     bad_request: "Bad Request",
@@ -87,6 +87,7 @@ export const englishTranslations = {
       email: {
         invalid: "Invalid email format.",
       },
+      no_data: "No data provided to perform update",
     },
 
     auth: {

@@ -5,7 +5,7 @@ export class ConflictError extends BaseError {
   constructor(message?: string) {
     super(
       message
-        ? i18n`errors.conflict.details(${message})`
+        ? i18n`errors.conflict_details(${message})`
         : i18n`errors.conflict`,
       409
     );

@@ -1,7 +1,7 @@
 export const spanishTranslations = {
   errors: {
     unauthorized: "No autorizado",
-    unauthorizedDetails: "No autorizado: {0}",
+    unauthorized_details: "No autorizado: {0}",
     unauthorizedRolemismatch: "Rol incorrecto",
     internal_server_error: "Error interno del servidor",
     bad_request: "Solicitud Incorrecta",
@@ -87,6 +87,7 @@ export const spanishTranslations = {
       email: {
         invalid: "Formato de correo electrónico inválido.",
       },
+      no_data: "No se proporcionó ningún dato para realizar una actualización.",
     },
 
     auth: {

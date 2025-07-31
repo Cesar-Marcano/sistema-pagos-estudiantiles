@@ -15,7 +15,7 @@ export class PrismaErrorHandler implements IErrorHandler {
       return {
         statusCode: 409,
         message: i18n`errors.prisma.duplicate_entry.message(${targetFields})`,
-        details: i18n`errors.prisma.duplicate_entry.details(${targetFields})`,
+        details: i18n`errors.prisma.duplicate_entry_details(${targetFields})`,
       };
     }
 
@@ -56,14 +56,14 @@ export class PrismaErrorHandler implements IErrorHandler {
       return {
         statusCode: 409,
         message: i18n`errors.prisma.foreign_key_constraint.message`,
-        details: i18n`errors.prisma.foreign_key_constraint.details`,
+        details: i18n`errors.prisma.foreign_key_constraint_details`,
       };
     }
     if (error.code === "P2014") {
       return {
         statusCode: 409,
         message: i18n`errors.prisma.relation_violation.message`,
-        details: i18n`errors.prisma.relation_violation.details`,
+        details: i18n`errors.prisma.relation_violation_details`,
       };
     }
 
@@ -80,7 +80,7 @@ export class PrismaErrorHandler implements IErrorHandler {
       return {
         statusCode: 503,
         message: i18n`errors.prisma.database_connection_error.message`,
-        details: i18n`errors.prisma.database_connection_error.details`,
+        details: i18n`errors.prisma.database_connection_error_details`,
       };
     }
 

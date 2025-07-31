@@ -5,7 +5,7 @@ export class UnauthorizedError extends BaseError {
   constructor(message?: string) {
     super(
       message
-        ? i18n`errors.unauthorized.details(${message})`
+        ? i18n`errors.unauthorized_details(${message})`
         : i18n`errors.unauthorized`,
       401
     );

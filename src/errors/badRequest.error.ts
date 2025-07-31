@@ -5,7 +5,7 @@ export class BadRequestError extends BaseError {
   constructor(message?: string) {
     super(
       message
-        ? i18n`errors.bad_request.details(${message})`
+        ? i18n`errors.bad_request_details(${message})`
         : i18n`errors.bad_request`,
       400
     );
