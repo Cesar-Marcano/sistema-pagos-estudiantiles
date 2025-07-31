@@ -1,6 +1,8 @@
 import { PrismaClient, Parent } from "@prisma/client";
 import { getUserId } from "../asyncLocalStorage";
 import { AuditLogsService } from "./auditLogs.service";
+import { BadRequestError } from "../errors/badRequest.error";
+import { i18n } from "../lang/i18n";
 
 export class ParentService {
   constructor(
@@ -75,6 +77,10 @@ export class ParentService {
     id: number,
     updateData: Partial<Parent>
   ): Promise<Parent> {
+    if (Object.keys(updateData).length < 1) {
+      throw new BadRequestError(i18n`errors.validation.no_data`);
+    }
+
     const updatedParent = await this.prisma.parent.update({
       where: { id },
       data: {

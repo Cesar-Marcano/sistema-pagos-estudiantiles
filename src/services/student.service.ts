@@ -1,6 +1,8 @@
 import { PrismaClient, Student } from "@prisma/client";
 import { AuditLogsService } from "./auditLogs.service";
 import { getUserId } from "../asyncLocalStorage";
+import { i18n } from "../lang/i18n";
+import { BadRequestError } from "../errors/badRequest.error";
 
 export class StudentService {
   constructor(
@@ -69,6 +71,10 @@ export class StudentService {
     id: number,
     updateData: Partial<Student>
   ): Promise<Student> {
+    if (Object.keys(updateData).length < 1) {
+      throw new BadRequestError(i18n`errors.validation.no_data`);
+    }
+
     const updatedStudent = await this.prisma.student.update({
       where: { id },
       data: {
