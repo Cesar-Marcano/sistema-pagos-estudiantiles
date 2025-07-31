@@ -114,10 +114,10 @@ model Student {
   Payment   Payment[]
   Invoice   Invoice[]
 
-  Parent Parent? @relation(fields: [parentId], references: [id])
+  Parent Parent @relation(fields: [parentId], references: [id])
 
   userId   Int
-  parentId Int?
+  parentId Int
   gradeId  Int
 
   addedBy User @relation(fields: [userId], references: [id])

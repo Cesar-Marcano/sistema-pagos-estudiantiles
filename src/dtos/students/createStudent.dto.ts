@@ -14,28 +14,24 @@ export const CreateStudentSchema = z.object({
 
   gradeId: z.number(),
 
+  gradeLevel: z.number(),
+
   section: z
     .string()
     .max(50, i18n`errors.validation.section.max(${50})`)
     .optional()
-    .or(z.literal("").transform(() => undefined)),
+    .or(z.literal("").transform(() => null)),
 
   document: z
     .string()
     .min(6, i18n`errors.validation.document.min(${6})`)
     .max(30, i18n`errors.validation.document.max(${30})`)
     .optional()
-    .or(z.literal("").transform(() => undefined)),
+    .or(z.literal("").transform(() => null)),
 
-  status: z
-    .enum(StudentStatus)
-    .optional()
-    .default(StudentStatus.ACTIVE),
+  status: z.enum(StudentStatus).optional().default(StudentStatus.ACTIVE),
 
-  parentId: z
-    .number()
-    .optional()
-    .or(z.literal(null).transform(() => undefined)),
+  parentId: z.number(),
 });
 
 export type CreateStudentDto = z.infer<typeof CreateStudentSchema>;
