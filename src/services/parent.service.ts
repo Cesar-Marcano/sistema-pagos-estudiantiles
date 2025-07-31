@@ -1,16 +1,33 @@
 import { PrismaClient, Parent } from "@prisma/client";
+import { getUserId } from "../asyncLocalStorage";
+import { AuditLogsService } from "./auditLogs.service";
 
 export class ParentService {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(
+    private readonly prisma: PrismaClient,
+    private readonly auditLogService: AuditLogsService
+  ) {}
 
   public async createParent(
     data: Omit<Parent, "id" | "createdAt" | "updatedAt" | "deletedAt">
   ): Promise<Parent> {
-    return await this.prisma.parent.create({
+    const newParent = await this.prisma.parent.create({
       data: {
         ...data,
       },
     });
+
+    const userId = getUserId();
+
+    await this.auditLogService.registerLog({
+      action: "CREATE",
+      changes: JSON.stringify(newParent),
+      entity: "Parent",
+      entityId: newParent.id,
+      performedBy: userId!,
+    });
+
+    return newParent;
   }
 
   public async getParentById(id: number): Promise<Parent | null> {
@@ -58,21 +75,45 @@ export class ParentService {
     id: number,
     updateData: Partial<Parent>
   ): Promise<Parent> {
-    return await this.prisma.parent.update({
+    const updatedParent = await this.prisma.parent.update({
       where: { id },
       data: {
         ...updateData,
         updatedAt: new Date(),
       },
     });
+
+    const userId = getUserId();
+
+    await this.auditLogService.registerLog({
+      action: "UPDATE",
+      changes: JSON.stringify(updateData),
+      entity: "Parent",
+      entityId: updatedParent.id,
+      performedBy: userId!,
+    });
+
+    return updatedParent;
   }
 
   public async deleteParent(id: number): Promise<Parent> {
-    return await this.prisma.parent.update({
+    const deletedParent = await this.prisma.parent.update({
       where: { id, deletedAt: null },
       data: {
         deletedAt: new Date(),
       },
     });
+
+    const userId = getUserId();
+
+    await this.auditLogService.registerLog({
+      action: "DELETE",
+      changes: JSON.stringify(deletedParent),
+      entity: "Parent",
+      entityId: deletedParent.id,
+      performedBy: userId!,
+    });
+
+    return deletedParent;
   }
 }
