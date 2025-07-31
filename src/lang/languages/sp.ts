@@ -105,6 +105,10 @@ export const spanishTranslations = {
         nonnegative: "La tarifa debe ser un número positivo o cero.",
       },
       no_data: "No se proporcionó ningún dato para realizar una actualización.",
+      grade: {
+        not_found: "No se encontró el grado con el id proporcionado.",
+        has_no_levels: "El grado no tiene niveles.",
+      },
     },
 
     auth: {
