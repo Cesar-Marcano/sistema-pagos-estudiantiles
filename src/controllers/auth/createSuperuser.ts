@@ -5,7 +5,7 @@ import { Controller, Handler, Middleware } from "../../utils/controller";
 import {
   CreateSuperUserDto,
   CreateSuperUserSchema,
-} from "../../dtos/createSuperUser.dto";
+} from "../../dtos/users/createSuperUser.dto";
 import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";
 import ms from "ms";
 

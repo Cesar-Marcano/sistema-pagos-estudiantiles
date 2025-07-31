@@ -1,4 +1,4 @@
-import { CreateUserDto, CreateUserSchema } from "../../dtos/createUser.dto";
+import { CreateUserDto, CreateUserSchema } from "../../dtos/users/createUser.dto";
 import { UserService } from "../../services/user.service";
 import { AuthService } from "../../services/auth.service";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";

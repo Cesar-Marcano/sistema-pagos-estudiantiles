@@ -1,6 +1,6 @@
 import { UserService } from "../../services/user.service";
 import { AuthService } from "../../services/auth.service";
-import { LoginUserDto, LoginUserSchema } from "../../dtos/loginUser.dto";
+import { LoginUserDto, LoginUserSchema } from "../../dtos/users/loginUser.dto";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
 import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";

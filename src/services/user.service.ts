@@ -2,7 +2,7 @@ import { PrismaClient, Role, User } from "@prisma/client";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 
-import { CreateUserSchema } from "../dtos/createUser.dto";
+import { CreateUserSchema } from "../dtos/users/createUser.dto";
 import { BadRequestError } from "../errors/badRequest.error";
 import { i18n } from "../lang/i18n";
 import { AuditLogsService } from "./auditLogs.service";

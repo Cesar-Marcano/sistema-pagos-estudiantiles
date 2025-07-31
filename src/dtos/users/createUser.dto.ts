@@ -1,6 +1,6 @@
 import { Role } from "@prisma/client";
 import { z } from "zod";
-import { i18n } from "../lang/i18n";
+import { i18n } from "../../lang/i18n";
 
 export const CreateUserSchema = z.object({
   username: z.string()

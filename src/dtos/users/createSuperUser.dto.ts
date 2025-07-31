@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { i18n } from "../lang/i18n";
+import { i18n } from "../../lang/i18n";
 
-export const LoginUserSchema = z.object({
+export const CreateSuperUserSchema = z.object({
   username: z
     .string()
     .min(3, i18n`errors.validation.username.min(${3})`)
@@ -15,6 +15,10 @@ export const LoginUserSchema = z.object({
     .regex(/[a-z]/, i18n`errors.validation.password.lowercase`)
     .regex(/[0-9]/, i18n`errors.validation.password.number`)
     .regex(/[^a-zA-Z0-9]/, i18n`errors.validation.password.specialChar`),
+  name: z
+    .string()
+    .min(1, i18n`errors.validation.name.min`)
+    .max(100, i18n`errors.validation.name.max(${100})`),
 });
 
-export type LoginUserDto = z.infer<typeof LoginUserSchema>;
+export type CreateSuperUserDto = z.infer<typeof CreateSuperUserSchema>;

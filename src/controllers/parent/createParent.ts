@@ -6,7 +6,7 @@ import { Role } from "@prisma/client";
 import {
   CreateParentDto,
   CreateParentSchema,
-} from "../../dtos/createParent.dto";
+} from "../../dtos/parents/createParent.dto";
 import { ParentService } from "../../services/parent.service";
 import { UserPayload } from "../../interfaces/tokenPayload";
 

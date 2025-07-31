@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { i18n } from "../lang/i18n";
+import { i18n } from "../../lang/i18n";
 
 export const CreateParentSchema = z.object({
   fullname: z.string()
