@@ -94,6 +94,16 @@ export const spanishTranslations = {
       section: {
         max: "La sección no puede exceder los {0} caracteres.",
       },
+      description: {
+        max: "La descripción no puede exceder los {0} caracteres.",
+      },
+      maxLevel: {
+        invalid: "El nivel máximo debe ser un número entero.",
+        positive: "El nivel máximo debe ser mayor que cero.",
+      },
+      fee: {
+        nonnegative: "La tarifa debe ser un número positivo o cero.",
+      },
       no_data: "No se proporcionó ningún dato para realizar una actualización.",
     },
 

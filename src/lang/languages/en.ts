@@ -94,6 +94,16 @@ export const englishTranslations = {
       section: {
         max: "Section cannot exceed {0} characters.",
       },
+      description: {
+        max: "The description cannot exceed {0} characters.",
+      },
+      maxLevel: {
+        invalid: "The max level should be an integer.",
+        positive: "The max level should be greater than 0.",
+      },
+      fee: {
+        nonnegative: "The fee should be equal or greater than 0.",
+      },
       no_data: "No data provided to perform update",
     },
 
