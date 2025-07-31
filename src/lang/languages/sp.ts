@@ -88,6 +88,12 @@ export const spanishTranslations = {
       email: {
         invalid: "Formato de correo electrónico inválido.",
       },
+      birthday: {
+        invalid: "Fecha de nacimiento inválida.",
+      },
+      section: {
+        max: "La sección no puede exceder los {0} caracteres.",
+      },
       no_data: "No se proporcionó ningún dato para realizar una actualización.",
     },
 

@@ -87,6 +87,13 @@ export const englishTranslations = {
       email: {
         invalid: "Invalid email format.",
       },
+
+      birthday: {
+        invalid: "Invalid birthday.",
+      },
+      section: {
+        max: "Section cannot exceed {0} characters.",
+      },
       no_data: "No data provided to perform update",
     },
 
