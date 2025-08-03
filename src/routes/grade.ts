@@ -7,6 +7,7 @@ import { GradeService } from "../services/grade.service";
 import { CreateGradeController } from "../controllers/grade/createGrade";
 import { UpdateGradeController } from "../controllers/grade/updateGrade";
 import { DeleteGradeController } from "../controllers/grade/deleteGrade";
+import { GetGradeController } from "../controllers/grade/getGrade";
 
 export const gradeRouter = Router();
 
@@ -17,20 +18,26 @@ const gradeService = new GradeService(prisma, auditLogService);
 const authService = new AuthService(prisma);
 
 // controllers
-const createStudentController = new CreateGradeController(
+const createGradeController = new CreateGradeController(
   gradeService,
   authService
 );
-const updateStudentController = new UpdateGradeController(
+const updateGradeController = new UpdateGradeController(
   gradeService,
   authService
 );
-const deleteStudentController = new DeleteGradeController(
+const deleteGradeController = new DeleteGradeController(
+  gradeService,
+  authService
+);
+const getGradeController = new GetGradeController(
   gradeService,
   authService
 );
 
 // routes initialization
-gradeRouter.post("/", createStudentController.build());
-gradeRouter.patch("/:id", updateStudentController.build());
-gradeRouter.delete("/:id", deleteStudentController.build());
+gradeRouter.post("/", createGradeController.build());
+gradeRouter.patch("/:id", updateGradeController.build());
+gradeRouter.delete("/:id", deleteGradeController.build());
+
+gradeRouter.get("/:id", getGradeController.build());
