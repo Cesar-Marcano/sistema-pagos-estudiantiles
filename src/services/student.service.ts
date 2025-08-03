@@ -138,7 +138,7 @@ export class StudentService {
 
   public async deleteStudent(id: number): Promise<Student> {
     const deletedStudent = await this.prisma.student.update({
-      where: { id },
+      where: { id, deletedAt: null },
       data: { deletedAt: new Date() },
     });
 
