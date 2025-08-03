@@ -16,7 +16,7 @@ export class DeleteGradeController extends Controller<null, UserPayload> {
   public middlewares: Middleware[] = [authGuard(this.authService, Role.ADMIN)];
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
-    const grade = await this.gradeService.DeleteGrade(Number(req.params.id));
+    const grade = await this.gradeService.deleteGrade(Number(req.params.id));
 
     res.status(200).json({ grade });
   };
