@@ -8,6 +8,7 @@ import { CreateStudentController } from "../controllers/student/createStudent";
 import { DeleteStudentController } from "../controllers/student/deleteStudent";
 import { GetStudentController } from "../controllers/student/getStudent";
 import { GetStudentsController } from "../controllers/student/getStudents";
+import { UpdateStudentController } from "../controllers/student/updateStudent";
 
 export const studentRouter = Router();
 
@@ -34,10 +35,16 @@ const getStudentsController = new GetStudentsController(
   studentService,
   authService
 );
+const updateStudentController = new UpdateStudentController(
+  studentService,
+  authService
+);
+
 
 // routes initialization
 studentRouter.post("/", createStudentController.build());
 studentRouter.delete("/:id", deleteStudentController.build());
+studentRouter.patch("/:id", updateStudentController.build());
 
 studentRouter.get("/:id", getStudentController.build());
 studentRouter.get("/", getStudentsController.build());

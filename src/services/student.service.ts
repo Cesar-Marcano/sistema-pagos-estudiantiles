@@ -88,7 +88,7 @@ export class StudentService {
   public async updateStudent(
     id: number,
     updateData: Partial<Student>
-  ): Promise<Student> {
+  ): Promise<Omit<Student, "id" | "createdAt" | "updatedAt" | "deletedAt">> {
     if (Object.keys(updateData).length < 1) {
       throw new BadRequestError(i18n`errors.validation.no_data`);
     }
