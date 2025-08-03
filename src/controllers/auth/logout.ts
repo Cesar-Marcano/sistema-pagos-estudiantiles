@@ -14,7 +14,7 @@ export class LogoutController extends Controller {
   public handler: Handler = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
-    if (!refreshToken) throw new BadRequestError(i18n`errors.not_logged_in`)
+    if (!refreshToken) throw new BadRequestError(i18n`errors.not_logged_in`);
 
     res.cookie("refreshToken", "", {
       httpOnly: true,
@@ -27,7 +27,12 @@ export class LogoutController extends Controller {
       const payload = await this.authService.decodeRefreshToken(refreshToken);
 
       await this.authService.logout(payload.jti, payload.id);
-    } catch (error) {}
+    } catch (error) {
+      console.warn(
+        "[LogoutController] Failed to decode or logout refresh token",
+        error
+      );
+    }
 
     res.status(200).json({});
   };
