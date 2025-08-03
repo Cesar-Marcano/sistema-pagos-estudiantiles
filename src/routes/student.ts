@@ -7,6 +7,7 @@ import { StudentService } from "../services/student.service";
 import { CreateStudentController } from "../controllers/student/createStudent";
 import { DeleteStudentController } from "../controllers/student/deleteStudent";
 import { GetStudentController } from "../controllers/student/getStudent";
+import { GetStudentsController } from "../controllers/student/getStudents";
 
 export const studentRouter = Router();
 
@@ -29,9 +30,14 @@ const getStudentController = new GetStudentController(
   studentService,
   authService
 );
+const getStudentsController = new GetStudentsController(
+  studentService,
+  authService
+);
 
 // routes initialization
 studentRouter.post("/", createStudentController.build());
 studentRouter.delete("/:id", deleteStudentController.build());
 
 studentRouter.get("/:id", getStudentController.build());
+studentRouter.get("/", getStudentsController.build());
