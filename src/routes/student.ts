@@ -6,6 +6,7 @@ import { AuditLogsService } from "../services/auditLogs.service";
 import { StudentService } from "../services/student.service";
 import { CreateStudentController } from "../controllers/student/createStudent";
 import { DeleteStudentController } from "../controllers/student/deleteStudent";
+import { GetStudentController } from "../controllers/student/getStudent";
 
 export const studentRouter = Router();
 
@@ -24,7 +25,13 @@ const deleteStudentController = new DeleteStudentController(
   studentService,
   authService
 );
+const getStudentController = new GetStudentController(
+  studentService,
+  authService
+);
 
 // routes initialization
 studentRouter.post("/", createStudentController.build());
 studentRouter.delete("/:id", deleteStudentController.build());
+
+studentRouter.get("/:id", getStudentController.build());
