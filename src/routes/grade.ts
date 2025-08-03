@@ -8,6 +8,7 @@ import { CreateGradeController } from "../controllers/grade/createGrade";
 import { UpdateGradeController } from "../controllers/grade/updateGrade";
 import { DeleteGradeController } from "../controllers/grade/deleteGrade";
 import { GetGradeController } from "../controllers/grade/getGrade";
+import { GetGradesController } from "../controllers/grade/getGrades";
 
 export const gradeRouter = Router();
 
@@ -34,6 +35,10 @@ const getGradeController = new GetGradeController(
   gradeService,
   authService
 );
+const getGradesController = new GetGradesController(
+  gradeService,
+  authService
+);
 
 // routes initialization
 gradeRouter.post("/", createGradeController.build());
@@ -41,3 +46,4 @@ gradeRouter.patch("/:id", updateGradeController.build());
 gradeRouter.delete("/:id", deleteGradeController.build());
 
 gradeRouter.get("/:id", getGradeController.build());
+gradeRouter.get("/", getGradesController.build());
