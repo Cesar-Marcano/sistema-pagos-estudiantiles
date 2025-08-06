@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { prisma } from "../app/prisma";
+import { prisma } from "../app/instances/prisma";
 import { AuthService } from "../services/auth.service";
 import { ParentService } from "../services/parent.service";
 import { CreateParentController } from "../controllers/parent/createParent";
