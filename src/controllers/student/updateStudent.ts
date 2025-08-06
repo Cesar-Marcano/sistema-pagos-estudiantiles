@@ -10,6 +10,7 @@ import {
   UpdateStudentSchema,
 } from "../../dtos/students/updateStudent.dto";
 import { Decimal } from "@prisma/client/runtime/library";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class UpdateStudentController extends Controller<
   UpdateStudentDto,
@@ -28,19 +29,18 @@ export class UpdateStudentController extends Controller<
   ];
 
   public handler: Handler<UpdateStudentDto, UserPayload> = async (req, res) => {
-    const student = await this.studentService.updateStudent(
-      Number(req.params.id),
-      {
-        birthday: req.body.birthday ? new Date(req.body.birthday) : undefined,
-        document: req.body.document,
-        fullname: req.body.fullname,
-        gradeId: req.body.gradeId,
-        gradeLevel: req.body.gradeLevel,
-        parentId: req.body.parentId,
-        section: req.body.section,
-        status: req.body.status,
-      }
-    );
+    const id = parseIdParam(req);
+
+    const student = await this.studentService.updateStudent(id, {
+      birthday: req.body.birthday ? new Date(req.body.birthday) : undefined,
+      document: req.body.document,
+      fullname: req.body.fullname,
+      gradeId: req.body.gradeId,
+      gradeLevel: req.body.gradeLevel,
+      parentId: req.body.parentId,
+      section: req.body.section,
+      status: req.body.status,
+    });
 
     res.status(200).json({ student });
   };

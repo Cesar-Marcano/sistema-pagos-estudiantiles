@@ -4,6 +4,7 @@ import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
 import { UserPayload } from "../../interfaces/tokenPayload";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class DeleteStudentController extends Controller<null, UserPayload> {
   constructor(
@@ -16,7 +17,8 @@ export class DeleteStudentController extends Controller<null, UserPayload> {
   public middlewares: Middleware[] = [authGuard(this.authService, Role.ADMIN)];
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
-    const student = await this.studentService.deleteStudent(Number(req.params.id));
+    const id = parseIdParam(req);
+    const student = await this.studentService.deleteStudent(id);
 
     res.status(200).json({ student });
   };

@@ -10,6 +10,7 @@ import {
   UpdateGradeSchema,
 } from "../../dtos/grades/updateGrade.dto";
 import { Decimal } from "@prisma/client/runtime/library";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class UpdateGradeController extends Controller<
   UpdateGradeDto,
@@ -28,7 +29,8 @@ export class UpdateGradeController extends Controller<
   ];
 
   public handler: Handler<UpdateGradeDto, UserPayload> = async (req, res) => {
-    const grade = await this.gradeService.updateGrade(Number(req.params.id), {
+    const id = parseIdParam(req);
+    const grade = await this.gradeService.updateGrade(id, {
       name: req.body.name,
       description: req.body.description!,
       hasLevels: req.body.hasLevels,

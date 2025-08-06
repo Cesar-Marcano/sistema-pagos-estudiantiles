@@ -3,6 +3,7 @@ import { GradeService } from "../../services/grade.service";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { UserPayload } from "../../interfaces/tokenPayload";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class GetGradeController extends Controller<null, UserPayload> {
   constructor(
@@ -15,7 +16,8 @@ export class GetGradeController extends Controller<null, UserPayload> {
   public middlewares: Middleware[] = [authGuard(this.authService, "any")];
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
-    const grade = await this.gradeService.getGrade(Number(req.params.id));
+    const id = parseIdParam(req);
+    const grade = await this.gradeService.getGrade(id);
 
     res.status(200).json({ grade });
   };

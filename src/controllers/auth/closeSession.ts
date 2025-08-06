@@ -1,10 +1,10 @@
 import { AuthService } from "../../services/auth.service";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
-import z from "zod";
 import { ConflictError } from "../../errors/conflict.error";
 import { i18n } from "../../lang/i18n";
 import { UserPayload } from "../../interfaces/tokenPayload";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class CloseSessionController extends Controller<null, UserPayload> {
   constructor(private readonly authService: AuthService) {
@@ -15,10 +15,9 @@ export class CloseSessionController extends Controller<null, UserPayload> {
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-    const sessionIdSchema = z.coerce.number().int().positive();
 
     const payload = await this.authService.decodeRefreshToken(refreshToken);
-    const sessionId = sessionIdSchema.parse(req.params.sessionId);
+    const sessionId = parseIdParam(req, "sessionId");
 
     const session = await this.authService.getSession(sessionId);
 

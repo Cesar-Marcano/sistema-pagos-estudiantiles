@@ -3,6 +3,7 @@ import { StudentService } from "../../services/student.service";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { UserPayload } from "../../interfaces/tokenPayload";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class GetStudentController extends Controller<null, UserPayload> {
   constructor(
@@ -15,7 +16,8 @@ export class GetStudentController extends Controller<null, UserPayload> {
   public middlewares: Middleware[] = [authGuard(this.authService, "any")];
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
-    const student = await this.studentService.getStudentById(Number(req.params.id));
+    const id = parseIdParam(req);
+    const student = await this.studentService.getStudentById(id);
 
     res.status(200).json({ student });
   };
