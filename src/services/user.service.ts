@@ -6,7 +6,7 @@ import { CreateUserSchema } from "../dtos/users/createUser.dto";
 import { BadRequestError } from "../errors/badRequest.error";
 import { i18n } from "../lang/i18n";
 import { AuditLogsService } from "./auditLogs.service";
-import { getUserId } from "../asyncLocalStorage";
+import { getUserId } from "../utils/asyncLocalStorage";
 
 export class UserService {
   constructor(

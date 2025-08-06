@@ -1,6 +1,6 @@
 import { PrismaClient, Student } from "@prisma/client";
 import { AuditLogsService } from "./auditLogs.service";
-import { getUserId } from "../asyncLocalStorage";
+import { getUserId } from "../utils/asyncLocalStorage";
 import { i18n } from "../lang/i18n";
 import { BadRequestError } from "../errors/badRequest.error";
 

@@ -4,7 +4,7 @@ import { AuthService } from "../services/auth.service";
 import { UnauthorizedError } from "../errors/unauthorized.error";
 import { i18n } from "../lang/i18n";
 import { UserPayload } from "../interfaces/tokenPayload";
-import { runWithUserContext } from "../asyncLocalStorage";
+import { runWithUserContext } from "../utils/asyncLocalStorage";
 
 interface AuthenticatedRequest extends Request {
   user?: UserPayload;
