@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { prisma } from "../prisma";
+import { prisma } from "../app/prisma";
 import { AuthService } from "../services/auth.service";
 import { AuditLogsService } from "../services/auditLogs.service";
 import { GradeService } from "../services/grade.service";
