@@ -44,6 +44,9 @@ model Parent {
   Payment     Payment[]
   students    Student[]
 
+  @@unique([document, deletedAt])
+  @@unique([email, deletedAt])
+  @@unique([phoneNumber, deletedAt])
   @@index([userId, createdAt])
 }
 
@@ -60,6 +63,8 @@ model Grade {
   userId      Int
   addedBy     User      @relation(fields: [userId], references: [id])
   Student     Student[]
+
+  @@unique([name, deletedAt])
 }
 
 model Student {
@@ -76,12 +81,14 @@ model Student {
   userId     Int
   parentId   Int
   gradeId    Int
-  discounts  Discount[]    @relation("StudentDiscounts")
   Invoice    Invoice[]
   Payment    Payment[]
   grade      Grade         @relation(fields: [gradeId], references: [id])
   Parent     Parent        @relation(fields: [parentId], references: [id])
   addedBy    User          @relation(fields: [userId], references: [id])
+  discounts  Discount[]    @relation("StudentDiscounts")
+
+  @@unique([document, deletedAt])
 }
 
 model Discount {
@@ -96,6 +103,8 @@ model Discount {
   userId       Int
   addedBy      User      @relation(fields: [userId], references: [id])
   students     Student[] @relation("StudentDiscounts")
+
+  @@unique([name, deletedAt])
 }
 
 model Invoice {
@@ -120,6 +129,7 @@ model Invoice {
   addedBy        User          @relation(fields: [userId], references: [id])
   payments       Payment[]
 
+  @@unique([invoiceNumber, deletedAt])
   @@index([studentId, issueDate])
 }
 
@@ -135,6 +145,8 @@ model PaymentMethod {
   userId                     Int
   Payment                    Payment[]
   addedBy                    User      @relation(fields: [userId], references: [id])
+
+  @@unique([name, deletedAt])
 }
 
 model Payment {
@@ -160,6 +172,8 @@ model Payment {
   forStudent      Student       @relation(fields: [studentId], references: [id])
   addedBy         User          @relation("AddedPayments", fields: [userId], references: [id])
   verifiedBy      User?         @relation("VerifiedPayments", fields: [verifiedById], references: [id])
+
+  @@unique([referenceNumber, deletedAt])
 }
 
 model AuditLog {
