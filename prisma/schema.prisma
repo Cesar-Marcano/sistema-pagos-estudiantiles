@@ -195,6 +195,12 @@ model Session {
   user      User     @relation(fields: [userId], references: [id])
 }
 
+model Setting {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  value String
+}
+
 enum Role {
   READONLY
   ADMIN
