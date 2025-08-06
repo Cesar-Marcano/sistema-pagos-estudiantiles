@@ -1,12 +1,14 @@
-import { CreateUserDto, CreateUserSchema } from "../../dtos/users/createUser.dto";
+import {
+  CreateUserDto,
+  CreateUserSchema,
+} from "../../dtos/users/createUser.dto";
 import { UserService } from "../../services/user.service";
 import { AuthService } from "../../services/auth.service";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
-import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";
-import ms from "ms";
+import { setRefreshTokenCookie } from "../../utils/cookies";
 
 export class RegisterController extends Controller<CreateUserDto> {
   constructor(
@@ -31,12 +33,7 @@ export class RegisterController extends Controller<CreateUserDto> {
       username: user.name,
     });
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: !isDevelopment,
-      sameSite: "strict",
-      maxAge: ms(REFRESH_TOKEN_EXP),
-    });
+    setRefreshTokenCookie(res, refreshToken);
 
     res.status(201).json({ user });
   };

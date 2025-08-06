@@ -1,8 +1,8 @@
 import { Controller, Handler, Middleware } from "../../utils/controller";
-import { isDevelopment } from "../../config/envVariables";
 import { AuthService } from "../../services/auth.service";
 import { BadRequestError } from "../../errors/badRequest.error";
 import { i18n } from "../../lang/i18n";
+import { deleteRefreshTokenCookie } from "../../utils/cookies";
 
 export class LogoutController extends Controller {
   constructor(private readonly authService: AuthService) {
@@ -16,12 +16,7 @@ export class LogoutController extends Controller {
 
     if (!refreshToken) throw new BadRequestError(i18n`errors.not_logged_in`);
 
-    res.cookie("refreshToken", "", {
-      httpOnly: true,
-      secure: !isDevelopment,
-      sameSite: "strict",
-      maxAge: 0,
-    });
+    deleteRefreshTokenCookie(res);
 
     try {
       const payload = await this.authService.decodeRefreshToken(refreshToken);

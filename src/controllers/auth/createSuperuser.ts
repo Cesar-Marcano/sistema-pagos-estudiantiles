@@ -6,8 +6,7 @@ import {
   CreateSuperUserDto,
   CreateSuperUserSchema,
 } from "../../dtos/users/createSuperUser.dto";
-import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";
-import ms from "ms";
+import { setRefreshTokenCookie } from "../../utils/cookies";
 
 export class CreateSuperUserController extends Controller<CreateSuperUserDto> {
   constructor(
@@ -35,12 +34,7 @@ export class CreateSuperUserController extends Controller<CreateSuperUserDto> {
       username: user.name,
     });
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: !isDevelopment,
-      sameSite: "strict",
-      maxAge: ms(REFRESH_TOKEN_EXP),
-    });
+    setRefreshTokenCookie(res, refreshToken);
 
     res.status(201).json({ user });
   };

@@ -3,10 +3,9 @@ import { AuthService } from "../../services/auth.service";
 import { LoginUserDto, LoginUserSchema } from "../../dtos/users/loginUser.dto";
 import { Controller, Handler, Middleware } from "../../utils/controller";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
-import { isDevelopment, REFRESH_TOKEN_EXP } from "../../config/envVariables";
-import ms from "ms";
 import { UnauthorizedError } from "../../errors/unauthorized.error";
 import { i18n } from "../../lang/i18n";
+import { setRefreshTokenCookie } from "../../utils/cookies";
 
 export class LoginController extends Controller<LoginUserDto> {
   constructor(
@@ -21,7 +20,8 @@ export class LoginController extends Controller<LoginUserDto> {
   public handler: Handler<LoginUserDto> = async (req, res) => {
     const cookieRefreshToken = req.cookies.refreshToken;
 
-    if (cookieRefreshToken) throw new UnauthorizedError(i18n`errors.already_logged_in`);
+    if (cookieRefreshToken)
+      throw new UnauthorizedError(i18n`errors.already_logged_in`);
 
     const user = await this.userService.loginUser(
       req.body.username,
@@ -35,12 +35,7 @@ export class LoginController extends Controller<LoginUserDto> {
       username: user.name,
     });
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: !isDevelopment,
-      sameSite: "strict",
-      maxAge: ms(REFRESH_TOKEN_EXP),
-    });
+    setRefreshTokenCookie(res, refreshToken);
 
     res.status(200).json({ user });
   };
