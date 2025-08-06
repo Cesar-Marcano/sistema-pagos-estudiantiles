@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { SettingsKeys } from "../config/settings";
+import { SettingsKeys } from "../interfaces/settings";
 
 export class SettingsService {
   constructor(private readonly prisma: PrismaClient) {}
