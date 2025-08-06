@@ -19,7 +19,7 @@ export class SettingsService {
     });
   }
 
-  public async getConfig(name: SettingsKeys, defaultValue: string) {
+  public async getConfig(name: SettingsKeys, defaultValue?: string) {
     return (
       (await this.prisma.setting.findUnique({
         where: {
