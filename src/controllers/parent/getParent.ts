@@ -4,6 +4,7 @@ import { authGuard } from "../../middlewares/authGuard";
 import { ParentService } from "../../services/parent.service";
 import { UserPayload } from "../../interfaces/tokenPayload";
 import z from "zod";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class GetParentController extends Controller<null, UserPayload> {
   constructor(
@@ -16,11 +17,7 @@ export class GetParentController extends Controller<null, UserPayload> {
   public middlewares: Middleware[] = [authGuard(this.authService, "any")];
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
-      const paramsSchema = z.object({
-        id: z.coerce.number().int().min(1),
-      });
-  
-      const { id: parentId } = paramsSchema.parse(req.params);
+    const parentId = parseIdParam(req);
 
     const result = await this.parentService.getParentById(parentId);
 

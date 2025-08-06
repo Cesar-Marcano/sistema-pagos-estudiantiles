@@ -10,6 +10,7 @@ import {
 import { ParentService } from "../../services/parent.service";
 import { UserPayload } from "../../interfaces/tokenPayload";
 import z from "zod";
+import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class UpdateParentController extends Controller<
   UpdateParentDto,
@@ -28,11 +29,8 @@ export class UpdateParentController extends Controller<
   ];
 
   public handler: Handler<UpdateParentDto, UserPayload> = async (req, res) => {
-    const paramsSchema = z.object({
-      id: z.coerce.number().int().min(1),
-    });
+    const parentId = parseIdParam(req);
 
-    const { id: parentId } = paramsSchema.parse(req.params);
     const updateData = req.body;
 
     const parent = await this.parentService.updateParent(parentId, updateData);
