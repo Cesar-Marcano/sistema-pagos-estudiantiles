@@ -1,21 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
-type AnyMock = jest.Mock<any, any>;
-type MockedModel = Record<string, AnyMock>;
-
-export type MockedPrismaClient = Partial<
-  Record<keyof PrismaClient, MockedModel>
-> & {
-  $connect: AnyMock;
-  $disconnect: AnyMock;
-  $on: AnyMock;
-  $transaction: AnyMock;
-  $use: AnyMock;
-};
-
 export function createMockPrisma(
   models: (keyof PrismaClient)[]
-): MockedPrismaClient {
+): PrismaClient {
   const base = {
     $connect: jest.fn(),
     $disconnect: jest.fn(),
@@ -37,5 +24,5 @@ export function createMockPrisma(
     };
   });
 
-  return mock as MockedPrismaClient;
+  return mock as unknown as PrismaClient;
 }
