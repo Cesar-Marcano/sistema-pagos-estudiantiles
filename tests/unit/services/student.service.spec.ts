@@ -45,6 +45,7 @@ describe("StudentService", () => {
         .mockResolvedValue(null);
 
       await studentService.createStudent(sampleStudentInput);
+      fail("Should fail");
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
     }

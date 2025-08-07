@@ -127,6 +127,7 @@ describe("ParentService", () => {
   it("should not update a parent", async () => {
     try {
       await parentService.updateParent(1, {});
+      fail("Should fail");
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
     }
