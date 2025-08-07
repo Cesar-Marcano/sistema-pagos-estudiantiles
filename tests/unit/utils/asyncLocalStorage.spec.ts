@@ -4,7 +4,7 @@ import {
 } from "../../../src/utils/asyncLocalStorage";
 
 describe("UserContext", () => {
-  it("Should return the userId within the context", () => {
+  it("should return the userId within the context", () => {
     runWithUserContext(123, () => {
       const userId = getUserId();
 
@@ -12,7 +12,7 @@ describe("UserContext", () => {
     });
   });
 
-  it("Should return undefined outside of context", () => {
+  it("should return undefined outside of context", () => {
     const userId = getUserId();
 
     expect(userId).toBeUndefined();

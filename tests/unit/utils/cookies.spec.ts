@@ -18,7 +18,7 @@ describe("CookiesUtil", () => {
     spies = mock.spies;
   });
 
-  it("Should set the cookie", () => {
+  it("should set the cookie", () => {
     setCookie(res, "some-key", "some-value", 3600);
 
     expect(spies.cookie).toHaveBeenCalledWith(
@@ -33,7 +33,7 @@ describe("CookiesUtil", () => {
     );
   });
 
-  it("Should set refresh token", () => {
+  it("should set refresh token", () => {
     setRefreshTokenCookie(res, "my-token!");
 
     expect(spies.cookie).toHaveBeenCalledWith(
@@ -48,7 +48,7 @@ describe("CookiesUtil", () => {
     );
   });
 
-  it("Should delete refresh token", () => {
+  it("should delete refresh token", () => {
     deleteRefreshTokenCookie(res);
 
     expect(spies.cookie).toHaveBeenCalledWith(

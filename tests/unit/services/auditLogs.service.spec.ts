@@ -11,7 +11,7 @@ describe("AuditLogsService", () => {
     auditLogsService = new AuditLogsService(prisma);
   });
 
-  it("Should register an audit log", () => {
+  it("should register an audit log", () => {
     const data = {
       action: "CREATE",
       changes: JSON.stringify({ foo: "bar" }),
@@ -27,7 +27,7 @@ describe("AuditLogsService", () => {
     });
   });
 
-  it("Should get audit logs", () => {
+  it("should get audit logs", () => {
     const page = 1;
     const pageSize = 10;
     auditLogsService.getLogs(page, pageSize);
@@ -44,7 +44,7 @@ describe("AuditLogsService", () => {
     });
   });
 
-  it("Should get an audit log", () => {
+  it("should get an audit log", () => {
     auditLogsService.getLog(1);
 
     expect(prisma.auditLog.findUnique).toHaveBeenCalledWith({

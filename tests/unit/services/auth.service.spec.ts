@@ -24,7 +24,7 @@ describe("AuthService", () => {
     authService = new AuthService(prisma);
   });
 
-  it("Should get session", async () => {
+  it("should get session", async () => {
     await authService.getSession(1);
 
     expect(prisma.session.findUnique).toHaveBeenCalledWith({
@@ -37,7 +37,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("Should close session", async () => {
+  it("should close session", async () => {
     await authService.closeSession(1, 123);
 
     expect(prisma.session.delete).toHaveBeenCalledWith({
@@ -54,7 +54,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("Should get user sessions", async () => {
+  it("should get user sessions", async () => {
     await authService.getUserSessions(123);
 
     expect(prisma.session.findMany).toHaveBeenCalledWith({
@@ -70,7 +70,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("Should logout", async () => {
+  it("should logout", async () => {
     await authService.logout(mockedJti, 123);
 
     expect(prisma.session.delete).toHaveBeenCalledWith({
@@ -83,7 +83,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("Should retrieve refresh token", async () => {
+  it("should retrieve refresh token", async () => {
     const token = await authService.retrieveRefreshToken(userMock);
 
     expect(jwtMock.sign).toHaveBeenCalledWith(
@@ -104,7 +104,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("Should retrieve access token", async () => {
+  it("should retrieve access token", async () => {
     (prisma.session.findUnique as jest.Mock).mockResolvedValue({});
 
     const userPayload = jwtMock.verify("", "", {}) as UserPayload;
@@ -126,7 +126,7 @@ describe("AuthService", () => {
     });
   });
 
-  it("Should throw if user does not exist", async () => {
+  it("should throw if user does not exist", async () => {
     (prisma.user.count as jest.Mock).mockResolvedValue(0);
 
     await expect(
