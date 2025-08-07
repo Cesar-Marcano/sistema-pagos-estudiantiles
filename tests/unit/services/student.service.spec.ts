@@ -11,6 +11,7 @@ import {
 import { sampleGrade } from "../../helpers/data/grade.data";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
 
 describe("StudentService", () => {
   let prisma: PrismaClient;
@@ -25,6 +26,7 @@ describe("StudentService", () => {
       student: {
         create: jest.fn().mockResolvedValue(sampleStudent),
         findUnique: jest.fn().mockResolvedValue(sampleStudent),
+        findMany: jest.fn().mockResolvedValue([sampleStudent]),
       },
     });
     auditLogsService = auditLogsServiceMock();
@@ -67,4 +69,45 @@ describe("StudentService", () => {
       })
     );
   });
+
+   it("should retrieve all students", async () => {
+      const page = 1;
+      const limit = 10;
+  
+      const { take, skip } = getPaginationSkip(page, limit);
+  
+      (prisma.$transaction as jest.Mock) = jest
+        .fn()
+        .mockResolvedValue([[sampleStudent], 1]);
+  
+      const students = await studentService.getAllStudents({ page, limit });
+  
+      expect(students.data.length).toBeGreaterThan(0);
+      expect(students.data[0]).toEqual(sampleStudent);
+      expect(students).toEqual(
+        expect.objectContaining({
+          pagination: expect.objectContaining({
+            total: 1,
+            totalPages: Math.ceil(1 / limit),
+            page,
+            limit,
+          }),
+        })
+      );
+  
+      expect(prisma.student.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip,
+          take,
+        })
+      );
+  
+      expect(prisma.student.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({
+            deletedAt: null,
+          }),
+        })
+      );
+    });
 });
