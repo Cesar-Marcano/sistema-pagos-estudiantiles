@@ -22,3 +22,13 @@ export const sampleStudent: Student = {
   deletedAt: null,
   id: 1,
 };
+
+export const updatedSampleStudent: Student = {
+  ...sampleStudent,
+  fullname: "Andres Foo Bar",
+};
+
+export const deletedSampleStudent: Student = {
+  ...sampleStudent,
+  deletedAt: new Date(),
+};
