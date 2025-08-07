@@ -7,6 +7,7 @@ import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock"
 import {
   sampleParent,
   sampleParentInput,
+  updatedSampleParent,
 } from "../../helpers/data/parent.data";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
 import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
@@ -22,6 +23,7 @@ describe("ParentService", () => {
         create: jest.fn().mockResolvedValue(sampleParent),
         findUnique: jest.fn().mockResolvedValue(sampleParent),
         findMany: jest.fn().mockResolvedValue([sampleParent]),
+        update: jest.fn().mockResolvedValue(updatedSampleParent),
       },
     });
     auditLogsService = auditLogsServiceMock();
@@ -94,6 +96,28 @@ describe("ParentService", () => {
         where: expect.objectContaining({
           deletedAt: null,
         }),
+      })
+    );
+  });
+
+  it("should update a parent", async () => {
+    const parent = await parentService.updateParent(1, {
+      fullname: "Alberson Foo Bar",
+    });
+
+    expectAuditLogCalledWith(auditLogsService, "UPDATE", "Parent", 1);
+
+    expect(parent).toEqual(updatedSampleParent);
+
+    expect(prisma.parent.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+          id: 1,
+        }),
+        data: {
+          fullname: "Alberson Foo Bar",
+        },
       })
     );
   });

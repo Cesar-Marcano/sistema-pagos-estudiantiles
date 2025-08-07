@@ -18,3 +18,8 @@ export const sampleParent: Parent = {
     id: 1,
     updatedAt: new Date(),
 }
+
+export const updatedSampleParent: Parent = {
+    ...sampleParent,
+    fullname: "Alberson Foo Bar",
+}
