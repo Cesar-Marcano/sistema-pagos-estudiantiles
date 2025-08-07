@@ -105,7 +105,9 @@ export const englishTranslations = {
         nonnegative: "The fee should be equal or greater than 0.",
       },
       no_data: "No data provided to perform update",
-      grade_has_no_levels: "The grade has no levels.",
+      grade: {
+        has_no_levels: "The grade has no levels.",
+      },
     },
 
     auth: {
