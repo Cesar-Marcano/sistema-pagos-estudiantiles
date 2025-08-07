@@ -1,5 +1,5 @@
 import { i18n } from "../lang/i18n";
-import { BaseError } from "../utils/baseError";
+import { BaseError } from "./baseError";
 
 export class InternalServerError extends BaseError {
   constructor() {
