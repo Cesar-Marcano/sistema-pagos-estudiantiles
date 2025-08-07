@@ -8,10 +8,10 @@ import helmet from "helmet";
 
 // local imports
 import { router } from "./router";
-import { executeInDev } from "../config/envVariables";
 import { globalErrorHandler } from "../middlewares/globalErrorHandler";
 import { i18n } from "../lang/i18n";
 import { loadSettings } from "../config/settings";
+import { executeInDev } from "../utils/executeInDev";
 
 // express instance
 const app = express();

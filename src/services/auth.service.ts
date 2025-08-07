@@ -2,12 +2,12 @@ import { PrismaClient, Role } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import {
   ACCESS_TOKEN_EXP,
-  getEnv,
   REFRESH_TOKEN_EXP,
 } from "../config/envVariables";
 import { UnauthorizedError } from "../errors/unauthorized.error";
 import { i18n } from "../lang/i18n";
 import { RawUserPayload, UserPayload } from "../interfaces/tokenPayload";
+import { getEnv } from "../utils/getEnv";
 
 export class AuthService {
   constructor(private readonly prisma: PrismaClient) {}
