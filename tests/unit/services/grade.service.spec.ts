@@ -46,6 +46,8 @@ describe("GradeService", () => {
   it("should retrieve a grade", async () => {
     const grade = await gradeService.getGrade(1);
 
+    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+
     expect(prisma.grade.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({
@@ -60,6 +62,8 @@ describe("GradeService", () => {
 
   it("should retrieve all grades", async () => {
     const grades = await gradeService.getGrades();
+
+    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
 
     expect(prisma.grade.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
