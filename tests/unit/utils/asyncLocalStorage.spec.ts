@@ -1,0 +1,20 @@
+import {
+  getUserId,
+  runWithUserContext,
+} from "../../../src/utils/asyncLocalStorage";
+
+describe("UserContext", () => {
+  it("Should return the userId within the context", () => {
+    runWithUserContext(123, () => {
+      const userId = getUserId();
+
+      expect(userId).toBe(123);
+    });
+  });
+
+  it("Should return undefined outside of context", () => {
+    const userId = getUserId();
+
+    expect(userId).toBeUndefined();
+  });
+});
