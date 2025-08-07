@@ -34,7 +34,7 @@ export class ParentService {
 
   public async getParentById(id: number): Promise<Parent | null> {
     return await this.prisma.parent.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
     });
   }
 
