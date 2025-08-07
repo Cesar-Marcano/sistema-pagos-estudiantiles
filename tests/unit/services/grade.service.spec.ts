@@ -18,7 +18,7 @@ describe("GradeService", () => {
   let gradeService: GradeService;
   let auditLogsService: AuditLogsService;
 
-  beforeAll(() => {
+  beforeEach(() => {
     prisma = createMockPrisma(["grade"], {
       grade: {
         create: jest.fn().mockResolvedValue(sampleGrade),
@@ -27,7 +27,7 @@ describe("GradeService", () => {
         update: jest.fn().mockResolvedValue(updatedSampleGrade),
       },
     });
-    auditLogsService = auditLogsServiceMock;
+    auditLogsService = auditLogsServiceMock();
     gradeService = new GradeService(prisma, auditLogsService);
   });
 
