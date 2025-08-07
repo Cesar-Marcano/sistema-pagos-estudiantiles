@@ -60,6 +60,7 @@ export class GradeService {
     const updatedGrade = await this.prisma.grade.update({
       where: {
         id: gradeId,
+        deletedAt: null,
       },
       data: updateData,
     });
