@@ -34,4 +34,23 @@ describe("GradeService", () => {
       data: sampleGradeInput,
     });
   });
+
+  it("should retrieve a grade", async () => {
+    (prisma.grade.findUnique as jest.Mock) = jest
+      .fn()
+      .mockResolvedValue(sampleGrade);
+
+    const grade = await gradeService.getGrade(1);
+
+    expect(prisma.grade.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          id: 1,
+          deletedAt: null,
+        }),
+      })
+    );
+
+    expect(grade).toBe(sampleGrade);
+  });
 });
