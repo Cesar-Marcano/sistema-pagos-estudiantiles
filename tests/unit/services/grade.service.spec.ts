@@ -4,6 +4,7 @@ import { GradeService } from "../../../src/services/grade.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { AuditLogsService } from "../../../src/services/auditLogs.service";
 import {
+  deletedSampleGrade,
   sampleGrade,
   sampleGradeInput,
   updatedSampleGrade,
@@ -101,5 +102,29 @@ describe("GradeService", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
     }
+  });
+
+  it("should delete a grade", async () => {
+    (prisma.grade.update as jest.Mock) = jest
+      .fn()
+      .mockResolvedValue(deletedSampleGrade);
+
+    const grade = await gradeService.deleteGrade(1);
+
+    expectAuditLogCalledWith(auditLogsService, "DELETE", "Grade", 1);
+
+    expect(prisma.grade.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          id: 1,
+          deletedAt: null,
+        }),
+        data: expect.objectContaining({
+          deletedAt: expect.any(Date),
+        }),
+      })
+    );
+
+    expect(grade).toEqual(deletedSampleGrade);
   });
 });

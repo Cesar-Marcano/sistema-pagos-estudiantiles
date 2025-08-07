@@ -25,3 +25,8 @@ export const updatedSampleGrade: Grade = {
   ...sampleGrade,
   name: "Foo Bar",
 };
+
+export const deletedSampleGrade: Grade = {
+  ...sampleGrade,
+  deletedAt: new Date(),
+};
