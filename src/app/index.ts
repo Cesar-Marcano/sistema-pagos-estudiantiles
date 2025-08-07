@@ -11,6 +11,7 @@ import { router } from "./router";
 import { executeInDev } from "../config/envVariables";
 import { globalErrorHandler } from "../middlewares/globalErrorHandler";
 import { i18n } from "../lang/i18n";
+import { loadSettings } from "../config/settings";
 
 // express instance
 const app = express();
@@ -31,7 +32,9 @@ app.use("/api", router);
 // global error handler
 app.use(globalErrorHandler);
 
-export function run() {
+export async function run() {
+  await loadSettings();
+
   app.listen(3000, () => {
     console.log(i18n`server.listening(${3000})`);
   });
