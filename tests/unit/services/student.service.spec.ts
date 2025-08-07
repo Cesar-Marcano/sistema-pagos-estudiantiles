@@ -24,6 +24,7 @@ describe("StudentService", () => {
       },
       student: {
         create: jest.fn().mockResolvedValue(sampleStudent),
+        findUnique: jest.fn().mockResolvedValue(sampleStudent),
       },
     });
     auditLogsService = auditLogsServiceMock();
@@ -49,5 +50,21 @@ describe("StudentService", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
     }
+  });
+
+  it("should retrieve a student", async () => {
+    const student = await studentService.getStudentById(1);
+
+    expect(student).toEqual(sampleStudent);
+
+    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+
+    expect(prisma.student.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+        }),
+      })
+    );
   });
 });
