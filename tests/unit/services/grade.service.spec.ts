@@ -11,6 +11,7 @@ import {
 } from "../../helpers/data/grade.data";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
+import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
 
 describe("GradeService", () => {
   let prisma: PrismaClient;
@@ -26,9 +27,7 @@ describe("GradeService", () => {
         update: jest.fn().mockResolvedValue(updatedSampleGrade),
       },
     });
-    auditLogsService = {
-      registerLog: jest.fn(),
-    } as unknown as AuditLogsService;
+    auditLogsService = auditLogsServiceMock;
     gradeService = new GradeService(prisma, auditLogsService);
   });
 
