@@ -108,37 +108,37 @@ describe("ParentService", () => {
     });
 
     expectAuditLogCalledWith(auditLogsService, "UPDATE", "Parent", 1);
-    
+
     expect(parent).toEqual(updatedSampleParent);
-    
+
     expect(prisma.parent.update).toHaveBeenCalledWith(
-        expect.objectContaining({
-            where: expect.objectContaining({
-                deletedAt: null,
-                id: 1,
-            }),
-            data: {
-                fullname: "Alberson Foo Bar",
-            },
-        })
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+          id: 1,
+        }),
+        data: {
+          fullname: "Alberson Foo Bar",
+        },
+      })
     );
-});
+  });
 
-it("should not update a parent", async () => {
+  it("should not update a parent", async () => {
     try {
-        await parentService.updateParent(1, {});
+      await parentService.updateParent(1, {});
     } catch (error) {
-        expect(error).toBeInstanceOf(BadRequestError);
+      expect(error).toBeInstanceOf(BadRequestError);
     }
-});
+  });
 
-it("should delete a parent", async () => {
+  it("should delete a parent", async () => {
     (prisma.parent.update as jest.Mock) = jest
-    .fn()
-    .mockResolvedValue(deletedSampleParent);
-    
+      .fn()
+      .mockResolvedValue(deletedSampleParent);
+
     const parent = await parentService.deleteParent(1);
-    
+
     expectAuditLogCalledWith(auditLogsService, "DELETE", "Parent", 1);
 
     expect(parent).toEqual(
