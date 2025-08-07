@@ -4,7 +4,7 @@ import {
   deleteRefreshTokenCookie,
   setRefreshTokenCookie,
 } from "../../../src/utils/cookies";
-import { createMockResponse } from "../../factories/express.factory";
+import { createMockResponse } from "../../helpers/factories/express.factory";
 import { REFRESH_TOKEN_EXP } from "../../../src/config/envVariables";
 import ms from "ms";
 

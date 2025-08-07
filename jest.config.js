@@ -11,5 +11,5 @@ module.exports = {
   roots: ["<rootDir>/src", "<rootDir>/tests"],
   moduleFileExtensions: ["ts", "js", "json"],
   testRegex: ".*\\.spec\\.ts$",
-  coveragePathIgnorePatterns: ["/node_modules/", "/tests/factories/"],
+  coveragePathIgnorePatterns: ["/node_modules/", "/tests/helpers/"],
 };

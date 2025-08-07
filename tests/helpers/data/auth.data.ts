@@ -1,5 +1,5 @@
 import { Session } from "@prisma/client";
-import { RawUserPayload } from "../../src/interfaces/tokenPayload";
+import { RawUserPayload } from "../../../src/interfaces/tokenPayload";
 
 export const userMock: RawUserPayload = {
   id: 1,

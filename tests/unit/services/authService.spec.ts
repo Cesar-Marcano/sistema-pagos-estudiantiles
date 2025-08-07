@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { jwtMock } from "../../__mocks__/jsonwebtoken.mock";
+import { jwtMock } from "../../helpers/mocks/jsonwebtoken.mock";
 import { AuthService } from "../../../src/services/auth.service";
-import { createMockPrisma } from "../../factories/prisma.factory";
-import { sessionData, userMock } from "../../factories/auth.factory";
+import { createMockPrisma } from "../../helpers/factories/prisma.factory";
+import { sessionData, userMock } from "../../helpers/data/auth.data";
 import { UserPayload } from "../../../src/interfaces/tokenPayload";
 import { UnauthorizedError } from "../../../src/errors/unauthorized.error";
 

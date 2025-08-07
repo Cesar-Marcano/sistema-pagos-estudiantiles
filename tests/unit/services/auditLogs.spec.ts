@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createMockPrisma } from "../../factories/prisma.factory";
+import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { AuditLogsService } from "../../../src/services/auditLogs.service";
 
 describe("AuditLogsService", () => {
