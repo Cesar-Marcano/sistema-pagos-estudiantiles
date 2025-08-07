@@ -48,7 +48,7 @@ export class StudentService {
 
   public async getStudentById(id: number): Promise<Student | null> {
     return await this.prisma.student.findUnique({
-      where: { id },
+      where: { id, deletedAt: null },
     });
   }
 
