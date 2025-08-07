@@ -11,8 +11,14 @@ describe("GradeService", () => {
   let gradeService: GradeService;
   let auditLogsService: AuditLogsService;
 
-  beforeEach(() => {
-    prisma = createMockPrisma(["grade"]);
+  beforeAll(() => {
+    prisma = createMockPrisma(["grade"], {
+      grade: {
+        create: jest.fn().mockResolvedValue(sampleGrade),
+        findUnique: jest.fn().mockResolvedValue(sampleGrade),
+        findMany: jest.fn().mockResolvedValue([sampleGrade]),
+      },
+    });
     auditLogsService = {
       registerLog: jest.fn(),
     } as unknown as AuditLogsService;
@@ -20,10 +26,6 @@ describe("GradeService", () => {
   });
 
   it("should create a new grade", async () => {
-    (prisma.grade.create as jest.Mock) = jest
-      .fn()
-      .mockResolvedValue(sampleGrade);
-
     const grade = await gradeService.createGrade(sampleGradeInput);
 
     expectAuditLogCalledWith(auditLogsService, "CREATE", "Grade", 1);
@@ -36,10 +38,6 @@ describe("GradeService", () => {
   });
 
   it("should retrieve a grade", async () => {
-    (prisma.grade.findUnique as jest.Mock) = jest
-      .fn()
-      .mockResolvedValue(sampleGrade);
-
     const grade = await gradeService.getGrade(1);
 
     expect(prisma.grade.findUnique).toHaveBeenCalledWith(
@@ -52,5 +50,20 @@ describe("GradeService", () => {
     );
 
     expect(grade).toBe(sampleGrade);
+  });
+
+  it("should retrieve all grades", async () => {
+    const grades = await gradeService.getGrades();
+
+    expect(prisma.grade.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+        }),
+      })
+    );
+
+    expect(grades.length).toBeGreaterThan(0);
+    expect(grades[0]).toBe(sampleGrade);
   });
 });
