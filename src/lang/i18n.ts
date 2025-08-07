@@ -1,4 +1,4 @@
-import { DEFAULT_LANG } from "../config/envVariables";
+import { settings } from "../config/settings";
 import { englishTranslations } from "./languages/en";
 import { spanishTranslations } from "./languages/sp";
 
@@ -28,9 +28,14 @@ export function i18n(strings: TemplateStringsArray, ...values: any[]): string {
   }
 
   const key = match[1];
-  const argString = match[2];
 
-  const translations = langs[DEFAULT_LANG];
+  let lang: keyof typeof langs = "en";
+
+  if (Object.keys(langs).includes(settings.lang)) {
+    lang = settings.lang as keyof typeof langs;
+  }
+
+  const translations = langs[lang];
 
   const template = getNested(translations, key);
 
