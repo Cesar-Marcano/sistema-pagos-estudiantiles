@@ -12,14 +12,19 @@ export const sampleParentInput: Omit<
 };
 
 export const sampleParent: Parent = {
-    ...sampleParentInput,
-    createdAt: new Date(),
-    deletedAt: null,
-    id: 1,
-    updatedAt: new Date(),
-}
+  ...sampleParentInput,
+  createdAt: new Date(),
+  deletedAt: null,
+  id: 1,
+  updatedAt: new Date(),
+};
 
 export const updatedSampleParent: Parent = {
-    ...sampleParent,
-    fullname: "Alberson Foo Bar",
-}
+  ...sampleParent,
+  fullname: "Alberson Foo Bar",
+};
+
+export const deletedSampleParent: Parent = {
+  ...sampleParent,
+  deletedAt: new Date(),
+};

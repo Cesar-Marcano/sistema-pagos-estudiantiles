@@ -5,6 +5,7 @@ import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { AuditLogsService } from "../../../src/services/auditLogs.service";
 import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
 import {
+  deletedSampleParent,
   sampleParent,
   sampleParentInput,
   updatedSampleParent,
@@ -129,5 +130,30 @@ describe("ParentService", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
     }
+  });
+
+  it("should delete a parent", async () => {
+    (prisma.parent.update as jest.Mock) = jest
+      .fn()
+      .mockResolvedValue(deletedSampleParent);
+
+    const parent = await parentService.deleteParent(1);
+
+    expect(parent).toEqual(
+      expect.objectContaining({
+        deletedAt: expect.any(Date),
+      })
+    );
+
+    expect(prisma.parent.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+        }),
+        data: expect.objectContaining({
+          deletedAt: expect.any(Date),
+        }),
+      })
+    );
   });
 });
