@@ -8,7 +8,7 @@ export const sampleGradeInput: Omit<
   description: "hello",
   fee: Decimal(12.0),
   hasLevels: false,
-  maxLevel: 0,
+  maxLevel: null,
   name: "Hello world",
   userId: 1,
 };
