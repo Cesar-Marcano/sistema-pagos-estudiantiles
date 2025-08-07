@@ -9,6 +9,7 @@ import {
   sampleParentInput,
 } from "../../helpers/data/parent.data";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
 
 describe("ParentService", () => {
   let prisma: PrismaClient;
@@ -20,6 +21,7 @@ describe("ParentService", () => {
       parent: {
         create: jest.fn().mockResolvedValue(sampleParent),
         findUnique: jest.fn().mockResolvedValue(sampleParent),
+        findMany: jest.fn().mockResolvedValue([sampleParent]),
       },
     });
     auditLogsService = auditLogsServiceMock();
@@ -47,6 +49,47 @@ describe("ParentService", () => {
     expect(parent).toEqual(sampleParent);
 
     expect(prisma.parent.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+        }),
+      })
+    );
+  });
+
+  it("should retrieve all parents", async () => {
+    const page = 1;
+    const limit = 10;
+
+    const { take, skip } = getPaginationSkip(page, limit);
+
+    (prisma.$transaction as jest.Mock) = jest
+      .fn()
+      .mockResolvedValue([[sampleParent], 1]);
+
+    const parents = await parentService.getAllParents({ page, limit });
+
+    expect(parents.data.length).toBeGreaterThan(0);
+    expect(parents.data[0]).toEqual(sampleParent);
+    expect(parents).toEqual(
+      expect.objectContaining({
+        pagination: expect.objectContaining({
+          total: 1,
+          totalPages: Math.ceil(1 / limit),
+          page,
+          limit,
+        }),
+      })
+    );
+
+    expect(prisma.parent.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        skip,
+        take,
+      })
+    );
+
+    expect(prisma.parent.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         where: expect.objectContaining({
           deletedAt: null,
