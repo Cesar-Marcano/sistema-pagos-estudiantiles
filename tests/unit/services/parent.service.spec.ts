@@ -11,6 +11,7 @@ import {
 } from "../../helpers/data/parent.data";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
 import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
+import { BadRequestError } from "../../../src/errors/badRequest.error";
 
 describe("ParentService", () => {
   let prisma: PrismaClient;
@@ -120,5 +121,13 @@ describe("ParentService", () => {
         },
       })
     );
+  });
+
+  it("should not update a parent", async () => {
+    try {
+      await parentService.updateParent(1, {});
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestError);
+    }
   });
 });
