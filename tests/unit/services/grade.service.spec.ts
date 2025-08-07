@@ -3,8 +3,13 @@ import { PrismaClient } from "@prisma/client";
 import { GradeService } from "../../../src/services/grade.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { AuditLogsService } from "../../../src/services/auditLogs.service";
-import { sampleGrade, sampleGradeInput } from "../../helpers/data/grade.data";
+import {
+  sampleGrade,
+  sampleGradeInput,
+  updatedSampleGrade,
+} from "../../helpers/data/grade.data";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { BadRequestError } from "../../../src/errors/badRequest.error";
 
 describe("GradeService", () => {
   let prisma: PrismaClient;
@@ -17,6 +22,7 @@ describe("GradeService", () => {
         create: jest.fn().mockResolvedValue(sampleGrade),
         findUnique: jest.fn().mockResolvedValue(sampleGrade),
         findMany: jest.fn().mockResolvedValue([sampleGrade]),
+        update: jest.fn().mockResolvedValue(updatedSampleGrade),
       },
     });
     auditLogsService = {
@@ -65,5 +71,35 @@ describe("GradeService", () => {
 
     expect(grades.length).toBeGreaterThan(0);
     expect(grades[0]).toBe(sampleGrade);
+  });
+
+  it("should update a grade", async () => {
+    const updateData = { name: "Foo Bar" };
+
+    const grade = await gradeService.updateGrade(1, updateData);
+
+    expectAuditLogCalledWith(auditLogsService, "UPDATE", "Grade", 1);
+
+    expect(prisma.grade.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          id: 1,
+          deletedAt: null,
+        }),
+        data: updateData,
+      })
+    );
+
+    expect(grade).toBe(updatedSampleGrade);
+  });
+
+  it("should fail with no update data for a grade", async () => {
+    try {
+      await gradeService.updateGrade(1, {});
+
+      fail("Should have thrown");
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestError);
+    }
   });
 });

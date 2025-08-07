@@ -20,3 +20,8 @@ export const sampleGrade: Grade = {
   updatedAt: new Date(),
   id: 1,
 };
+
+export const updatedSampleGrade: Grade = {
+  ...sampleGrade,
+  name: "Foo Bar",
+};
