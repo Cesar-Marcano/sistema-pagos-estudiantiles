@@ -1,5 +1,5 @@
 import { UserService } from "../../services/user.service";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 
 export class NeedsSuperUserController extends Controller {
   constructor(private readonly userService: UserService) {

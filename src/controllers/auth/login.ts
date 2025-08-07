@@ -1,7 +1,7 @@
 import { UserService } from "../../services/user.service";
 import { AuthService } from "../../services/auth.service";
 import { LoginUserDto, LoginUserSchema } from "../../dtos/users/loginUser.dto";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
 import { UnauthorizedError } from "../../errors/unauthorized.error";
 import { i18n } from "../../lang/i18n";

@@ -5,7 +5,7 @@ import {
 import { UserService } from "../../services/user.service";
 import { AuthService } from "../../services/auth.service";
 import { validateBodyMiddleware } from "../../middlewares/validateBody";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
 import { setRefreshTokenCookie } from "../../utils/cookies";

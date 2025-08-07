@@ -1,5 +1,5 @@
 import { AuthService } from "../../services/auth.service";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { ParentService } from "../../services/parent.service";
 import { UserPayload } from "../../interfaces/tokenPayload";

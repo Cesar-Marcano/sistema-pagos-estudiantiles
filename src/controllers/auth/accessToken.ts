@@ -1,7 +1,7 @@
 import { BadRequestError } from "../../errors/badRequest.error";
 import { i18n } from "../../lang/i18n";
 import { AuthService } from "../../services/auth.service";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 
 export class AccessTokenController extends Controller {
   constructor(private readonly authService: AuthService) {

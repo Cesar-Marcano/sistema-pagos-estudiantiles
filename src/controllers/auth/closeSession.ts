@@ -1,5 +1,5 @@
 import { AuthService } from "../../services/auth.service";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { ConflictError } from "../../errors/conflict.error";
 import { i18n } from "../../lang/i18n";

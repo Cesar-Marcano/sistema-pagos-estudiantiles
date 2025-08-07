@@ -1,4 +1,4 @@
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { AuthService } from "../../services/auth.service";
 import { BadRequestError } from "../../errors/badRequest.error";
 import { i18n } from "../../lang/i18n";

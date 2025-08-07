@@ -1,6 +1,6 @@
 import { AuthService } from "../../services/auth.service";
 import { StudentService } from "../../services/student.service";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
 import { UserPayload } from "../../interfaces/tokenPayload";

@@ -1,6 +1,6 @@
 import { AuthService } from "../../services/auth.service";
 import { GradeService } from "../../services/grade.service";
-import { Controller, Handler, Middleware } from "../../utils/controller";
+import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { UserPayload } from "../../interfaces/tokenPayload";
 
