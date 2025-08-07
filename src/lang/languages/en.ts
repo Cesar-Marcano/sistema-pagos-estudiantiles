@@ -106,6 +106,7 @@ export const englishTranslations = {
       },
       no_data: "No data provided to perform update",
       grade: {
+        not_found: "Grade with the id provided was not found.",
         has_no_levels: "The grade has no levels.",
       },
     },
