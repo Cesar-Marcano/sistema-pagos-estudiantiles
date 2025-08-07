@@ -15,13 +15,14 @@ describe("ParentService", () => {
   let auditLogsService: AuditLogsService;
   let parentService: ParentService;
 
-  beforeAll(() => {
+  beforeEach(() => {
     prisma = createMockPrisma(["parent"], {
       parent: {
         create: jest.fn().mockResolvedValue(sampleParent),
+        findUnique: jest.fn().mockResolvedValue(sampleParent),
       },
     });
-    auditLogsService = auditLogsServiceMock;
+    auditLogsService = auditLogsServiceMock();
     parentService = new ParentService(prisma, auditLogsService);
   });
 
@@ -34,6 +35,22 @@ describe("ParentService", () => {
     expect(prisma.parent.create).toHaveBeenCalledWith(
       expect.objectContaining({
         data: sampleParentInput,
+      })
+    );
+  });
+
+  it("should retrieve a parent by id", async () => {
+    const parent = await parentService.getParentById(1);
+
+    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+
+    expect(parent).toEqual(sampleParent);
+
+    expect(prisma.parent.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          deletedAt: null,
+        }),
       })
     );
   });
