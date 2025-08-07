@@ -116,10 +116,9 @@ export class StudentService {
     }
 
     const updatedStudent = await this.prisma.student.update({
-      where: { id },
+      where: { id, deletedAt: null },
       data: {
         ...updateData,
-        updatedAt: new Date(),
       },
     });
 
