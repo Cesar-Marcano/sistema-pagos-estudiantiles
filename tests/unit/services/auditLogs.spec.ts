@@ -26,4 +26,31 @@ describe("AuditLogsService", () => {
       data,
     });
   });
+
+  it("Should get audit logs", () => {
+    const page = 1;
+    const pageSize = 10;
+    auditLogsService.getLogs(page, pageSize);
+
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+
+    expect(prisma.auditLog.findMany).toHaveBeenCalledWith({
+      skip,
+      take,
+      orderBy: {
+        createdAt: expect.any(String),
+      },
+    });
+  });
+
+  it("Should get an audit log", () => {
+    auditLogsService.getLog(1);
+
+    expect(prisma.auditLog.findUnique).toHaveBeenCalledWith({
+      where: {
+        id: 1,
+      },
+    });
+  });
 });
