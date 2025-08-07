@@ -82,10 +82,9 @@ export class ParentService {
     }
 
     const updatedParent = await this.prisma.parent.update({
-      where: { id },
+      where: { id, deletedAt: null },
       data: {
         ...updateData,
-        updatedAt: new Date(),
       },
     });
 
