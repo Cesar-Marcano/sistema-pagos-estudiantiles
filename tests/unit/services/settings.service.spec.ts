@@ -32,4 +32,24 @@ describe("SettingsService", () => {
 
     expect(setting).toEqual("something");
   });
+
+  it("should set a setting", async () => {
+    const setting = await settingsService.setConfig("lang", "en");
+
+    expect(setting).toEqual(sampleSetting);
+    expect(prisma.setting.upsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          name: "lang",
+        },
+        update: {
+          value: "en",
+        },
+        create: expect.objectContaining({
+          name: "lang",
+          value: "en",
+        }),
+      })
+    );
+  });
 });
