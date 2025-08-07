@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { SettingsKeys } from "../interfaces/settings";
+import { settings } from "../config/settings";
 
 export class SettingsService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  public async setConfig(name: SettingsKeys, value: string) {
+  public async setConfig(name: keyof typeof settings, value: string) {
     return await this.prisma.setting.upsert({
       where: {
         name,
@@ -19,13 +19,13 @@ export class SettingsService {
     });
   }
 
-  public async getConfig(name: SettingsKeys, defaultValue?: string) {
+  public async getConfig(name: keyof typeof settings, defaultValue: string | null = null) {
     return (
       (await this.prisma.setting.findUnique({
         where: {
           name,
         },
-      })) ?? defaultValue
+      }))?.value ?? defaultValue
     );
   }
 }
