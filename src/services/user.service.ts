@@ -14,31 +14,37 @@ export class UserService {
     private readonly auditLogService: AuditLogsService
   ) {}
 
-  public async createUser(userData: z.infer<typeof CreateUserSchema>) {
+  private async hashPassword(password: string) {
     const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(userData.password, salt);
+    return bcrypt.hash(password, salt);
+  }
+
+  private async createUserInternal(
+    data: Omit<User, "id" | "deletedAt" | "updatedAt" | "createdAt">
+  ): Promise<Omit<User, "password">> {
+    const hashedPassword = await this.hashPassword(data.password);
 
     const newUser = await this.prisma.user.create({
       data: {
-        ...userData,
-        password,
-      },
-      omit: {
-        password: true,
+        ...data,
+        password: hashedPassword,
       },
     });
-
-    const userId = getUserId();
 
     this.auditLogService.registerLog({
       action: "CREATE",
       entity: "User",
-      changes: JSON.stringify(newUser),
+      changes: JSON.stringify({ ...newUser, password: undefined }),
       entityId: newUser.id,
-      performedBy: userId!,
+      performedBy: newUser.id ?? getUserId()!,
     });
 
-    return newUser;
+    const { password, ...userWithoutPassword } = newUser;
+    return userWithoutPassword;
+  }
+
+  public async createUser(userData: z.infer<typeof CreateUserSchema>) {
+    return this.createUserInternal(userData);
   }
 
   public async getUserLoginInfo(username: string) {
@@ -89,38 +95,15 @@ export class UserService {
     password: string,
     name: string
   ) {
-    const adminAlreadyExists = await this.adminExists();
-
-    if (adminAlreadyExists) {
+    if (await this.adminExists()) {
       throw new BadRequestError(i18n`errors.validation.super_user_exists`);
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const newAdmin = await this.prisma.user.create({
-      data: {
-        username,
-        password: hashedPassword,
-        name,
-        role: Role.ADMIN,
-      },
-      select: {
-        id: true,
-        username: true,
-        name: true,
-        role: true,
-      },
+    return this.createUserInternal({
+      username,
+      password,
+      name,
+      role: Role.ADMIN,
     });
-
-    this.auditLogService.registerLog({
-      action: "CREATE",
-      entity: "User",
-      changes: JSON.stringify(newAdmin),
-      entityId: newAdmin.id,
-      performedBy: newAdmin.id!,
-    });
-
-    return newAdmin;
   }
 }
