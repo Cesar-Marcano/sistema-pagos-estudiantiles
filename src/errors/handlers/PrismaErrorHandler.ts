@@ -15,7 +15,6 @@ export class PrismaErrorHandler implements IErrorHandler {
       return {
         statusCode: 409,
         message: i18n`errors.prisma.duplicate_entry.message(${targetFields})`,
-        details: i18n`errors.prisma.duplicate_entry_details(${targetFields})`,
       };
     }
 
