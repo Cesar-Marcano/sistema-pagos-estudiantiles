@@ -5,7 +5,9 @@ import {
 
 jest.mock("../../../src/utils/asyncLocalStorage", () => ({
   getUserId: jest.fn().mockReturnValue(1),
-  runWithUserContext: jest.fn(),
+  runWithUserContext: jest.fn((_, next) => {
+    next();
+  }),
 }));
 
 export const getUserIdMock = getUserId as jest.MockedFn<typeof getUserId>;
