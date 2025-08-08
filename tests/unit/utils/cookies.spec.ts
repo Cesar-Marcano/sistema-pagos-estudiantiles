@@ -10,18 +10,15 @@ import ms from "ms";
 
 describe("CookiesUtil", () => {
   let res: Response;
-  let spies: ReturnType<typeof createMockResponse>["spies"];
 
   beforeEach(() => {
-    const mock = createMockResponse();
-    res = mock.res;
-    spies = mock.spies;
+    res = createMockResponse();
   });
 
   it("should set the cookie", () => {
     setCookie(res, "some-key", "some-value", 3600);
 
-    expect(spies.cookie).toHaveBeenCalledWith(
+    expect(res.cookie).toHaveBeenCalledWith(
       "some-key",
       "some-value",
       expect.objectContaining({
@@ -36,7 +33,7 @@ describe("CookiesUtil", () => {
   it("should set refresh token", () => {
     setRefreshTokenCookie(res, "my-token!");
 
-    expect(spies.cookie).toHaveBeenCalledWith(
+    expect(res.cookie).toHaveBeenCalledWith(
       "refreshToken",
       "my-token!",
       expect.objectContaining({
@@ -51,7 +48,7 @@ describe("CookiesUtil", () => {
   it("should delete refresh token", () => {
     deleteRefreshTokenCookie(res);
 
-    expect(spies.cookie).toHaveBeenCalledWith(
+    expect(res.cookie).toHaveBeenCalledWith(
       "refreshToken",
       "",
       expect.objectContaining({

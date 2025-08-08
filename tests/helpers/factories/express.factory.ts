@@ -1,42 +1,24 @@
 import { Request, Response } from "express";
 
-export function createMockRequest(
-  overrides: Partial<Request> = {}
-): Partial<Request> {
+export function createMockRequest(overrides: Partial<Request> = {}) {
   return {
     body: {},
     params: {},
     query: {},
     headers: {},
     ...overrides,
-  };
+  } as Request;
 }
 
-export function createMockResponse(overrides: Partial<Response> = {}): {
-  res: Response;
-  spies: {
-    status: jest.Mock;
-    json: jest.Mock;
-    send: jest.Mock;
-    end: jest.Mock;
-    cookie: jest.Mock;
-  };
-} {
-  const res: Partial<Response> = { ...overrides };
-
-  const spies = {
+export function createMockResponse(overrides: Partial<Response> = {}) {
+  const res: Partial<Response> = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
     send: jest.fn().mockReturnThis(),
     end: jest.fn().mockReturnThis(),
     cookie: jest.fn().mockReturnThis(),
+    ...overrides,
   };
 
-  res.cookie = spies.cookie;
-  res.status = spies.status;
-  res.json = spies.json;
-  res.send = spies.send;
-  res.end = spies.end;
-
-  return { res: res as Response, spies };
+  return res as unknown as Response;
 }
