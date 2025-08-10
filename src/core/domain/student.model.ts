@@ -1,5 +1,6 @@
 import { Discount } from "./discount.model";
 import { Grade, GradeWithLevels, GradeWithoutLevels } from "./grade.model";
+import { IPeriod } from "./invoice.model";
 import { Parent } from "./parent.model";
 import { User } from "./user.model";
 
@@ -15,9 +16,13 @@ interface RawStudent {
   section?: string;
   document?: string;
   status: StudentStatus;
-  
+
   grade: number | Grade;
   gradeLevel?: number | never;
+  
+  joinGrade: number | Grade;
+  joinGradeLevel?: number | never;
+  joinPeriod: IPeriod;
 
   discounts: number[] | Discount[];
 
