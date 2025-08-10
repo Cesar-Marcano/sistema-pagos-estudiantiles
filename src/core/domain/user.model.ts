@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Role } from "./role.model";
 
 export interface User {
   id: number;
