@@ -20,7 +20,7 @@ export class DeleteParentController extends Controller<null, UserPayload> {
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const parentId = parseIdParam(req);
 
-    const parent = await this.parentService.deleteParent(parentId);
+    const parent = await this.parentService.delete(parentId);
 
     res.status(200).json({ parent });
   };

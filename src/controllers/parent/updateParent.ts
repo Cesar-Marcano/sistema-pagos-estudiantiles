@@ -33,7 +33,7 @@ export class UpdateParentController extends Controller<
 
     const updateData = req.body;
 
-    const parent = await this.parentService.updateParent(parentId, updateData);
+    const parent = await this.parentService.update(parentId, updateData);
 
     res.status(200).json({ parent });
   };

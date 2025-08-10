@@ -27,7 +27,7 @@ export class CreateParentController extends Controller<
   ];
 
   public handler: Handler<CreateParentDto, UserPayload> = async (req, res) => {
-    const parent = await this.parentService.createParent({
+    const parent = await this.parentService.create({
       document: req.body.document,
       email: req.body.email ?? null,
       fullname: req.body.fullname,

@@ -10,7 +10,7 @@ export class ParentService {
     private readonly auditLogService: AuditLogsService
   ) {}
 
-  public async createParent(
+  public async create(
     data: Omit<Parent, "id" | "createdAt" | "updatedAt" | "deletedAt">
   ): Promise<Parent> {
     const newParent = await this.prisma.parent.create({
@@ -32,13 +32,13 @@ export class ParentService {
     return newParent;
   }
 
-  public async getParentById(id: number): Promise<Parent | null> {
+  public async findById(id: number): Promise<Parent | null> {
     return await this.prisma.parent.findUnique({
       where: { id, deletedAt: null },
     });
   }
 
-  public async getAllParents(params: { page: number; limit: number }) {
+  public async list(params: { page: number; limit: number }) {
     const { page, limit } = params;
     const skip = (page - 1) * limit;
 
@@ -73,7 +73,7 @@ export class ParentService {
     };
   }
 
-  public async updateParent(
+  public async update(
     id: number,
     updateData: Partial<Parent>
   ): Promise<Parent> {
@@ -101,7 +101,7 @@ export class ParentService {
     return updatedParent;
   }
 
-  public async deleteParent(id: number): Promise<Parent> {
+  public async delete(id: number): Promise<Parent> {
     const deletedParent = await this.prisma.parent.update({
       where: { id, deletedAt: null },
       data: {

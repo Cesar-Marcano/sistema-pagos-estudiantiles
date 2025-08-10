@@ -18,7 +18,7 @@ export class GetParentsController extends Controller<null, UserPayload> {
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const { page, limit } = parsePaginationQuery(req);
 
-    const result = await this.parentService.getAllParents({ page, limit });
+    const result = await this.parentService.list({ page, limit });
 
     res.status(200).json(result);
   };

@@ -19,7 +19,7 @@ export class GetParentController extends Controller<null, UserPayload> {
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const parentId = parseIdParam(req);
 
-    const result = await this.parentService.getParentById(parentId);
+    const result = await this.parentService.findById(parentId);
 
     res.status(200).json(result);
   };

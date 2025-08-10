@@ -33,7 +33,7 @@ describe("ParentService", () => {
   });
 
   it("should create a parent", async () => {
-    const parent = await parentService.createParent(sampleParentInput);
+    const parent = await parentService.create(sampleParentInput);
 
     expectAuditLogCalledWith(auditLogsService, "CREATE", "Parent", 1);
 
@@ -46,7 +46,7 @@ describe("ParentService", () => {
   });
 
   it("should retrieve a parent by id", async () => {
-    const parent = await parentService.getParentById(1);
+    const parent = await parentService.findById(1);
 
     expect(auditLogsService.registerLog).not.toHaveBeenCalled();
 
@@ -71,7 +71,7 @@ describe("ParentService", () => {
       .fn()
       .mockResolvedValue([[sampleParent], 1]);
 
-    const parents = await parentService.getAllParents({ page, limit });
+    const parents = await parentService.list({ page, limit });
 
     expect(parents.data.length).toBeGreaterThan(0);
     expect(parents.data[0]).toEqual(sampleParent);
@@ -103,7 +103,7 @@ describe("ParentService", () => {
   });
 
   it("should update a parent", async () => {
-    const parent = await parentService.updateParent(1, {
+    const parent = await parentService.update(1, {
       fullname: "Alberson Foo Bar",
     });
 
@@ -126,7 +126,7 @@ describe("ParentService", () => {
 
   it("should not update a parent", async () => {
     try {
-      await parentService.updateParent(1, {});
+      await parentService.update(1, {});
       fail("Should fail");
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
@@ -138,7 +138,7 @@ describe("ParentService", () => {
       .fn()
       .mockResolvedValue(deletedSampleParent);
 
-    const parent = await parentService.deleteParent(1);
+    const parent = await parentService.delete(1);
 
     expectAuditLogCalledWith(auditLogsService, "DELETE", "Parent", 1);
 
