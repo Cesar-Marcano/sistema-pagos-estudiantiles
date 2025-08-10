@@ -1,0 +1,101 @@
+import { Discount, PrismaClient } from "@prisma/client";
+import { CrudInput } from "../interfaces/crudInput";
+import { getUserId } from "../utils/asyncLocalStorage";
+import { AuditLogsService } from "./auditLogs.service";
+import { BadRequestError } from "../errors/badRequest.error";
+import { i18n } from "../lang/i18n";
+
+export class DiscountService {
+  constructor(
+    private readonly prisma: PrismaClient,
+    private readonly auditLogsService: AuditLogsService
+  ) {}
+
+  async create(input: CrudInput<Discount>) {
+    const userId = getUserId()!;
+
+    const discount = await this.prisma.discount.create({
+      data: {
+        ...input,
+        userId,
+      },
+    });
+
+    this.auditLogsService.registerLog({
+      action: "CREATE",
+      changes: JSON.stringify(discount),
+      entity: "Discount",
+      entityId: discount.id,
+      performedBy: userId,
+    });
+
+    return discount;
+  }
+
+  async update(id: number, input: Partial<CrudInput<Discount>>) {
+    if (Object.keys(input).length < 1) {
+      throw new BadRequestError(i18n`errors.validation.no_data`);
+    }
+
+    const userId = getUserId()!;
+
+    const discount = await this.prisma.discount.update({
+      where: {
+        id,
+        deletedAt: null,
+      },
+      data: input,
+    });
+
+    this.auditLogsService.registerLog({
+      action: "UPDATE",
+      changes: JSON.stringify(discount),
+      entity: "Discount",
+      entityId: discount.id,
+      performedBy: userId,
+    });
+
+    return discount;
+  }
+
+  async delete(id: number) {
+    const userId = getUserId()!;
+
+    const discount = await this.prisma.discount.update({
+      where: {
+        id,
+        deletedAt: null,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+
+    this.auditLogsService.registerLog({
+      action: "DELETE",
+      changes: JSON.stringify(discount),
+      entity: "Discount",
+      entityId: discount.id,
+      performedBy: userId,
+    });
+
+    return discount;
+  }
+
+  async findById(id: number) {
+    return await this.prisma.discount.findUnique({
+      where: {
+        id,
+        deletedAt: null,
+      },
+    });
+  }
+
+  async findMany() {
+    return await this.prisma.discount.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
+  }
+}
