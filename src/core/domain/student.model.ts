@@ -28,12 +28,12 @@ interface RawStudent {
 }
 
 export interface StudentWithGradeWithoutLevels extends RawStudent {
-  grade: GradeWithoutLevels;
+  grade: number | GradeWithoutLevels;
   gradeLevel?: never;
 }
 
 export interface StudentWithGradeWithLevels extends RawStudent {
-  grade: GradeWithLevels;
+  grade: number | GradeWithLevels;
   gradeLevel: number;
 }
 
