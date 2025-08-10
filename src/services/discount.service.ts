@@ -91,7 +91,7 @@ export class DiscountService {
     });
   }
 
-  async findMany() {
+  async findAll() {
     return await this.prisma.discount.findMany({
       where: {
         deletedAt: null,
