@@ -28,7 +28,7 @@ export class CreateGradeController extends Controller<
   ];
 
   public handler: Handler<CreateGradeDto, UserPayload> = async (req, res) => {
-    const grade = await this.gradeService.createGrade({
+    const grade = await this.gradeService.create({
       name: req.body.name,
       description: req.body.description!,
       hasLevels: req.body.hasLevels,

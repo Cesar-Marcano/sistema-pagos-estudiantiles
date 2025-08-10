@@ -15,7 +15,7 @@ export class GetGradesController extends Controller<null, UserPayload> {
   public middlewares: Middleware[] = [authGuard(this.authService, "any")];
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
-    const grades = await this.gradeService.getGrades();
+    const grades = await this.gradeService.findAll();
 
     res.status(200).json({ grades });
   };

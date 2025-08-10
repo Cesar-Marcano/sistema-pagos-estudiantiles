@@ -30,7 +30,7 @@ export class UpdateGradeController extends Controller<
 
   public handler: Handler<UpdateGradeDto, UserPayload> = async (req, res) => {
     const id = parseIdParam(req);
-    const grade = await this.gradeService.updateGrade(id, {
+    const grade = await this.gradeService.update(id, {
       name: req.body.name,
       description: req.body.description!,
       hasLevels: req.body.hasLevels,

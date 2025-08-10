@@ -10,7 +10,7 @@ export class GradeService {
     private readonly auditLogsService: AuditLogsService
   ) {}
 
-  public async createGrade(
+  public async create(
     grade: Omit<Grade, "id" | "createdAt" | "updatedAt" | "deletedAt">
   ) {
     const newGrade = await this.prisma.grade.create({
@@ -30,7 +30,7 @@ export class GradeService {
     return newGrade;
   }
 
-  public async getGrade(gradeId: number) {
+  public async findById(gradeId: number) {
     return await this.prisma.grade.findUnique({
       where: {
         id: gradeId,
@@ -39,7 +39,7 @@ export class GradeService {
     });
   }
 
-  public async getGrades() {
+  public async findAll() {
     return await this.prisma.grade.findMany({
       where: {
         deletedAt: null,
@@ -47,7 +47,7 @@ export class GradeService {
     });
   }
 
-  public async updateGrade(
+  public async update(
     gradeId: number,
     updateData: Partial<
       Omit<Grade, "id" | "createdAt" | "updatedAt" | "deletedAt">
@@ -78,7 +78,7 @@ export class GradeService {
     return updatedGrade;
   }
 
-  public async deleteGrade(gradeId: number) {
+  public async delete(gradeId: number) {
     const deletedGrade = await this.prisma.grade.update({
       where: {
         id: gradeId,

@@ -32,7 +32,7 @@ describe("GradeService", () => {
   });
 
   it("should create a new grade", async () => {
-    const grade = await gradeService.createGrade(sampleGradeInput);
+    const grade = await gradeService.create(sampleGradeInput);
 
     expectAuditLogCalledWith(auditLogsService, "CREATE", "Grade", 1);
 
@@ -44,7 +44,7 @@ describe("GradeService", () => {
   });
 
   it("should retrieve a grade", async () => {
-    const grade = await gradeService.getGrade(1);
+    const grade = await gradeService.findById(1);
 
     expect(auditLogsService.registerLog).not.toHaveBeenCalled();
 
@@ -61,7 +61,7 @@ describe("GradeService", () => {
   });
 
   it("should retrieve all grades", async () => {
-    const grades = await gradeService.getGrades();
+    const grades = await gradeService.findAll();
 
     expect(auditLogsService.registerLog).not.toHaveBeenCalled();
 
@@ -80,7 +80,7 @@ describe("GradeService", () => {
   it("should update a grade", async () => {
     const updateData = { name: "Foo Bar" };
 
-    const grade = await gradeService.updateGrade(1, updateData);
+    const grade = await gradeService.update(1, updateData);
 
     expectAuditLogCalledWith(auditLogsService, "UPDATE", "Grade", 1);
 
@@ -99,7 +99,7 @@ describe("GradeService", () => {
 
   it("should fail with no update data for a grade", async () => {
     try {
-      await gradeService.updateGrade(1, {});
+      await gradeService.update(1, {});
 
       fail("Should have thrown");
     } catch (error) {
@@ -112,7 +112,7 @@ describe("GradeService", () => {
       .fn()
       .mockResolvedValue(deletedSampleGrade);
 
-    const grade = await gradeService.deleteGrade(1);
+    const grade = await gradeService.delete(1);
 
     expectAuditLogCalledWith(auditLogsService, "DELETE", "Grade", 1);
 
