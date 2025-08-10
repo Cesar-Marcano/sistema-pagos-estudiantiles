@@ -15,12 +15,12 @@ interface RawGrade {
   deletedAt: Date | null;
 }
 
-interface GradeWithLevels extends RawGrade {
+export interface GradeWithLevels extends RawGrade {
   hasLevels: true;
   maxLevel: number;
 }
 
-interface GradeWithoutLevels extends RawGrade {
+export interface GradeWithoutLevels extends RawGrade {
   hasLevels: false;
   maxLevel?: never;
 }
