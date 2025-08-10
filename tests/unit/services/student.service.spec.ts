@@ -37,7 +37,7 @@ describe("StudentService", () => {
   });
 
   it("should create a new student", async () => {
-    const student = await studentService.createStudent(sampleStudentInput);
+    const student = await studentService.create(sampleStudentInput);
 
     expectAuditLogCalledWith(auditLogsService, "CREATE", "Student", 1);
 
@@ -50,7 +50,7 @@ describe("StudentService", () => {
         .fn()
         .mockResolvedValue(null);
 
-      await studentService.createStudent(sampleStudentInput);
+      await studentService.create(sampleStudentInput);
       fail("Should fail");
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestError);
@@ -58,7 +58,7 @@ describe("StudentService", () => {
   });
 
   it("should retrieve a student", async () => {
-    const student = await studentService.getStudentById(1);
+    const student = await studentService.findById(1);
 
     expect(student).toEqual(sampleStudent);
 
@@ -83,7 +83,7 @@ describe("StudentService", () => {
       .fn()
       .mockResolvedValue([[sampleStudent], 1]);
 
-    const students = await studentService.getAllStudents({ page, limit });
+    const students = await studentService.list({ page, limit });
 
     expect(students.data.length).toBeGreaterThan(0);
     expect(students.data[0]).toEqual(sampleStudent);
@@ -115,7 +115,7 @@ describe("StudentService", () => {
   });
 
   it("should update a student", async () => {
-      const student = await studentService.updateStudent(1, {
+      const student = await studentService.update(1, {
         fullname: "Andres Foo Bar",
       });
   
@@ -138,7 +138,7 @@ describe("StudentService", () => {
   
     it("should not update a student", async () => {
       try {
-        await studentService.updateStudent(1, {});
+        await studentService.update(1, {});
         fail("Should fail");
       } catch (error) {
         expect(error).toBeInstanceOf(BadRequestError);
@@ -150,7 +150,7 @@ describe("StudentService", () => {
         .fn()
         .mockResolvedValue(deletedSampleStudent);
   
-      const student = await studentService.deleteStudent(1);
+      const student = await studentService.delete(1);
   
       expectAuditLogCalledWith(auditLogsService, "DELETE", "Student", 1);
   

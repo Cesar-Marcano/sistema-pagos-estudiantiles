@@ -17,7 +17,7 @@ export class GetStudentController extends Controller<null, UserPayload> {
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const id = parseIdParam(req);
-    const student = await this.studentService.getStudentById(id);
+    const student = await this.studentService.findById(id);
 
     res.status(200).json({ student });
   };

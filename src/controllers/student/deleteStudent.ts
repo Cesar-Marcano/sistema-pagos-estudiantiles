@@ -18,7 +18,7 @@ export class DeleteStudentController extends Controller<null, UserPayload> {
 
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const id = parseIdParam(req);
-    const student = await this.studentService.deleteStudent(id);
+    const student = await this.studentService.delete(id);
 
     res.status(200).json({ student });
   };

@@ -18,7 +18,7 @@ export class GetStudentsController extends Controller<null, UserPayload> {
   public handler: Handler<null, UserPayload> = async (req, res) => {
     const { page, limit } = parsePaginationQuery(req);
 
-    const result = await this.studentService.getAllStudents({ page, limit });
+    const result = await this.studentService.list({ page, limit });
 
     res.status(200).json(result);
   };

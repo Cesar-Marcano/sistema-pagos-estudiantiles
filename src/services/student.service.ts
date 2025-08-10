@@ -10,7 +10,7 @@ export class StudentService {
     private readonly auditLogService: AuditLogsService
   ) {}
 
-  public async createStudent(
+  public async create(
     data: Omit<Student, "id" | "createdAt" | "updatedAt" | "deletedAt">
   ): Promise<Student> {
     const grade = await this.prisma.grade.findUnique({
@@ -46,13 +46,13 @@ export class StudentService {
     return newStudent;
   }
 
-  public async getStudentById(id: number): Promise<Student | null> {
+  public async findById(id: number): Promise<Student | null> {
     return await this.prisma.student.findUnique({
       where: { id, deletedAt: null },
     });
   }
 
-  public async getAllStudents(params: { page: number; limit: number }) {
+  public async list(params: { page: number; limit: number }) {
     const { page, limit } = params;
     const skip = (page - 1) * limit;
 
@@ -85,7 +85,7 @@ export class StudentService {
     };
   }
 
-  public async updateStudent(
+  public async update(
     id: number,
     updateData: Partial<Student>
   ): Promise<Omit<Student, "id" | "createdAt" | "updatedAt" | "deletedAt">> {
@@ -94,7 +94,7 @@ export class StudentService {
     }
 
     if (updateData.gradeLevel !== undefined && updateData.gradeLevel !== null) {
-      const student = await this.getStudentById(id);
+      const student = await this.findById(id);
 
       if (!student) {
         throw new BadRequestError(i18n`errors.validation.student.not_found`);
@@ -135,7 +135,7 @@ export class StudentService {
     return updatedStudent;
   }
 
-  public async deleteStudent(id: number): Promise<Student> {
+  public async delete(id: number): Promise<Student> {
     const deletedStudent = await this.prisma.student.update({
       where: { id, deletedAt: null },
       data: { deletedAt: new Date() },
@@ -154,14 +154,14 @@ export class StudentService {
     return deletedStudent;
   }
 
-  public async getStudentsByParentId(parentId: number): Promise<Student[]> {
+  public async findStudentsByParentId(parentId: number): Promise<Student[]> {
     return await this.prisma.student.findMany({
       where: { parentId, deletedAt: null },
       orderBy: { createdAt: "desc" },
     });
   }
 
-  public async getStudentsByGradeId(gradeId: number): Promise<Student[]> {
+  public async findStudentsByGradeId(gradeId: number): Promise<Student[]> {
     return await this.prisma.student.findMany({
       where: { gradeId, deletedAt: null },
       orderBy: { fullname: "asc" },

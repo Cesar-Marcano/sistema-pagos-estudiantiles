@@ -27,7 +27,7 @@ export class CreateStudentController extends Controller<
   ];
 
   public handler: Handler<CreateStudentDto, UserPayload> = async (req, res) => {
-    const parent = await this.studentService.createStudent({
+    const parent = await this.studentService.create({
       birthday: new Date(req.body.birthday),
       document: req.body.document!,
       fullname: req.body.fullname,

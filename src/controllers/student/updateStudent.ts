@@ -31,7 +31,7 @@ export class UpdateStudentController extends Controller<
   public handler: Handler<UpdateStudentDto, UserPayload> = async (req, res) => {
     const id = parseIdParam(req);
 
-    const student = await this.studentService.updateStudent(id, {
+    const student = await this.studentService.update(id, {
       birthday: req.body.birthday ? new Date(req.body.birthday) : undefined,
       document: req.body.document,
       fullname: req.body.fullname,
