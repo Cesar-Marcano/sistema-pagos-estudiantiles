@@ -1,0 +1,1 @@
+export type CrudInput<T> = Omit<T, "id" | "createdAt" | "updatedAt" | "deletedAt" | "userId">;
