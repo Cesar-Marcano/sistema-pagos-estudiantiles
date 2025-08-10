@@ -3,20 +3,20 @@ import { PrismaClient } from "@prisma/client";
 import { ParentService } from "../../../src/services/parent.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { AuditLogService } from "../../../src/services/auditLog.service";
-import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
+import { auditLogServiceMock } from "../../helpers/mocks/auditLogService.mock";
 import {
   deletedSampleParent,
   sampleParent,
   sampleParentInput,
   updatedSampleParent,
 } from "../../helpers/data/parent.data";
-import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLog.assertions";
 import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
 
 describe("ParentService", () => {
   let prisma: PrismaClient;
-  let auditLogsService: AuditLogService;
+  let auditLogService: AuditLogService;
   let parentService: ParentService;
 
   beforeEach(() => {
@@ -28,14 +28,14 @@ describe("ParentService", () => {
         update: jest.fn().mockResolvedValue(updatedSampleParent),
       },
     });
-    auditLogsService = auditLogsServiceMock();
-    parentService = new ParentService(prisma, auditLogsService);
+    auditLogService = auditLogServiceMock();
+    parentService = new ParentService(prisma, auditLogService);
   });
 
   it("should create a parent", async () => {
     const parent = await parentService.create(sampleParentInput);
 
-    expectAuditLogCalledWith(auditLogsService, "CREATE", "Parent", 1);
+    expectAuditLogCalledWith(auditLogService, "CREATE", "Parent", 1);
 
     expect(parent).toEqual(sampleParent);
     expect(prisma.parent.create).toHaveBeenCalledWith(
@@ -48,7 +48,7 @@ describe("ParentService", () => {
   it("should retrieve a parent by id", async () => {
     const parent = await parentService.findById(1);
 
-    expect(auditLogsService.register).not.toHaveBeenCalled();
+    expect(auditLogService.register).not.toHaveBeenCalled();
 
     expect(parent).toEqual(sampleParent);
 
@@ -107,7 +107,7 @@ describe("ParentService", () => {
       fullname: "Alberson Foo Bar",
     });
 
-    expectAuditLogCalledWith(auditLogsService, "UPDATE", "Parent", 1);
+    expectAuditLogCalledWith(auditLogService, "UPDATE", "Parent", 1);
 
     expect(parent).toEqual(updatedSampleParent);
 
@@ -140,7 +140,7 @@ describe("ParentService", () => {
 
     const parent = await parentService.delete(1);
 
-    expectAuditLogCalledWith(auditLogsService, "DELETE", "Parent", 1);
+    expectAuditLogCalledWith(auditLogService, "DELETE", "Parent", 1);
 
     expect(parent).toEqual(
       expect.objectContaining({

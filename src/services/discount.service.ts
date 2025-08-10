@@ -8,7 +8,7 @@ import { i18n } from "../lang/i18n";
 export class DiscountService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly auditLogsService: AuditLogService
+    private readonly auditLogService: AuditLogService
   ) {}
 
   async create(input: CrudInput<Discount>) {
@@ -21,7 +21,7 @@ export class DiscountService {
       },
     });
 
-    this.auditLogsService.register({
+    this.auditLogService.register({
       action: "CREATE",
       changes: JSON.stringify(discount),
       entity: "Discount",
@@ -47,7 +47,7 @@ export class DiscountService {
       data: input,
     });
 
-    this.auditLogsService.register({
+    this.auditLogService.register({
       action: "UPDATE",
       changes: JSON.stringify(discount),
       entity: "Discount",
@@ -71,7 +71,7 @@ export class DiscountService {
       },
     });
 
-    this.auditLogsService.register({
+    this.auditLogService.register({
       action: "DELETE",
       changes: JSON.stringify(discount),
       entity: "Discount",
@@ -118,7 +118,7 @@ export class DiscountService {
       },
     });
 
-    await this.auditLogsService.register({
+    await this.auditLogService.register({
       action: "UPDATE",
       changes: JSON.stringify({ studentId, discountId }),
       entity: "Student",

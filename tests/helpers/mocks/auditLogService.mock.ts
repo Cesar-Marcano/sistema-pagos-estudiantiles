@@ -1,6 +1,6 @@
 import { AuditLogService } from "../../../src/services/auditLog.service";
 
-export const auditLogsServiceMock = (): AuditLogService =>
+export const auditLogServiceMock = (): AuditLogService =>
   ({
-    registerLog: jest.fn(),
+    register: jest.fn(),
   } as unknown as AuditLogService);

@@ -1,12 +1,12 @@
 import { AuditLogService } from "../../../src/services/auditLog.service";
 
 export function expectAuditLogCalledWith(
-  auditLogsService: AuditLogService,
+  auditLogService: AuditLogService,
   action: string,
   entity: string,
   entityId: number
 ) {
-  expect(auditLogsService.register).toHaveBeenCalledWith(
+  expect(auditLogService.register).toHaveBeenCalledWith(
     expect.objectContaining({
       action,
       entity,

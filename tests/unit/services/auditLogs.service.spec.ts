@@ -4,11 +4,11 @@ import { AuditLogService } from "../../../src/services/auditLog.service";
 
 describe("AuditLogsService", () => {
   let prisma: PrismaClient;
-  let auditLogsService: AuditLogService;
+  let auditLogService: AuditLogService;
 
   beforeAll(() => {
     prisma = createMockPrisma(["auditLog"]);
-    auditLogsService = new AuditLogService(prisma);
+    auditLogService = new AuditLogService(prisma);
   });
 
   it("should register an audit log", () => {
@@ -20,7 +20,7 @@ describe("AuditLogsService", () => {
       performedBy: 0,
     };
 
-    auditLogsService.register(data);
+    auditLogService.register(data);
 
     expect(prisma.auditLog.create).toHaveBeenCalledWith({
       data,
@@ -30,7 +30,7 @@ describe("AuditLogsService", () => {
   it("should get audit logs", () => {
     const page = 1;
     const pageSize = 10;
-    auditLogsService.list(page, pageSize);
+    auditLogService.list(page, pageSize);
 
     const skip = (page - 1) * pageSize;
     const take = pageSize;
@@ -45,7 +45,7 @@ describe("AuditLogsService", () => {
   });
 
   it("should get an audit log", () => {
-    auditLogsService.getLog(1);
+    auditLogService.getLog(1);
 
     expect(prisma.auditLog.findUnique).toHaveBeenCalledWith({
       where: {

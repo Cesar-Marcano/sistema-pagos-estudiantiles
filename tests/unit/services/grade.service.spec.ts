@@ -9,14 +9,14 @@ import {
   sampleGradeInput,
   updatedSampleGrade,
 } from "../../helpers/data/grade.data";
-import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLog.assertions";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
-import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
+import { auditLogServiceMock } from "../../helpers/mocks/auditLogService.mock";
 
 describe("GradeService", () => {
   let prisma: PrismaClient;
   let gradeService: GradeService;
-  let auditLogsService: AuditLogService;
+  let auditLogService: AuditLogService;
 
   beforeEach(() => {
     prisma = createMockPrisma(["grade"], {
@@ -27,14 +27,14 @@ describe("GradeService", () => {
         update: jest.fn().mockResolvedValue(updatedSampleGrade),
       },
     });
-    auditLogsService = auditLogsServiceMock();
-    gradeService = new GradeService(prisma, auditLogsService);
+    auditLogService = auditLogServiceMock();
+    gradeService = new GradeService(prisma, auditLogService);
   });
 
   it("should create a new grade", async () => {
     const grade = await gradeService.create(sampleGradeInput);
 
-    expectAuditLogCalledWith(auditLogsService, "CREATE", "Grade", 1);
+    expectAuditLogCalledWith(auditLogService, "CREATE", "Grade", 1);
 
     expect(grade).toBe(sampleGrade);
 
@@ -46,7 +46,7 @@ describe("GradeService", () => {
   it("should retrieve a grade", async () => {
     const grade = await gradeService.findById(1);
 
-    expect(auditLogsService.register).not.toHaveBeenCalled();
+    expect(auditLogService.register).not.toHaveBeenCalled();
 
     expect(prisma.grade.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -63,7 +63,7 @@ describe("GradeService", () => {
   it("should retrieve all grades", async () => {
     const grades = await gradeService.findAll();
 
-    expect(auditLogsService.register).not.toHaveBeenCalled();
+    expect(auditLogService.register).not.toHaveBeenCalled();
 
     expect(prisma.grade.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -82,7 +82,7 @@ describe("GradeService", () => {
 
     const grade = await gradeService.update(1, updateData);
 
-    expectAuditLogCalledWith(auditLogsService, "UPDATE", "Grade", 1);
+    expectAuditLogCalledWith(auditLogService, "UPDATE", "Grade", 1);
 
     expect(prisma.grade.update).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -114,7 +114,7 @@ describe("GradeService", () => {
 
     const grade = await gradeService.delete(1);
 
-    expectAuditLogCalledWith(auditLogsService, "DELETE", "Grade", 1);
+    expectAuditLogCalledWith(auditLogService, "DELETE", "Grade", 1);
 
     expect(prisma.grade.update).toHaveBeenCalledWith(
       expect.objectContaining({

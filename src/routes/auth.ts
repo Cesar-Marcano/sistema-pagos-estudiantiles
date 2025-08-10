@@ -16,9 +16,9 @@ import { AuditLogService } from "../services/auditLog.service";
 export const authRouter = Router();
 
 // services
-const auditLogsService = new AuditLogService(prisma);
+const auditLogService = new AuditLogService(prisma);
 
-const userService = new UserService(prisma, auditLogsService);
+const userService = new UserService(prisma, auditLogService);
 const authService = new AuthService(prisma);
 
 // controllers

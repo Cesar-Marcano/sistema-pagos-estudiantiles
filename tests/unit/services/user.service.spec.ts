@@ -3,15 +3,15 @@ import { bcryptMock } from "../../helpers/mocks/bcrypt.mock";
 import { PrismaClient } from "@prisma/client";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { UserService } from "../../../src/services/user.service";
-import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
+import { auditLogServiceMock } from "../../helpers/mocks/auditLogService.mock";
 import { sampleUser, sampleUserInput } from "../../helpers/data/user.data";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
-import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLog.assertions";
 import { AuditLogService } from "../../../src/services/auditLog.service";
 
 describe("UserService", () => {
   let prisma: PrismaClient;
-  let auditLogsService: AuditLogService;
+  let auditLogService: AuditLogService;
   let userService: UserService;
 
   beforeEach(() => {
@@ -22,14 +22,14 @@ describe("UserService", () => {
         count: jest.fn().mockResolvedValue(0),
       },
     });
-    auditLogsService = auditLogsServiceMock();
-    userService = new UserService(prisma, auditLogsService);
+    auditLogService = auditLogServiceMock();
+    userService = new UserService(prisma, auditLogService);
   });
 
   it("should create a user", async () => {
     const user = await userService.createUser(sampleUserInput);
 
-    expectAuditLogCalledWith(auditLogsService, "CREATE", "User", 1);
+    expectAuditLogCalledWith(auditLogService, "CREATE", "User", 1);
     expect(user).toEqual(
       expect.objectContaining({
         id: sampleUser.id,

@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { StudentService } from "../../../src/services/student.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { AuditLogService } from "../../../src/services/auditLog.service";
-import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
+import { auditLogServiceMock } from "../../helpers/mocks/auditLogService.mock";
 import {
   deletedSampleStudent,
   sampleStudent,
@@ -12,13 +12,13 @@ import {
 } from "../../helpers/data/student.data";
 import { sampleGrade } from "../../helpers/data/grade.data";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
-import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
+import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLog.assertions";
 import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
 
 describe("StudentService", () => {
   let prisma: PrismaClient;
   let studentService: StudentService;
-  let auditLogsService: AuditLogService;
+  let auditLogService: AuditLogService;
 
   beforeEach(() => {
     prisma = createMockPrisma(["student", "grade"], {
@@ -32,14 +32,14 @@ describe("StudentService", () => {
         update: jest.fn().mockResolvedValue(updatedSampleStudent),
       },
     });
-    auditLogsService = auditLogsServiceMock();
-    studentService = new StudentService(prisma, auditLogsService);
+    auditLogService = auditLogServiceMock();
+    studentService = new StudentService(prisma, auditLogService);
   });
 
   it("should create a new student", async () => {
     const student = await studentService.create(sampleStudentInput);
 
-    expectAuditLogCalledWith(auditLogsService, "CREATE", "Student", 1);
+    expectAuditLogCalledWith(auditLogService, "CREATE", "Student", 1);
 
     expect(student).toEqual(sampleStudent);
   });
@@ -62,7 +62,7 @@ describe("StudentService", () => {
 
     expect(student).toEqual(sampleStudent);
 
-    expect(auditLogsService.register).not.toHaveBeenCalled();
+    expect(auditLogService.register).not.toHaveBeenCalled();
 
     expect(prisma.student.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -119,7 +119,7 @@ describe("StudentService", () => {
         fullname: "Andres Foo Bar",
       });
   
-      expectAuditLogCalledWith(auditLogsService, "UPDATE", "Student", 1);
+      expectAuditLogCalledWith(auditLogService, "UPDATE", "Student", 1);
   
       expect(student).toEqual(updatedSampleStudent);
   
@@ -152,7 +152,7 @@ describe("StudentService", () => {
   
       const student = await studentService.delete(1);
   
-      expectAuditLogCalledWith(auditLogsService, "DELETE", "Student", 1);
+      expectAuditLogCalledWith(auditLogService, "DELETE", "Student", 1);
   
       expect(student).toEqual(
         expect.objectContaining({

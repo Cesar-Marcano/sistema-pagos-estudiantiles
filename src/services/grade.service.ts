@@ -7,7 +7,7 @@ import { i18n } from "../lang/i18n";
 export class GradeService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly auditLogsService: AuditLogService
+    private readonly auditLogService: AuditLogService
   ) {}
 
   public async create(
@@ -19,7 +19,7 @@ export class GradeService {
 
     const userId = getUserId();
 
-    await this.auditLogsService.register({
+    await this.auditLogService.register({
       action: "CREATE",
       changes: JSON.stringify(newGrade),
       entity: "Grade",
@@ -67,7 +67,7 @@ export class GradeService {
 
     const userId = getUserId();
 
-    await this.auditLogsService.register({
+    await this.auditLogService.register({
       action: "UPDATE",
       changes: JSON.stringify(updateData),
       entity: "Grade",
@@ -91,7 +91,7 @@ export class GradeService {
 
     const userId = getUserId();
 
-    await this.auditLogsService.register({
+    await this.auditLogService.register({
       action: "DELETE",
       changes: JSON.stringify(deletedGrade),
       entity: "Grade",
