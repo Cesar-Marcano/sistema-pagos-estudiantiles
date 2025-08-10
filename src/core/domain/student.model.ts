@@ -1,3 +1,4 @@
+import { Discount } from "./discount";
 import { Grade, GradeWithLevels, GradeWithoutLevels } from "./grade.model";
 import { Parent } from "./parent.model";
 import { User } from "./user.model";
@@ -17,6 +18,8 @@ interface RawStudent {
   
   grade: number | Grade;
   gradeLevel?: number | never;
+
+  discounts: number[] | Discount[];
 
   parent: number | Parent;
 
