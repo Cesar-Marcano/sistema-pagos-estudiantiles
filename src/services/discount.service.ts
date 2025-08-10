@@ -98,4 +98,34 @@ export class DiscountService {
       },
     });
   }
+
+  async applyDiscount(discountId: number, studentId: number) {
+    if (!(await this.findById(discountId))) {
+      throw new BadRequestError(i18n`errors.prisma.record_not_found.message`);
+    }
+
+    const student = await this.prisma.student.update({
+      where: {
+        deletedAt: null,
+        id: studentId,
+      },
+      data: {
+        discounts: {
+          connect: {
+            id: discountId,
+          },
+        },
+      },
+    });
+
+    await this.auditLogsService.registerLog({
+      action: "UPDATE",
+      changes: JSON.stringify({ studentId, discountId }),
+      entity: "Student",
+      entityId: studentId,
+      performedBy: getUserId()!,
+    });
+
+    return student;
+  }
 }
