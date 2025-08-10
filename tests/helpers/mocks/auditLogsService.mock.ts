@@ -1,6 +1,6 @@
-import { AuditLogsService } from "../../../src/services/auditLogs.service";
+import { AuditLogService } from "../../../src/services/auditLog.service";
 
-export const auditLogsServiceMock = (): AuditLogsService =>
+export const auditLogsServiceMock = (): AuditLogService =>
   ({
     registerLog: jest.fn(),
-  } as unknown as AuditLogsService);
+  } as unknown as AuditLogService);

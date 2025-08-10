@@ -1,14 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
-import { AuditLogsService } from "../../../src/services/auditLogs.service";
+import { AuditLogService } from "../../../src/services/auditLog.service";
 
 describe("AuditLogsService", () => {
   let prisma: PrismaClient;
-  let auditLogsService: AuditLogsService;
+  let auditLogsService: AuditLogService;
 
   beforeAll(() => {
     prisma = createMockPrisma(["auditLog"]);
-    auditLogsService = new AuditLogsService(prisma);
+    auditLogsService = new AuditLogService(prisma);
   });
 
   it("should register an audit log", () => {
@@ -20,7 +20,7 @@ describe("AuditLogsService", () => {
       performedBy: 0,
     };
 
-    auditLogsService.registerLog(data);
+    auditLogsService.register(data);
 
     expect(prisma.auditLog.create).toHaveBeenCalledWith({
       data,
@@ -30,7 +30,7 @@ describe("AuditLogsService", () => {
   it("should get audit logs", () => {
     const page = 1;
     const pageSize = 10;
-    auditLogsService.getLogs(page, pageSize);
+    auditLogsService.list(page, pageSize);
 
     const skip = (page - 1) * pageSize;
     const take = pageSize;

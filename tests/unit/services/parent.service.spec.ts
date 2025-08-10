@@ -2,7 +2,7 @@ import "../../helpers/mocks/asyncLocalStorage.mock";
 import { PrismaClient } from "@prisma/client";
 import { ParentService } from "../../../src/services/parent.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
-import { AuditLogsService } from "../../../src/services/auditLogs.service";
+import { AuditLogService } from "../../../src/services/auditLog.service";
 import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
 import {
   deletedSampleParent,
@@ -16,7 +16,7 @@ import { BadRequestError } from "../../../src/errors/badRequest.error";
 
 describe("ParentService", () => {
   let prisma: PrismaClient;
-  let auditLogsService: AuditLogsService;
+  let auditLogsService: AuditLogService;
   let parentService: ParentService;
 
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe("ParentService", () => {
   it("should retrieve a parent by id", async () => {
     const parent = await parentService.findById(1);
 
-    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+    expect(auditLogsService.register).not.toHaveBeenCalled();
 
     expect(parent).toEqual(sampleParent);
 

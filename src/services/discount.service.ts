@@ -1,14 +1,14 @@
 import { Discount, PrismaClient } from "@prisma/client";
 import { CrudInput } from "../interfaces/crudInput";
 import { getUserId } from "../utils/asyncLocalStorage";
-import { AuditLogsService } from "./auditLogs.service";
+import { AuditLogService } from "./auditLog.service";
 import { BadRequestError } from "../errors/badRequest.error";
 import { i18n } from "../lang/i18n";
 
 export class DiscountService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly auditLogsService: AuditLogsService
+    private readonly auditLogsService: AuditLogService
   ) {}
 
   async create(input: CrudInput<Discount>) {
@@ -21,7 +21,7 @@ export class DiscountService {
       },
     });
 
-    this.auditLogsService.registerLog({
+    this.auditLogsService.register({
       action: "CREATE",
       changes: JSON.stringify(discount),
       entity: "Discount",
@@ -47,7 +47,7 @@ export class DiscountService {
       data: input,
     });
 
-    this.auditLogsService.registerLog({
+    this.auditLogsService.register({
       action: "UPDATE",
       changes: JSON.stringify(discount),
       entity: "Discount",
@@ -71,7 +71,7 @@ export class DiscountService {
       },
     });
 
-    this.auditLogsService.registerLog({
+    this.auditLogsService.register({
       action: "DELETE",
       changes: JSON.stringify(discount),
       entity: "Discount",
@@ -118,7 +118,7 @@ export class DiscountService {
       },
     });
 
-    await this.auditLogsService.registerLog({
+    await this.auditLogsService.register({
       action: "UPDATE",
       changes: JSON.stringify({ studentId, discountId }),
       entity: "Student",

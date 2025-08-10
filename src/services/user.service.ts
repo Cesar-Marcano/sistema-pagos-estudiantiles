@@ -5,13 +5,13 @@ import bcrypt from "bcryptjs";
 import { CreateUserSchema } from "../dtos/users/createUser.dto";
 import { BadRequestError } from "../errors/badRequest.error";
 import { i18n } from "../lang/i18n";
-import { AuditLogsService } from "./auditLogs.service";
+import { AuditLogService } from "./auditLog.service";
 import { getUserId } from "../utils/asyncLocalStorage";
 
 export class UserService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly auditLogService: AuditLogsService
+    private readonly auditLogService: AuditLogService
   ) {}
 
   private async hashPassword(password: string) {
@@ -31,7 +31,7 @@ export class UserService {
       },
     });
 
-    this.auditLogService.registerLog({
+    this.auditLogService.register({
       action: "CREATE",
       entity: "User",
       changes: JSON.stringify({ ...newUser, password: undefined }),

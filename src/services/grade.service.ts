@@ -1,5 +1,5 @@
 import { Grade, PrismaClient } from "@prisma/client";
-import { AuditLogsService } from "./auditLogs.service";
+import { AuditLogService } from "./auditLog.service";
 import { getUserId } from "../utils/asyncLocalStorage";
 import { BadRequestError } from "../errors/badRequest.error";
 import { i18n } from "../lang/i18n";
@@ -7,7 +7,7 @@ import { i18n } from "../lang/i18n";
 export class GradeService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly auditLogsService: AuditLogsService
+    private readonly auditLogsService: AuditLogService
   ) {}
 
   public async create(
@@ -19,7 +19,7 @@ export class GradeService {
 
     const userId = getUserId();
 
-    await this.auditLogsService.registerLog({
+    await this.auditLogsService.register({
       action: "CREATE",
       changes: JSON.stringify(newGrade),
       entity: "Grade",
@@ -67,7 +67,7 @@ export class GradeService {
 
     const userId = getUserId();
 
-    await this.auditLogsService.registerLog({
+    await this.auditLogsService.register({
       action: "UPDATE",
       changes: JSON.stringify(updateData),
       entity: "Grade",
@@ -91,7 +91,7 @@ export class GradeService {
 
     const userId = getUserId();
 
-    await this.auditLogsService.registerLog({
+    await this.auditLogsService.register({
       action: "DELETE",
       changes: JSON.stringify(deletedGrade),
       entity: "Grade",

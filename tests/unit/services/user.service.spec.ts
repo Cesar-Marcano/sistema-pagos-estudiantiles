@@ -7,11 +7,11 @@ import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock"
 import { sampleUser, sampleUserInput } from "../../helpers/data/user.data";
 import { BadRequestError } from "../../../src/errors/badRequest.error";
 import { expectAuditLogCalledWith } from "../../helpers/assertions/auditLogs.assertions";
-import { AuditLogsService } from "../../../src/services/auditLogs.service";
+import { AuditLogService } from "../../../src/services/auditLog.service";
 
 describe("UserService", () => {
   let prisma: PrismaClient;
-  let auditLogsService: AuditLogsService;
+  let auditLogsService: AuditLogService;
   let userService: UserService;
 
   beforeEach(() => {

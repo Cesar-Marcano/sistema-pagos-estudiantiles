@@ -2,7 +2,7 @@ import "../../helpers/mocks/asyncLocalStorage.mock";
 import { PrismaClient } from "@prisma/client";
 import { GradeService } from "../../../src/services/grade.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
-import { AuditLogsService } from "../../../src/services/auditLogs.service";
+import { AuditLogService } from "../../../src/services/auditLog.service";
 import {
   deletedSampleGrade,
   sampleGrade,
@@ -16,7 +16,7 @@ import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock"
 describe("GradeService", () => {
   let prisma: PrismaClient;
   let gradeService: GradeService;
-  let auditLogsService: AuditLogsService;
+  let auditLogsService: AuditLogService;
 
   beforeEach(() => {
     prisma = createMockPrisma(["grade"], {
@@ -46,7 +46,7 @@ describe("GradeService", () => {
   it("should retrieve a grade", async () => {
     const grade = await gradeService.findById(1);
 
-    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+    expect(auditLogsService.register).not.toHaveBeenCalled();
 
     expect(prisma.grade.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -63,7 +63,7 @@ describe("GradeService", () => {
   it("should retrieve all grades", async () => {
     const grades = await gradeService.findAll();
 
-    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+    expect(auditLogsService.register).not.toHaveBeenCalled();
 
     expect(prisma.grade.findMany).toHaveBeenCalledWith(
       expect.objectContaining({

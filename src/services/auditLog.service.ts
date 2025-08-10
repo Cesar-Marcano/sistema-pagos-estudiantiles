@@ -1,15 +1,15 @@
 import { AuditLog, PrismaClient } from "@prisma/client";
 
-export class AuditLogsService {
+export class AuditLogService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  public async registerLog(data: Omit<AuditLog, "createdAt" | "id">) {
+  public async register(data: Omit<AuditLog, "createdAt" | "id">) {
     return await this.prisma.auditLog.create({
       data,
     });
   }
 
-  public async getLogs(page: number = 1, pageSize: number = 10) {
+  public async list(page: number = 1, pageSize: number = 10) {
     const skip = (page - 1) * pageSize;
     const take = pageSize;
 

@@ -8,12 +8,12 @@ import { UpdateParentController } from "../controllers/parent/updateParent";
 import { DeleteParentController } from "../controllers/parent/deleteParent";
 import { GetParentsController } from "../controllers/parent/getParents";
 import { GetParentController } from "../controllers/parent/getParent";
-import { AuditLogsService } from "../services/auditLogs.service";
+import { AuditLogService } from "../services/auditLog.service";
 
 export const parentRouter = Router();
 
 // services
-const auditLogService = new AuditLogsService(prisma)
+const auditLogService = new AuditLogService(prisma)
 
 const parentService = new ParentService(prisma, auditLogService);
 const authService = new AuthService(prisma);

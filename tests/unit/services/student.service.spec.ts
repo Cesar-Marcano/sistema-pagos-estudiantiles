@@ -2,7 +2,7 @@ import "../../helpers/mocks/asyncLocalStorage.mock";
 import { PrismaClient } from "@prisma/client";
 import { StudentService } from "../../../src/services/student.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
-import { AuditLogsService } from "../../../src/services/auditLogs.service";
+import { AuditLogService } from "../../../src/services/auditLog.service";
 import { auditLogsServiceMock } from "../../helpers/mocks/auditLogsService.mock";
 import {
   deletedSampleStudent,
@@ -18,7 +18,7 @@ import { getPaginationSkip } from "../../helpers/utils/getPaginationSkip";
 describe("StudentService", () => {
   let prisma: PrismaClient;
   let studentService: StudentService;
-  let auditLogsService: AuditLogsService;
+  let auditLogsService: AuditLogService;
 
   beforeEach(() => {
     prisma = createMockPrisma(["student", "grade"], {
@@ -62,7 +62,7 @@ describe("StudentService", () => {
 
     expect(student).toEqual(sampleStudent);
 
-    expect(auditLogsService.registerLog).not.toHaveBeenCalled();
+    expect(auditLogsService.register).not.toHaveBeenCalled();
 
     expect(prisma.student.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({

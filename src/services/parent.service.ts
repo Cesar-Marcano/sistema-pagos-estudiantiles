@@ -1,13 +1,13 @@
 import { PrismaClient, Parent } from "@prisma/client";
 import { getUserId } from "../utils/asyncLocalStorage";
-import { AuditLogsService } from "./auditLogs.service";
+import { AuditLogService } from "./auditLog.service";
 import { BadRequestError } from "../errors/badRequest.error";
 import { i18n } from "../lang/i18n";
 
 export class ParentService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly auditLogService: AuditLogsService
+    private readonly auditLogService: AuditLogService
   ) {}
 
   public async create(
@@ -21,7 +21,7 @@ export class ParentService {
 
     const userId = getUserId();
 
-    await this.auditLogService.registerLog({
+    await this.auditLogService.register({
       action: "CREATE",
       changes: JSON.stringify(newParent),
       entity: "Parent",
@@ -90,7 +90,7 @@ export class ParentService {
 
     const userId = getUserId();
 
-    await this.auditLogService.registerLog({
+    await this.auditLogService.register({
       action: "UPDATE",
       changes: JSON.stringify(updateData),
       entity: "Parent",
@@ -111,7 +111,7 @@ export class ParentService {
 
     const userId = getUserId();
 
-    await this.auditLogService.registerLog({
+    await this.auditLogService.register({
       action: "DELETE",
       changes: JSON.stringify(deletedParent),
       entity: "Parent",
