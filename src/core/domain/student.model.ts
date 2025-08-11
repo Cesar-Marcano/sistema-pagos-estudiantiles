@@ -1,7 +1,7 @@
 import { Discount } from "./discount.model";
 import { Grade, GradeWithLevels, GradeWithoutLevels } from "./grade.model";
-import { IPeriod } from "./invoice.model";
 import { Parent } from "./parent.model";
+import { Period } from "./period.model";
 import { User } from "./user.model";
 
 export enum StudentStatus {
@@ -22,7 +22,7 @@ interface RawStudent {
   
   joinGrade: number | Grade;
   joinGradeLevel?: number | never;
-  joinPeriod: IPeriod;
+  joinPeriod: number | Period;
 
   discounts: number[] | Discount[];
 
