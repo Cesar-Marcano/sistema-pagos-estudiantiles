@@ -162,4 +162,12 @@ export class Parent {
 
     return this;
   }
+
+  public delete(): this {
+    if (this._deletedAt === null) {
+      this._deletedAt = new Date();
+      this._updatedAt = this._deletedAt;
+    }
+    return this;
+  }
 }
