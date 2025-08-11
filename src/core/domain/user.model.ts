@@ -61,14 +61,16 @@ export class User {
 
     const hashedPassword = await hasherService.hashPassword(validPassword);
 
+    const now = new Date();
+
     const userFromDb: IUser = {
       ...data,
       username,
       name,
       email,
       password: hashedPassword,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
       deletedAt: null,
     };
 
