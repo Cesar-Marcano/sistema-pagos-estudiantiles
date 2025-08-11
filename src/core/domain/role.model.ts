@@ -7,12 +7,17 @@ export interface IRole {
   id?: number;
   name: string;
   tier: number;
-  permissions?: Permission[];
+  permissions: Permission[];
 
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
+
+export type ICreateRole = Omit<
+  IRole,
+  "id" | "createdAt" | "updatedAt" | "deletedAt" | "permissions"
+>;
 
 export class Role {
   private readonly _id?: number;
@@ -24,23 +29,40 @@ export class Role {
   private _updatedAt: Date;
   private _deletedAt: Date | null;
 
-  constructor(data: IRole) {
+  private constructor(data: IRole) {
     if (data.name.trim().length < 1) {
       throw new Error("The name should not be blank.");
     }
-
     if (data.tier < 0) {
-      throw new Error("Tier should be greater than 0");
+      throw new Error("Tier should be greater or equal than 0");
     }
 
     this._id = data.id;
     this._name = data.name.trim().toUpperCase();
-    this._permissions = data.permissions ?? [];
+    this._permissions = data.permissions;
     this._tier = data.tier;
 
-    this._createdAt = data.createdAt ?? new Date();
-    this._updatedAt = data.updatedAt ?? new Date();
-    this._deletedAt = data.deletedAt ?? null;
+    this._createdAt = data.createdAt;
+    this._updatedAt = data.updatedAt;
+    this._deletedAt = data.deletedAt;
+  }
+
+  public static create(data: ICreateRole): Role {
+    const now = new Date();
+
+    const roleData: IRole = {
+      ...data,
+      permissions: [],
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null,
+    };
+
+    return new Role(roleData);
+  }
+
+  public static fromDB(data: IRole): Role {
+    return new Role(data);
   }
 
   public get id(): number | undefined {
@@ -109,7 +131,7 @@ export class Role {
 
   public updateTier(tier: number): this {
     if (tier < 0) {
-      throw new Error("Tier should be greater than 0");
+      throw new Error("Tier should be greater or equal than 0");
     }
 
     this._tier = tier;
