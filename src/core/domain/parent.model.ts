@@ -1,7 +1,7 @@
 import { RequireAtLeastOne } from "../../utils/types/common-types";
 import { User } from "./user.model";
 
-interface RawParent {
+interface BaseParent {
   id: number;
   fullname: string;
   document: string;
@@ -15,4 +15,4 @@ interface RawParent {
   deletedAt: Date | null;
 }
 
-export type Parent = RequireAtLeastOne<RawParent, "phoneNumber" | "email">;
+export type Parent = RequireAtLeastOne<BaseParent, "phoneNumber" | "email">;
