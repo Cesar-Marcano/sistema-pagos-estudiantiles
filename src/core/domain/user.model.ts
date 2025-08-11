@@ -77,6 +77,10 @@ export class User {
     return new User(userFromDb);
   }
 
+  public static fromDB(data: IUser): User {
+    return new User(data);
+  }
+
   public get id(): number | undefined {
     return this._id;
   }
@@ -122,6 +126,10 @@ export class User {
     hasherService: IHasherService
   ): Promise<this> {
     const password = new Password(val).value;
+
+    if (await hasherService.comparePassword(password, this._password)) {
+      return this;
+    }
 
     this._password = await hasherService.hashPassword(password);
 
