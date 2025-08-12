@@ -4,84 +4,57 @@ import { Email } from "../datavalues/email.datavalue";
 import { PhoneNumber } from "../datavalues/phonenumber.datavalue";
 import { User } from "./user.model";
 
-interface IBaseParent {
-  id?: number;
-  fullname: string;
-  document: string;
-  phoneNumber?: string;
-  email?: string;
-
-  createdBy: number | User;
-
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export type IParent = RequireAtLeastOne<IBaseParent, "phoneNumber" | "email">;
-
-export type ICreateParent = Omit<
-  IParent,
-  "createdAt" | "updatedAt" | "deletedAt" | "id"
->;
-
 export class Parent {
-  private readonly _id?: number;
-  private _fullname: string;
-  private _document: string;
-  private _phoneNumber?: string;
-  private _email?: string;
+  constructor(
+    private _fullname: string,
+    private _document: string,
+    private _phoneNumber: string | null,
+    private _email: string | null,
 
-  private _createdBy: number | User;
+    private _createdBy: number | User,
 
-  private _createdAt: Date;
-  private _updatedAt: Date;
-  private _deletedAt: Date | null;
+    private _createdAt: Date,
+    private _updatedAt: Date,
+    private _deletedAt: Date | null,
+    private readonly _id?: number
+  ) {}
 
-  private constructor(data: IParent) {
-    this._id = data.id;
-    this._fullname = data.fullname;
-    this._document = data.document;
-    this._phoneNumber = data.phoneNumber;
-    this._email = data.email;
-    this._createdBy = data.createdBy;
-    this._createdAt = data.createdAt;
-    this._updatedAt = data.updatedAt;
-    this._deletedAt = data.deletedAt;
-  }
-
-  public static create(data: ICreateParent): Parent {
+  public static create(
+    _fullname: string,
+    _document: string,
+    _phoneNumber: string | null,
+    _email: string | null,
+    _createdBy: number | User
+  ): Parent {
     const now = new Date();
 
-    const contactData = {
-      ...(data.phoneNumber
-        ? { phoneNumber: new PhoneNumber(data.phoneNumber).value }
-        : {}),
-      ...(data.email ? { email: new Email(data.email).value } : {}),
-    } as RequireAtLeastOne<
-      { phoneNumber?: string; email?: string },
-      "phoneNumber" | "email"
-    >;
+    if (!_email && !_phoneNumber) {
+      throw new Error("Email or phone number required.");
+    }
 
-    const newParent: IParent = {
-      ...data,
-      ...contactData,
-      fullname: data.fullname.trim(),
-      document: new IdentificationDocument(data.document).value,
-      createdAt: now,
-      updatedAt: now,
-      deletedAt: null,
-    };
+    const phoneNumber = !_phoneNumber
+      ? null
+      : new PhoneNumber(_phoneNumber).value;
 
-    if (newParent.fullname.length < 7) {
+    const email = !_email ? null : new Email(_email).value;
+
+    const fullname = _fullname.trim();
+    const document = new IdentificationDocument(_document).value;
+
+    if (fullname.length < 7) {
       throw new Error("Invalid fullname");
     }
 
-    return new Parent(newParent);
-  }
-
-  public static fromDb(data: IParent): Parent {
-    return new Parent(data);
+    return new Parent(
+      fullname,
+      document,
+      phoneNumber,
+      email,
+      _createdBy,
+      now,
+      now,
+      null
+    );
   }
 
   public get id(): number | undefined {
@@ -96,11 +69,11 @@ export class Parent {
     return this._document;
   }
 
-  public get phoneNumber(): string | undefined {
+  public get phoneNumber(): string | null {
     return this._phoneNumber;
   }
 
-  public get email(): string | undefined {
+  public get email(): string | null {
     return this._email;
   }
 
