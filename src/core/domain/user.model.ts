@@ -4,81 +4,52 @@ import { Username } from "../datavalues/username.datavalue";
 import { IHasherService } from "../ports/out/hasher.port";
 import { Role } from "./role.model";
 
-export interface IUser {
-  id?: number;
-  role: number | Role;
-  username: string;
-  name: string;
-  password: string;
-  email: string;
-
-  createdBy: number | User;
-
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export type ICreateUser = Omit<
-  IUser,
-  "id" | "createdAt" | "updatedAt" | "deletedAt"
-> & {
-  password: string;
-};
-
 export class User {
-  private _id?: number;
-  private _role: number | Role;
-  private _username: string;
-  private _name: string;
-  private _password: string;
-  private _email: string;
+  constructor(
+    private _role: number | Role,
+    private _username: string,
+    private _name: string,
+    private _password: string,
+    private _email: string,
 
-  private _createdBy: number | User;
+    private _createdBy: number | User,
 
-  private _createdAt: Date;
-  private _updatedAt: Date;
-  private _deletedAt: Date | null;
+    private _createdAt: Date,
+    private _updatedAt: Date,
+    private _deletedAt: Date | null,
+    private _id?: number
+  ) {}
 
-  private constructor(data: IUser) {
-    this._id = data.id;
-    this._role = data.role;
-    this._username = data.username;
-    this._name = data.name;
-    this._password = data.password;
-    this._email = data.email;
-    this._createdBy = data.createdBy;
-    this._createdAt = data.createdAt;
-    this._updatedAt = data.updatedAt;
-    this._deletedAt = data.deletedAt;
-  }
+  public static async create(
+    _role: number | Role,
+    _username: string,
+    _name: string,
+    _password: string,
+    _email: string,
 
-  public static async create(data: ICreateUser, hasherService: IHasherService) {
-    const username = new Username(data.username).value;
-    const name = data.name.trim();
-    const email = new Email(data.email).value;
-    const validPassword = new Password(data.password).value;
+    _createdBy: number | User,
+    hasherService: IHasherService
+  ) {
+    const username = new Username(_username).value;
+    const name = _name.trim();
+    const email = new Email(_email).value;
+    const validPassword = new Password(_password).value;
 
     const hashedPassword = await hasherService.hashPassword(validPassword);
 
     const now = new Date();
 
-    const userFromDb: IUser = {
-      ...data,
+    return new User(
+      _role,
       username,
       name,
+      hashedPassword,
       email,
-      password: hashedPassword,
-      createdAt: now,
-      updatedAt: now,
-      deletedAt: null,
-    };
-
-    return new User(userFromDb);
-  }
-
-  public static fromDB(data: IUser): User {
-    return new User(data);
+      _createdBy,
+      now,
+      now,
+      null
+    );
   }
 
   public get id(): number | undefined {
