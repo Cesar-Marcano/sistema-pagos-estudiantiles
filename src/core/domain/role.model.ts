@@ -3,66 +3,30 @@ export enum Permission {
   CAN_CREATE_NEW_USERS,
 }
 
-export interface IRole {
-  id?: number;
-  name: string;
-  tier: number;
-  permissions: Permission[];
-
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
-}
-
-export type ICreateRole = Omit<
-  IRole,
-  "id" | "createdAt" | "updatedAt" | "deletedAt" | "permissions"
->;
-
 export class Role {
-  private readonly _id?: number;
-  private _name: string;
-  private _tier: number;
-  private _permissions: Permission[];
+  private constructor(
+    private _name: string,
+    private _tier: number,
+    private _permissions: Permission[],
 
-  private _createdAt: Date;
-  private _updatedAt: Date;
-  private _deletedAt: Date | null;
-
-  private constructor(data: IRole) {
-    if (data.name.trim().length < 1) {
+    private _createdAt: Date,
+    private _updatedAt: Date,
+    private _deletedAt: Date | null,
+    private readonly _id?: number
+  ) {
+    if (_name.trim().length < 1) {
       throw new Error("The name should not be blank.");
     }
-    if (data.tier < 0) {
+    if (_tier < 0) {
       throw new Error("Tier should be greater or equal than 0");
     }
-
-    this._id = data.id;
-    this._name = data.name.trim().toUpperCase();
-    this._permissions = data.permissions;
-    this._tier = data.tier;
-
-    this._createdAt = data.createdAt;
-    this._updatedAt = data.updatedAt;
-    this._deletedAt = data.deletedAt;
+    this._name = _name.trim().toUpperCase();
   }
 
-  public static create(data: ICreateRole): Role {
+  public static create(_name: string, _tier: number): Role {
     const now = new Date();
 
-    const roleData: IRole = {
-      ...data,
-      permissions: [],
-      createdAt: now,
-      updatedAt: now,
-      deletedAt: null,
-    };
-
-    return new Role(roleData);
-  }
-
-  public static fromDB(data: IRole): Role {
-    return new Role(data);
+    return new Role(_name, _tier, [], now, now, null);
   }
 
   public get id(): number | undefined {
