@@ -13,7 +13,7 @@ export class Parent {
 
     private _createdBy: number | User,
 
-    private _createdAt: Date,
+    private readonly _createdAt: Date,
     private _updatedAt: Date,
     private _deletedAt: Date | null,
     private readonly _id?: number

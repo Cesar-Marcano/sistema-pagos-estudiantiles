@@ -5,7 +5,7 @@ export class Session {
     private _jti: string,
     private _user: number | User,
 
-    private _createdAt: Date,
+    private readonly _createdAt: Date,
     private readonly _id?: number
   ) {}
 
