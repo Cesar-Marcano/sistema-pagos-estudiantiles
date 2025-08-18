@@ -19,6 +19,7 @@ export class AuditLog {
     private _entity: Entities,
     private _entityId: number,
     private _action: AuditLogActions,
+    private _changes: string,
 
     private _performedBy: number | User,
 
@@ -40,6 +41,10 @@ export class AuditLog {
 
   public get action(): AuditLogActions {
     return this._action;
+  }
+
+  public get changes(): string {
+    return this._changes;
   }
 
   public get performedBy(): number | User {
