@@ -20,22 +20,19 @@ export class User {
     private _id?: number
   ) {}
 
-  public static async create(
+  public static create(
     _role: number | Role,
     _username: string,
     _name: string,
     _password: string,
     _email: string,
 
-    _createdBy: number | User,
-    hasherService: IHasherService
+    _createdBy: number | User
   ) {
     const username = new Username(_username).value;
     const name = _name.trim();
     const email = new Email(_email).value;
     const validPassword = new Password(_password).value;
-
-    const hashedPassword = await hasherService.hashPassword(validPassword);
 
     const now = new Date();
 
@@ -43,7 +40,7 @@ export class User {
       _role,
       username,
       name,
-      hashedPassword,
+      validPassword,
       email,
       _createdBy,
       now,
@@ -92,17 +89,14 @@ export class User {
     return this._deletedAt;
   }
 
-  public async changePassword(
-    val: string,
-    hasherService: IHasherService
-  ): Promise<this> {
+  public changePassword(val: string): this {
     const password = new Password(val).value;
 
-    if (await hasherService.comparePassword(password, this._password)) {
+    if (password === this._password) {
       return this;
     }
 
-    this._password = await hasherService.hashPassword(password);
+    this._password = password;
 
     this._updatedAt = new Date();
 
