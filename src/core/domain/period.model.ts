@@ -8,6 +8,7 @@ export class Period {
     private readonly _createdBy: number | User,
 
     private readonly _createdAt: Date,
+    private _updatedAt: Date,
     private _deletedAt: Date | null,
     private readonly _id?: number
   ) {}
@@ -25,7 +26,9 @@ export class Period {
       throw new Error("Invalid month");
     }
 
-    return new Period(_year, _month, _createdBy, new Date(), null);
+    const now = new Date();
+
+    return new Period(_year, _month, _createdBy, now, now, null);
   }
 
   public get id(): number | undefined {
@@ -48,13 +51,27 @@ export class Period {
     return this._createdAt;
   }
 
+  public get updatedAt(): Date {
+    return this._updatedAt;
+  }
+
   public get deletedAt(): Date | null {
     return this.deletedAt;
   }
 
   public delete(): this {
-    this._deletedAt = new Date();
+    if (this._deletedAt === null) {
+      this._deletedAt = new Date();
+      this._updatedAt = this._deletedAt;
+    }
+    return this;
+  }
 
+  public restore(): this {
+    if (this._deletedAt !== null) {
+      this._deletedAt = null;
+      this._updatedAt = new Date();
+    }
     return this;
   }
 }

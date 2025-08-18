@@ -160,9 +160,18 @@ export class Grade {
   }
 
   public delete(): this {
-    this._deletedAt = new Date();
-    this._updatedAt = new Date();
+    if (this._deletedAt === null) {
+      this._deletedAt = new Date();
+      this._updatedAt = this._deletedAt;
+    }
+    return this;
+  }
 
+  public restore(): this {
+    if (this._deletedAt !== null) {
+      this._deletedAt = null;
+      this._updatedAt = new Date();
+    }
     return this;
   }
 }

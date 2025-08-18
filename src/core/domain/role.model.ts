@@ -162,4 +162,12 @@ export class Role {
     }
     return this;
   }
+
+  public restore(): this {
+    if (this._deletedAt !== null) {
+      this._deletedAt = null;
+      this._updatedAt = new Date();
+    }
+    return this;
+  }
 }

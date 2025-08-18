@@ -135,18 +135,26 @@ export class Discount {
     return this;
   }
 
-  public delete(): this {
-    const now = new Date();
-    this._deletedAt = now;
-    this._updatedAt = now;
-
-    return this;
-  }
-
   public calculateAmount(subtotal: number): number {
     if (this._isPercentage) {
       return (subtotal * this._value) / 100;
     }
     return this._value;
+  }
+
+  public delete(): this {
+    if (this._deletedAt === null) {
+      this._deletedAt = new Date();
+      this._updatedAt = this._deletedAt;
+    }
+    return this;
+  }
+
+  public restore(): this {
+    if (this._deletedAt !== null) {
+      this._deletedAt = null;
+      this._updatedAt = new Date();
+    }
+    return this;
   }
 }

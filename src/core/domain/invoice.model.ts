@@ -190,10 +190,18 @@ export class Invoice {
   }
 
   public delete(): this {
-    if (this._deletedAt) return this;
-    const now = new Date();
-    this._deletedAt = now;
-    this._updatedAt = now;
+    if (this._deletedAt === null) {
+      this._deletedAt = new Date();
+      this._updatedAt = this._deletedAt;
+    }
+    return this;
+  }
+
+  public restore(): this {
+    if (this._deletedAt !== null) {
+      this._deletedAt = null;
+      this._updatedAt = new Date();
+    }
     return this;
   }
 }

@@ -131,11 +131,18 @@ export class PaymentMethod {
   }
 
   public delete(): this {
-    const now = new Date();
+    if (this._deletedAt === null) {
+      this._deletedAt = new Date();
+      this._updatedAt = this._deletedAt;
+    }
+    return this;
+  }
 
-    this._deletedAt = now;
-    this._updatedAt = now;
-
+  public restore(): this {
+    if (this._deletedAt !== null) {
+      this._deletedAt = null;
+      this._updatedAt = new Date();
+    }
     return this;
   }
 }
