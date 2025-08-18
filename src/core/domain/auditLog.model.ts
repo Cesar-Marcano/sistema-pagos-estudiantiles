@@ -4,8 +4,9 @@ export type Entities =
   | "User"
   | "Student"
   | "Role"
-  | "PaymentMethod"
+  | "Period"
   | "Payment"
+  | "PaymentMethod"
   | "Parent"
   | "Invoice"
   | "Grade"
@@ -13,13 +14,39 @@ export type Entities =
 
 export type AuditLogActions = "CREATE" | "UPDATE" | "DELETE";
 
-export interface AuditLog {
-  id: number;
-  entity: Entities;
-  entityId: number;
-  action: AuditLogActions;
+export class AuditLog {
+  constructor(
+    private _entity: Entities,
+    private _entityId: number,
+    private _action: AuditLogActions,
 
-  performedBy: number | User;
+    private _performedBy: number | User,
 
-  createdAt: Date;
+    private _createdAt: Date,
+    private readonly _id: number
+  ) {}
+
+  public get id(): number {
+    return this._id;
+  }
+
+  public get entity(): Entities {
+    return this._entity;
+  }
+
+  public get entityId(): number {
+    return this._entityId;
+  }
+
+  public get action(): AuditLogActions {
+    return this._action;
+  }
+
+  public get performedBy(): number | User {
+    return this._performedBy;
+  }
+
+  public get createdAt(): Date {
+    return this._createdAt;
+  }
 }
