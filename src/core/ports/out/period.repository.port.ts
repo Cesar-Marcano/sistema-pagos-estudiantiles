@@ -21,6 +21,6 @@ export interface IPeriodRepository {
   search(criteria: IPeriodSearchCriteria): Promise<Paginated<Period>>;
   findById(id: number): Promise<Period>;
 
-  delete(id: number): Promise<Period>;
+  softDelete(id: number): Promise<Period>;
   restore(id: number): Promise<Period>;
 }
