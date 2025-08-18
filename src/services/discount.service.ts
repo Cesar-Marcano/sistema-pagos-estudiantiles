@@ -1,5 +1,5 @@
 import { Discount, PrismaClient } from "@prisma/client";
-import { CrudInput } from "../interfaces/crudInput";
+import { CrudInput } from "../shared/interfaces/crudInput";
 import { getUserId } from "../utils/asyncLocalStorage";
 import { AuditLogService } from "./auditLog.service";
 import { BadRequestError } from "../errors/badRequest.error";

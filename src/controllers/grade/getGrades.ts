@@ -2,7 +2,7 @@ import { AuthService } from "../../services/auth.service";
 import { GradeService } from "../../services/grade.service";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 
 export class GetGradesController extends Controller<null, UserPayload> {
   constructor(

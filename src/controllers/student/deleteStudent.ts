@@ -3,7 +3,7 @@ import { StudentService } from "../../services/student.service";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class DeleteStudentController extends Controller<null, UserPayload> {

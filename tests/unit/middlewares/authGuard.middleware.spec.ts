@@ -7,7 +7,7 @@ import {
 } from "../../helpers/factories/express.factory";
 import { AuthService } from "../../../src/services/auth.service";
 import { authGuard } from "../../../src/middlewares/authGuard";
-import { UserPayload } from "../../../src/interfaces/tokenPayload";
+import { UserPayload } from "../../../src/shared/interfaces/tokenPayload";
 import { Role } from "@prisma/client";
 import { UnauthorizedError } from "../../../src/errors/unauthorized.error";
 

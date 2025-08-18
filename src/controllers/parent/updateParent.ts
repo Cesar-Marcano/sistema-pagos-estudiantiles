@@ -8,7 +8,7 @@ import {
   UpdateParentSchema,
 } from "../../dtos/parents/updateParent.dto";
 import { ParentService } from "../../services/parent.service";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 import z from "zod";
 import { parseIdParam } from "../../parsers/param/id.parser";
 

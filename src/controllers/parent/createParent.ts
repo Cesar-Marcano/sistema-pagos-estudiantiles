@@ -8,7 +8,7 @@ import {
   CreateParentSchema,
 } from "../../dtos/parents/createParent.dto";
 import { ParentService } from "../../services/parent.service";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 
 export class CreateParentController extends Controller<
   CreateParentDto,

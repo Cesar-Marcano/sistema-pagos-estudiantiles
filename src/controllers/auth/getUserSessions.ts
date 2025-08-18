@@ -1,7 +1,7 @@
 import { AuthService } from "../../services/auth.service";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 
 export class GetUserSessionsController extends Controller<null, UserPayload> {
   constructor(private readonly authService: AuthService) {

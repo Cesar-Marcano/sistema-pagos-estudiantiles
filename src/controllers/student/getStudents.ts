@@ -2,7 +2,7 @@ import { AuthService } from "../../services/auth.service";
 import { StudentService } from "../../services/student.service";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 import { parsePaginationQuery } from "../../parsers/query/pagination.query";
 
 export class GetStudentsController extends Controller<null, UserPayload> {

@@ -2,7 +2,7 @@ import { AuthService } from "../../services/auth.service";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { ParentService } from "../../services/parent.service";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 import { parsePaginationQuery } from "../../parsers/query/pagination.query";
 
 export class GetParentsController extends Controller<null, UserPayload> {

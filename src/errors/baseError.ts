@@ -1,4 +1,4 @@
-import { CustomError } from "../interfaces/CustomError";
+import { CustomError } from "../shared/interfaces/CustomError";
 
 export class BaseError extends Error implements CustomError {
   constructor(

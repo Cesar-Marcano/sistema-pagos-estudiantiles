@@ -1,4 +1,4 @@
-import { IErrorHandler } from "../../interfaces/IErrorHandler";
+import { IErrorHandler } from "../../shared/interfaces/IErrorHandler";
 import { BaseError } from "../baseError";
 
 export class BaseErrorHandler implements IErrorHandler {

@@ -3,7 +3,7 @@ import { jwtMock } from "../../helpers/mocks/jsonwebtoken.mock";
 import { AuthService } from "../../../src/services/auth.service";
 import { createMockPrisma } from "../../helpers/factories/prisma.factory";
 import { sessionData, userMock } from "../../helpers/data/auth.data";
-import { UserPayload } from "../../../src/interfaces/tokenPayload";
+import { UserPayload } from "../../../src/shared/interfaces/tokenPayload";
 import { UnauthorizedError } from "../../../src/errors/unauthorized.error";
 
 describe("AuthService", () => {

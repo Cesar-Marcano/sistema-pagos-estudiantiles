@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import { Request, Response } from "express";
-import { IErrorHandler } from "../../interfaces/IErrorHandler";
+import { IErrorHandler } from "../../shared/interfaces/IErrorHandler";
 import { i18n } from "../../lang/i18n";
 
 export class ZodErrorHandler implements IErrorHandler {

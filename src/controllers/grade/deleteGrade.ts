@@ -3,7 +3,7 @@ import { GradeService } from "../../services/grade.service";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
-import { UserPayload } from "../../interfaces/tokenPayload";
+import { UserPayload } from "../../shared/interfaces/tokenPayload";
 import { parseIdParam } from "../../parsers/param/id.parser";
 
 export class DeleteGradeController extends Controller<null, UserPayload> {

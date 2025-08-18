@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserPayload } from "../../../src/interfaces/tokenPayload";
+import { UserPayload } from "../../../src/shared/interfaces/tokenPayload";
 
 const mockUserPayload: UserPayload = {
   id: 1,
