@@ -11,6 +11,7 @@ export interface IUserRepository {
   findByEmail(email: string): Promise<User>;
 
   softDelete(id: number): Promise<User>;
+  restore(id: number): Promise<User>;
 
   existsById(id: number): Promise<boolean>;
   existsByEmail(email: string): Promise<boolean>;
