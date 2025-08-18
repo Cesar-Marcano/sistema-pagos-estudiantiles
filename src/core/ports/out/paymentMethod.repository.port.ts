@@ -3,7 +3,7 @@ import { PaymentMethod } from "../../domain/paymentMethod.model";
 
 export interface IPaymentMethodSearchCriteria {
   query?: {
-    name?: number;
+    name?: string;
     requiresManualVerification?: boolean;
     requiresReferenceNumber?: boolean;
     createdAt?: Date;
