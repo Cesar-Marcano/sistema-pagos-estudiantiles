@@ -129,4 +129,13 @@ export class PaymentMethod {
 
     return this;
   }
+
+  public delete(): this {
+    const now = new Date();
+
+    this._deletedAt = now;
+    this._updatedAt = now;
+
+    return this;
+  }
 }
