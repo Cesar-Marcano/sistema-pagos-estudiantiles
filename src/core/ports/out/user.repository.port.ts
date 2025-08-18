@@ -7,6 +7,7 @@ export interface IUserSearchCriteria {
     username?: string;
     name?: string;
     email?: string;
+    createdById?: number;
     createdAt?: Date;
     deletedAt?: Date;
   };

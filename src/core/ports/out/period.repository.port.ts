@@ -6,6 +6,7 @@ export interface IPeriodSearchCriteria {
     id?: number;
     year?: number;
     month?: number;
+    createdById?: number;
     createdAt?: Date;
     deletedAt?: Date;
   };

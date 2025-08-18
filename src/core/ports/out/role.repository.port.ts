@@ -7,6 +7,7 @@ export interface IRoleSearchCriteria {
     name?: string;
     includingPermissions?: Permission[];
     tier?: number;
+    createdById?: number;
     createdAt?: Date;
     deletedAt?: Date;
   };

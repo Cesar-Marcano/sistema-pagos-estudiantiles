@@ -6,6 +6,7 @@ export interface IPaymentMethodSearchCriteria {
     name?: string;
     requiresManualVerification?: boolean;
     requiresReferenceNumber?: boolean;
+    createdById?: number;
     createdAt?: Date;
     deletedAt?: Date;
   };
