@@ -9,4 +9,7 @@ export interface ISessionRepository {
   deleteByJti(jti: string): Promise<Session>;
 
   deleteAllByUserId(userId: number): Promise<Session>;
+
+  sessionExistsById(id: number): Promise<boolean>;
+  sessionExistsByJti(jti: string): Promise<boolean>;
 }
