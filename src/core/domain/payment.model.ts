@@ -123,7 +123,7 @@ export class Payment {
   }
 
   public get invoice(): number | Invoice {
-    return this.invoice;
+    return this._invoice;
   }
 
   public get verified(): boolean | null {
