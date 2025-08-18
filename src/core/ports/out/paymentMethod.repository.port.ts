@@ -25,6 +25,6 @@ export interface IPaymentMethodRepository {
 
   upsert(paymentMethod: PaymentMethod): Promise<PaymentMethod>;
 
-  delete(id: number): Promise<PaymentMethod>;
+  softDelete(id: number): Promise<PaymentMethod>;
   restore(id: number): Promise<PaymentMethod>;
 }
