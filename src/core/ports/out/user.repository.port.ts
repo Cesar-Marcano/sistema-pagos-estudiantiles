@@ -3,7 +3,7 @@ import { User } from "../../domain/user.model";
 export interface IUserRepository {
   create(user: User): Promise<User>;
 
-  update(id: number, user: Partial<User>): Promise<User>;
+  upsert(user: User): Promise<User>;
 
   changePassword(id: number, password: string): Promise<User>;
 
