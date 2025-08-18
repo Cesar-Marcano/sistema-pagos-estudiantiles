@@ -1,7 +1,7 @@
 import { Email } from "../datavalues/email.datavalue";
 import { Password } from "../datavalues/password.datavalue";
 import { Username } from "../datavalues/username.datavalue";
-import { IHasherService } from "../ports/out/hasher.port";
+import { IHasherService } from "../ports/out/services/hasher.port";
 import { Role } from "./role.model";
 
 export class User {
