@@ -28,6 +28,6 @@ export interface IPaymentRepository {
   
   upsert(payment: Payment): Promise<Payment>;
 
-  delete(id: number): Promise<Payment>;
+  softDelete(id: number): Promise<Payment>;
   restore(id: number): Promise<Payment>;
 }
