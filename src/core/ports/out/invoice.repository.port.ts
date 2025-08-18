@@ -28,6 +28,6 @@ export interface IInvoiceRepository {
   
   upsert(invoice: Invoice): Promise<Invoice>;
 
-  delete(id: number): Promise<Invoice>;
+  softDelete(id: number): Promise<Invoice>;
   restore(id: number): Promise<Invoice>;
 }
