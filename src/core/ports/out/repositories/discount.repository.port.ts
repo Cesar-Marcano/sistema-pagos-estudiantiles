@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Discount } from "../../domain/discount.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Discount } from "../../../domain/discount.model";
 
 export interface IDiscountSearchCriteria {
   query?: {

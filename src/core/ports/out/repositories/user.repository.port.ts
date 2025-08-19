@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { User } from "../../domain/user.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { User } from "../../../domain/user.model";
 
 export interface IUserSearchCriteria {
   query?: {

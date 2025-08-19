@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Grade } from "../../domain/grade.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Grade } from "../../../domain/grade.model";
 
 export interface IGradeSearchCriteria {
   query?: {

@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { PaymentMethod } from "../../domain/paymentMethod.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { PaymentMethod } from "../../../domain/paymentMethod.model";
 
 export interface IPaymentMethodSearchCriteria {
   query?: {

@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Student, StudentStatus } from "../../domain/student.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Student, StudentStatus } from "../../../domain/student.model";
 
 export interface IStudentSearchCriteria {
   query?: {

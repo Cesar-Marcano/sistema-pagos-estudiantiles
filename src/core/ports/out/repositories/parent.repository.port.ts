@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Parent } from "../../domain/parent.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Parent } from "../../../domain/parent.model";
 
 export interface IParentSearchCriteria {
   query?: {

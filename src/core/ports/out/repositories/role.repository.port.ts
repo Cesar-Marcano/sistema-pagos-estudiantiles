@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Permission, Role } from "../../domain/role.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Permission, Role } from "../../../domain/role.model";
 
 export interface IRoleSearchCriteria {
   query?: {

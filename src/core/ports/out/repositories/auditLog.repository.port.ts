@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { AuditLog, AuditLogActions, Entities } from "../../domain/auditLog.model";
+import { Paginated } from "../../../../shared/interfaces/paginated"; 
+import { AuditLog, AuditLogActions, Entities } from "../../../domain/auditLog.model";
 
 export interface IAuditLogSearchCriteria {
   query?: {

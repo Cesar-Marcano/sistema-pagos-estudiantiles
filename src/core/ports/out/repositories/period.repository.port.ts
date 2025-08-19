@@ -1,5 +1,5 @@
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Period } from "../../domain/period.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Period } from "../../../domain/period.model";
 
 export interface IPeriodSearchCriteria {
   query?: {

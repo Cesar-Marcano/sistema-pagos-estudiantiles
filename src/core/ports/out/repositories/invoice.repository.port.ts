@@ -1,6 +1,6 @@
-import { InvoiceStatus } from "@prisma/client";
-import { Paginated } from "../../../shared/interfaces/paginated";
-import { Invoice } from "../../domain/invoice.model";
+import { InvoiceStatus } from "../../../domain/invoice.model";
+import { Paginated } from "../../../../shared/interfaces/paginated";
+import { Invoice } from "../../../domain/invoice.model";
 
 export interface IInvoiceSearchCriteria {
   query?: {
