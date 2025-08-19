@@ -1,15 +1,16 @@
 import { Email } from "../datavalues/email.datavalue";
 import { Password } from "../datavalues/password.datavalue";
 import { Username } from "../datavalues/username.datavalue";
+import { IHasherService } from "../ports/out/services/hasher.service.port";
 import { Role } from "./role.model";
 
 export class User {
   constructor(
     private _role: number | Role,
-    private _username: string,
+    private _username: Username,
     private _name: string,
-    private _password: string,
-    private _email: string,
+    private _password: Password,
+    private _email: Email,
 
     private _createdBy: number | User,
 
@@ -21,26 +22,22 @@ export class User {
 
   public static create(
     _role: number | Role,
-    _username: string,
+    _username: Username,
     _name: string,
-    _password: string,
-    _email: string,
+    _password: Password,
+    _email: Email,
 
     _createdBy: number | User
   ) {
-    const username = new Username(_username).value;
     const name = _name.trim();
-    const email = new Email(_email).value;
-    const validPassword = new Password(_password).value;
-
     const now = new Date();
 
     return new User(
       _role,
-      username,
+      _username,
       name,
-      validPassword,
-      email,
+      _password,
+      _email,
       _createdBy,
       now,
       now,
@@ -60,16 +57,12 @@ export class User {
     return this._role;
   }
 
-  public get username(): string {
+  public get username(): Username {
     return this._username;
   }
 
-  public get email(): string {
+  public get email(): Email {
     return this._email;
-  }
-
-  public get hashedPassword(): string {
-    return this._password;
   }
 
   public get createdBy(): number | User {
@@ -88,25 +81,19 @@ export class User {
     return this._deletedAt;
   }
 
-  public changePassword(val: string): this {
-    const password = new Password(val).value;
-
-    if (password === this._password) {
-      return this;
-    }
-
-    this._password = password;
+  public async changePassword(
+    val: string,
+    hasherService: IHasherService
+  ): Promise<this> {
+    this._password = await Password.create(val, hasherService);
 
     this._updatedAt = new Date();
 
     return this;
   }
 
-  public updateUsername(val: string): this {
-    const username = new Username(val).value;
-
-    this._username = username;
-
+  public updateUsername(val: Username): this {
+    this._username = val;
     this._updatedAt = new Date();
 
     return this;
@@ -130,11 +117,8 @@ export class User {
     return this;
   }
 
-  public updateEmail(val: string): this {
-    const email = new Email(val).value;
-
-    this._email = email;
-
+  public updateEmail(val: Email): this {
+    this._email = val;
     this._updatedAt = new Date();
 
     return this;
