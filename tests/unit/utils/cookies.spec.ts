@@ -3,7 +3,7 @@ import {
   setCookie,
   deleteRefreshTokenCookie,
   setRefreshTokenCookie,
-} from "../../../src/utils/cookies";
+} from "../../../src/shared/utils/cookies";
 import { createMockResponse } from "../../helpers/factories/express.factory";
 import { REFRESH_TOKEN_EXP } from "../../../src/config/envVariables";
 import ms from "ms";

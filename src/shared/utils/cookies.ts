@@ -1,6 +1,6 @@
 import { Response } from "express";
 import ms from "ms";
-import { REFRESH_TOKEN_EXP, isDevelopment } from "../config/envVariables";
+import { REFRESH_TOKEN_EXP, isDevelopment } from "../../config/envVariables";
 
 export function setCookie(
   res: Response,

@@ -1,9 +1,9 @@
 import {
   getUserId,
   runWithUserContext,
-} from "../../../src/utils/asyncLocalStorage";
+} from "../../../src/shared/utils/asyncLocalStorage";
 
-jest.mock("../../../src/utils/asyncLocalStorage", () => ({
+jest.mock("../../../src/shared/utils/asyncLocalStorage", () => ({
   getUserId: jest.fn().mockReturnValue(1),
   runWithUserContext: jest.fn((_, next) => {
     next();
