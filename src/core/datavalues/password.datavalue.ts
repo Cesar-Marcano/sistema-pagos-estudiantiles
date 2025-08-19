@@ -1,7 +1,7 @@
 export class Password {
   constructor(private readonly _value: string) {
     const regExp =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})/;
+      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*()_+{}:;\'"?/<,.~`|\\\]\[-])(?=.{8,})/;
 
     if (!regExp.test(_value)) {
       throw new Error("Weak password");
