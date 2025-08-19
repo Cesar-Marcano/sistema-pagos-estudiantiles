@@ -4,7 +4,7 @@ import { authGuard } from "../../middlewares/authGuard";
 import { ConflictError } from "../../errors/conflict.error";
 import { i18n } from "../../lang/i18n";
 import { UserPayload } from "../../shared/interfaces/tokenPayload";
-import { parseIdParam } from "../../utils/parsers/param/id.parser";
+import { parseIdParam } from "../../shared/utils/parsers/param/id.parser";
 
 export class CloseSessionController extends Controller<null, UserPayload> {
   constructor(private readonly authService: AuthService) {

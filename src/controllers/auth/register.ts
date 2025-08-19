@@ -8,7 +8,7 @@ import { validateBodyMiddleware } from "../../middlewares/validateBody";
 import { Controller, Handler, Middleware } from "../../app/controller";
 import { authGuard } from "../../middlewares/authGuard";
 import { Role } from "@prisma/client";
-import { setRefreshTokenCookie } from "../../utils/cookies";
+import { setRefreshTokenCookie } from "../../shared/utils/cookies";
 
 export class RegisterController extends Controller<CreateUserDto> {
   constructor(
