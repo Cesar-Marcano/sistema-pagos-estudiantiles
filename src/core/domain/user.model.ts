@@ -92,6 +92,13 @@ export class User {
     return this;
   }
 
+  public async comparePassword(
+    password: string,
+    hasherService: IHasherService
+  ): Promise<boolean> {
+    return await this._password.compare(password, hasherService);
+  }
+
   public updateUsername(val: Username): this {
     this._username = val;
     this._updatedAt = new Date();
