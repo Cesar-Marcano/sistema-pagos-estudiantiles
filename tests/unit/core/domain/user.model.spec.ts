@@ -1,3 +1,4 @@
+import { Username } from "../../../../src/core/datavalues/username.datavalue";
 import { User } from "../../../../src/core/domain/user.model";
 import { IHasherService } from "../../../../src/core/ports/out/services/hasher.service.port";
 import {
@@ -90,6 +91,16 @@ describe("User model", () => {
       expect(userFromDB.id).toBe(1);
       expect(userFromDB.createdAt).toBeInstanceOf(Date);
       expect(userFromDB.updatedAt).toBeInstanceOf(Date);
+    });
+  });
+
+  describe("Content updates", () => {
+    it("should change the username", () => {
+      const newUsername = new Username("my.new.username");
+
+      user.updateUsername(newUsername);
+
+      expect(user.username).toBe(newUsername);
     });
   });
 });
