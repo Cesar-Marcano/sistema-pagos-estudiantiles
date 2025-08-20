@@ -97,10 +97,22 @@ describe("User model", () => {
   describe("Content updates", () => {
     it("should change the username", () => {
       const newUsername = new Username("my.new.username");
+      const oldUpdatedAt = user.updatedAt;
 
       user.updateUsername(newUsername);
 
       expect(user.username).toBe(newUsername);
+      expect(user.updatedAt).not.toBe(oldUpdatedAt);
+    });
+
+    it("should change the name", () => {
+      const newName = "New Name";
+      const oldUpdatedAt = user.updatedAt;
+
+      user.updateName(newName);
+
+      expect(user.name).toBe(newName);
+      expect(user.updatedAt).not.toBe(oldUpdatedAt);
     });
   });
 });
