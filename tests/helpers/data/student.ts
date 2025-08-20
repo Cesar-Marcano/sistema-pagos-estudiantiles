@@ -1,8 +1,4 @@
-import { Email } from "../../../src/core/datavalues/email.datavalue";
-import { Password } from "../../../src/core/datavalues/password.datavalue";
-import { Username } from "../../../src/core/datavalues/username.datavalue";
 import { Student, StudentStatus } from "../../../src/core/domain/student.model";
-import { User } from "../../../src/core/domain/user.model";
 
 export const sampleStudentData = {
   fullname: "Foo Bar Foo Bar",
