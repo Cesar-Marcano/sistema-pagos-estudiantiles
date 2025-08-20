@@ -1,3 +1,4 @@
+import { Email } from "../../../../src/core/datavalues/email.datavalue";
 import { Username } from "../../../../src/core/datavalues/username.datavalue";
 import { User } from "../../../../src/core/domain/user.model";
 import { IHasherService } from "../../../../src/core/ports/out/services/hasher.service.port";
@@ -114,5 +115,16 @@ describe("User model", () => {
       expect(user.name).toBe(newName);
       expect(user.updatedAt).not.toBe(oldUpdatedAt);
     });
+  });
+
+  it("should update role", () => {
+    const newRoleId = 21;
+    const oldUpdatedAt = user.updatedAt;
+
+    user.updateRole(newRoleId);
+
+    expect(typeof user.role).toBe("number");
+    expect(user.role).toBe(newRoleId);
+    expect(user.updatedAt).not.toBe(oldUpdatedAt);
   });
 });
