@@ -83,4 +83,13 @@ describe("User model", () => {
       expect(descriptor).toBeUndefined();
     });
   });
+
+  describe("User from DB", () => {
+    it("should have db data", () => {
+      expect(userFromDB.id).not.toBeUndefined();
+      expect(userFromDB.id).toBe(1);
+      expect(userFromDB.createdAt).toBeInstanceOf(Date);
+      expect(userFromDB.updatedAt).toBeInstanceOf(Date);
+    });
+  });
 });
