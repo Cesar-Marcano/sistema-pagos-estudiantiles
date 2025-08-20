@@ -34,7 +34,7 @@ export const testNewStudent = () => {
   );
 };
 
-export const testDbUser = () => {
+export const testDbStudent = () => {
   return new Student(
     sampleStudentData.fullname,
     sampleStudentData.birthday,
