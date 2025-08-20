@@ -127,4 +127,14 @@ describe("User model", () => {
     expect(user.role).toBe(newRoleId);
     expect(user.updatedAt).not.toBe(oldUpdatedAt);
   });
+
+  it("should update email", () => {
+    const newEmail = new Email("my.new.email@something.com");
+    const oldUpdatedAt = user.updatedAt;
+
+    user.updateEmail(newEmail);
+
+    expect(user.email).toBe(newEmail);
+    expect(user.updatedAt).not.toBe(oldUpdatedAt);
+  });
 });
