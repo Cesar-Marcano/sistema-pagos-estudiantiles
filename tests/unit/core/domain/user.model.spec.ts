@@ -56,6 +56,22 @@ describe("User model", () => {
         "hashedPassword"
       );
     });
+
+    it("should change the password", async () => {
+      const newPassword = "newSecurePassword123!";
+      const newHashedPassword = "newHashedPassword123";
+
+      const changePasswordHasherServiceMock = {
+        ...iHasherServiceMock,
+        hash: jest.fn().mockImplementation((password, hashedPassword) => {
+          return (
+            password === newPassword && hashedPassword === newHashedPassword
+          );
+        }),
+      };
+
+      await user.changePassword(newPassword, changePasswordHasherServiceMock);
+    });
   });
 
   describe("Property access", () => {
