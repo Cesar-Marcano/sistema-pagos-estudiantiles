@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
 import { UnauthorizedError } from "../errors/unauthorized.error";
 import { i18n } from "../lang/i18n";
-import { UserPayload } from "../interfaces/tokenPayload";
+import { UserPayload } from "../shared/interfaces/tokenPayload";
 import { runWithUserContext } from "../utils/asyncLocalStorage";
 
 interface AuthenticatedRequest extends Request {

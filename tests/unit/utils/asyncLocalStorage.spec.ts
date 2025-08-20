@@ -1,7 +1,7 @@
 import {
   getUserId,
   runWithUserContext,
-} from "../../../src/utils/asyncLocalStorage";
+} from "../../../src/shared/utils/asyncLocalStorage";
 
 describe("UserContext", () => {
   it("should return the userId within the context", () => {

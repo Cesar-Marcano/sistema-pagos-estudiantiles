@@ -5,7 +5,7 @@ import { ZodErrorHandler } from "../errors/handlers/ZodErrorHandler";
 import { JWTErrorHandler } from "../errors/handlers/JWTErrorHandler";
 import { PrismaErrorHandler } from "../errors/handlers/PrismaErrorHandler";
 import { BaseErrorHandler } from "../errors/handlers/BaseErrorHandler";
-import { IErrorHandler } from "../interfaces/IErrorHandler";
+import { IErrorHandler } from "../shared/interfaces/IErrorHandler";
 import { i18n } from "../lang/i18n";
 
 const errorHandlers: IErrorHandler[] = [
