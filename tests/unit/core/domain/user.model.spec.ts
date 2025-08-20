@@ -115,26 +115,68 @@ describe("User model", () => {
       expect(user.name).toBe(newName);
       expect(user.updatedAt).not.toBe(oldUpdatedAt);
     });
+
+    it("should update role", () => {
+      const newRoleId = 21;
+      const oldUpdatedAt = user.updatedAt;
+
+      user.updateRole(newRoleId);
+
+      expect(typeof user.role).toBe("number");
+      expect(user.role).toBe(newRoleId);
+      expect(user.updatedAt).not.toBe(oldUpdatedAt);
+    });
+
+    it("should update email", () => {
+      const newEmail = new Email("my.new.email@something.com");
+      const oldUpdatedAt = user.updatedAt;
+
+      user.updateEmail(newEmail);
+
+      expect(user.email).toBe(newEmail);
+      expect(user.updatedAt).not.toBe(oldUpdatedAt);
+    });
   });
 
-  it("should update role", () => {
-    const newRoleId = 21;
-    const oldUpdatedAt = user.updatedAt;
+  describe("User deletion and restoration", () => {
+    let oldUpdatedAt: Date;
+    beforeEach(() => {
+      oldUpdatedAt = user.updatedAt;
+      user.delete();
+    });
 
-    user.updateRole(newRoleId);
+    it("should delete the user", () => {
+      expect(user.deletedAt).not.toBeNull();
+      expect(user.updatedAt).not.toBe(oldUpdatedAt);
+    });
 
-    expect(typeof user.role).toBe("number");
-    expect(user.role).toBe(newRoleId);
-    expect(user.updatedAt).not.toBe(oldUpdatedAt);
+    it("should restore the user", () => {
+      user.restore();
+      const oldUpdatedAtAfterRestoration = user.updatedAt;
+
+      expect(user.deletedAt).toBeNull();
+      expect(user.updatedAt).not.toBe(oldUpdatedAt);
+      expect(oldUpdatedAt).not.toBe(oldUpdatedAtAfterRestoration);
+    });
+
+    it("should not delete the user if it's already soft-deleted", () => {
+      const updatedAtBeforeSecondDelete = user.updatedAt;
+
+      user.delete();
+
+      expect(user.deletedAt).toEqual(updatedAtBeforeSecondDelete);
+
+      expect(user.updatedAt).toBe(updatedAtBeforeSecondDelete);
+    });
   });
 
-  it("should update email", () => {
-    const newEmail = new Email("my.new.email@something.com");
-    const oldUpdatedAt = user.updatedAt;
+  it("should not restore the user if it's not soft-deleted", () => {
+    const initialUpdatedAt = user.updatedAt;
 
-    user.updateEmail(newEmail);
+    user.restore();
 
-    expect(user.email).toBe(newEmail);
-    expect(user.updatedAt).not.toBe(oldUpdatedAt);
+    expect(user.deletedAt).toBeNull();
+
+    expect(user.updatedAt).toBe(initialUpdatedAt);
   });
 });
