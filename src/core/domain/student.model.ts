@@ -1,3 +1,5 @@
+import { IdentificationDocument } from "../datavalues/document.datavalue";
+
 export enum StudentStatus {
   Active,
   Inactive,
@@ -8,7 +10,7 @@ export class Student {
     private _fullname: string,
     private _birthday: Date,
     private _section: string | null,
-    private _document: string | null,
+    private _document: IdentificationDocument | null,
     private _status: StudentStatus,
 
     private _grade: number,
@@ -34,7 +36,7 @@ export class Student {
     _fullname: string,
     _birthday: Date,
     _section: string | null,
-    _document: string | null,
+    _document: IdentificationDocument | null,
     _status: StudentStatus,
 
     _grade: number,
@@ -101,7 +103,7 @@ export class Student {
     return this._section;
   }
 
-  public get document(): string | null {
+  public get document(): IdentificationDocument | null {
     return this._document;
   }
 
@@ -169,7 +171,7 @@ export class Student {
     return this;
   }
 
-  public updateDocument(val: string | null): this {
+  public updateDocument(val: IdentificationDocument | null): this {
     this._document = val;
     this._updatedAt = new Date();
     return this;
