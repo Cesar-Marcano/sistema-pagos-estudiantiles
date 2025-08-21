@@ -54,7 +54,7 @@ export class Period {
   }
 
   public get deletedAt(): Date | null {
-    return this.deletedAt;
+    return this._deletedAt;
   }
 
   public delete(): this {
