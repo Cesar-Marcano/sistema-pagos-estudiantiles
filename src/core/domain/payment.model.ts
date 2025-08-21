@@ -1,6 +1,4 @@
-import { Invoice } from "./invoice.model";
 import { PaymentMethod } from "./paymentMethod.model";
-import { User } from "./user.model";
 
 export class Payment {
   constructor(
@@ -8,17 +6,17 @@ export class Payment {
     private _denied: boolean,
     private _notes: string | null,
 
-    private _paymentMethod: number | PaymentMethod,
+    private _paymentMethod: number,
 
-    private _invoice: number | Invoice,
+    private _invoice: number,
 
     private _verified: boolean | null,
     private _verifiedAt: Date | null,
-    private _verifiedBy: (number | User) | null,
+    private _verifiedBy: number | null,
 
     private _referenceNumber: string | null,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private _createdAt: Date,
     private _updatedAt: Date,
@@ -30,17 +28,17 @@ export class Payment {
     _amount: number,
     _notes: string | null,
 
-    _paymentMethod: PaymentMethod,
+    _paymentMethod: PaymentMethod & { id: number },
 
-    _invoice: number | Invoice,
+    _invoice: number,
 
     _verified: boolean | null,
     _verifiedAt: Date | null,
-    _verifiedBy: (number | User) | null,
+    _verifiedBy: number | null,
 
     _referenceNumber: string | null,
 
-    _createdBy: number | User
+    _createdBy: number
   ) {
     if (_amount < 1) {
       throw new Error("Invalid amount");
@@ -57,30 +55,23 @@ export class Payment {
       throw new Error("Invalid reference number");
     }
 
-    if (_paymentMethod instanceof PaymentMethod) {
-      if (_paymentMethod.requiresManualVerification && _verified === null) {
-        throw new Error("Verified needs to be true or false but not null");
-      }
+    if (_paymentMethod.requiresManualVerification && _verified === null) {
+      throw new Error("Verified needs to be true or false but not null");
+    }
 
-      if (_paymentMethod.requiresReferenceNumber && _referenceNumber === null) {
-        throw new Error("Reference number needs to be filled");
-      }
+    if (_paymentMethod.requiresReferenceNumber && _referenceNumber === null) {
+      throw new Error("Reference number needs to be filled");
+    }
 
-      if (
-        !_paymentMethod.requiresReferenceNumber &&
-        _referenceNumber !== null
-      ) {
-        throw new Error("Reference number needs to be null");
-      }
+    if (!_paymentMethod.requiresReferenceNumber && _referenceNumber !== null) {
+      throw new Error("Reference number needs to be null");
+    }
 
-      if (
-        !_paymentMethod.requiresManualVerification &&
-        (_verified !== null || _verifiedAt !== null || _verifiedBy !== null)
-      ) {
-        throw new Error(
-          "Verified, verified at and verified by needs to be null"
-        );
-      }
+    if (
+      !_paymentMethod.requiresManualVerification &&
+      (_verified !== null || _verifiedAt !== null || _verifiedBy !== null)
+    ) {
+      throw new Error("Verified, verified at and verified by needs to be null");
     }
 
     const now = new Date();
@@ -89,7 +80,7 @@ export class Payment {
       _amount,
       false,
       notes,
-      _paymentMethod,
+      _paymentMethod.id,
       _invoice,
       _verified,
       _verifiedAt,
@@ -118,11 +109,11 @@ export class Payment {
     return this._notes;
   }
 
-  public get paymentMethod(): number | PaymentMethod {
+  public get paymentMethod(): number {
     return this._paymentMethod;
   }
 
-  public get invoice(): number | Invoice {
+  public get invoice(): number {
     return this._invoice;
   }
 
@@ -134,7 +125,7 @@ export class Payment {
     return this._verifiedAt;
   }
 
-  public get verifiedBy(): (number | User) | null {
+  public get verifiedBy(): number | null {
     return this._verifiedBy;
   }
 
@@ -142,7 +133,7 @@ export class Payment {
     return this._referenceNumber;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
@@ -204,13 +195,13 @@ export class Payment {
   public updateVerified(
     verified: true,
     verifiedAt: Date,
-    verifiedBy: number | User
+    verifiedBy: number
   ): this;
 
   public updateVerified(
     verified: boolean,
     verifiedAt?: Date | null,
-    verifiedBy?: (number | User) | null
+    verifiedBy?: number | null
   ): this {
     if (verified === false) {
       if (this._verified === verified) {
