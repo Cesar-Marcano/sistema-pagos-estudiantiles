@@ -19,7 +19,7 @@ export interface IUserSearchCriteria {
 export interface IUserRepository {
   create(user: User): Promise<User>;
 
-  upsert(user: User): Promise<User>;
+  update(user: User): Promise<User>;
 
   changePassword(id: number, password: string): Promise<User>;
 
