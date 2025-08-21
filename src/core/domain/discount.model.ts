@@ -7,7 +7,7 @@ export class Discount {
     private _value: number,
     private _isPercentage: boolean,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private _createdAt: Date,
     private _updatedAt: Date,
@@ -20,7 +20,7 @@ export class Discount {
     _description: string | null,
     _value: number,
     _isPercentage: boolean,
-    _createdBy: number | User
+    _createdBy: number
   ) {
     const name = _name.trim();
     const description = _description?.trim() ?? null;
@@ -73,7 +73,7 @@ export class Discount {
     return this._isPercentage;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
