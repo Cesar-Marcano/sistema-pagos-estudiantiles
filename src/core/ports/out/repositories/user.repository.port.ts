@@ -23,8 +23,8 @@ export interface IUserRepository {
 
   changePassword(id: number, password: string): Promise<User>;
 
-  findById(id: number): Promise<User>;
-  findByEmail(email: string): Promise<User>;
+  findById(id: number): Promise<User | null>;
+  findByEmail(email: string): Promise<User | null>;
   search(criteria: IUserSearchCriteria): Promise<Paginated<User>>;
 
   softDelete(id: number): Promise<User>;
