@@ -1,5 +1,3 @@
-import { User } from "./user.model";
-
 export type Entities =
   | "User"
   | "Student"

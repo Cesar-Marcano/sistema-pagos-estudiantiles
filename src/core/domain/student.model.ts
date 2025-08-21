@@ -1,9 +1,3 @@
-import { Discount } from "./discount.model";
-import { Grade } from "./grade.model";
-import { Parent } from "./parent.model";
-import { Period } from "./period.model";
-import { User } from "./user.model";
-
 export enum StudentStatus {
   Active,
   Inactive,

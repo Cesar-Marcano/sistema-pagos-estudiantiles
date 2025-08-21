@@ -1,7 +1,6 @@
 import { IdentificationDocument } from "../datavalues/document.datavalue";
 import { Email } from "../datavalues/email.datavalue";
 import { PhoneNumber } from "../datavalues/phonenumber.datavalue";
-import { User } from "./user.model";
 
 export class Parent {
   constructor(

@@ -1,5 +1,3 @@
-import { User } from "./user.model";
-
 export class Discount {
   constructor(
     private _name: string,

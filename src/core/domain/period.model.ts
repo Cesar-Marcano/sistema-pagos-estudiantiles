@@ -1,5 +1,3 @@
-import { User } from "./user.model";
-
 export class Period {
   constructor(
     private readonly _year: number,

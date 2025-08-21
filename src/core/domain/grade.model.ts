@@ -1,5 +1,3 @@
-import { User } from "./user.model";
-
 export class Grade {
   constructor(
     private _name: string,
