@@ -1,9 +1,3 @@
-import { Student } from "./student.model";
-import { Discount } from "./discount.model";
-import { User } from "./user.model";
-import { Parent } from "./parent.model";
-import { Period } from "./period.model";
-
 export enum InvoiceStatus {
   Pending,
   Paid,
@@ -16,14 +10,14 @@ export class Invoice {
     private _status: InvoiceStatus,
     private _subtotal: number,
 
-    private _period: number | Period,
+    private _period: number,
 
-    private _student: number | Student,
-    private _parent: number | Parent,
+    private _student: number,
+    private _parent: number,
 
-    private _discounts: number[] | Discount[],
+    private _discounts: number[],
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private _createdAt: Date,
     private _updatedAt: Date,
@@ -36,14 +30,14 @@ export class Invoice {
     _status: InvoiceStatus,
     _subtotal: number,
 
-    _period: number | Period,
+    _period: number,
 
-    _student: number | Student,
-    _parent: number | Parent,
+    _student: number,
+    _parent: number,
 
-    _discounts: Discount[],
+    _discounts: number[],
 
-    _createdBy: number | User
+    _createdBy: number
   ) {
     const invoiceNumber = _invoiceNumber.trim();
 
@@ -88,23 +82,23 @@ export class Invoice {
     return this._subtotal;
   }
 
-  public get period(): number | Period {
+  public get period(): number {
     return this._period;
   }
 
-  public get student(): number | Student {
+  public get student(): number {
     return this._student;
   }
 
-  public get parent(): number | Parent {
+  public get parent(): number {
     return this._parent;
   }
 
-  public get discounts(): number[] | Discount[] {
+  public get discounts(): number[] {
     return this._discounts;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
@@ -120,20 +114,6 @@ export class Invoice {
     return this._deletedAt;
   }
 
-  public get discountTotal(): number {
-    if (this._discounts.every((d) => d instanceof Discount)) {
-      return this._discounts.reduce(
-        (acc, discount) => acc + discount.calculateAmount(this._subtotal),
-        0
-      );
-    }
-    return 0;
-  }
-
-  public get total(): number {
-    return this.subtotal - this.discountTotal;
-  }
-
   public updateStatus(status: InvoiceStatus): this {
     if (this._status === status) return this;
     this._status = status;
@@ -141,48 +121,20 @@ export class Invoice {
     return this;
   }
 
-  public addDiscount(discount: Discount): this {
-    if (!Array.isArray(this._discounts)) {
-      this._discounts = [];
-    }
-
-    if (!discount.id) {
-      throw new Error("Required property discount.id");
-    }
-
-    if (
-      (this._discounts.every((d) => d instanceof Discount) &&
-        this._discounts.includes(discount)) ||
-      (this._discounts.every((d) => d instanceof Number) &&
-        this._discounts.includes(discount.id))
-    ) {
-      return this;
-    }
-
-    if (this._discounts.every((d) => d instanceof Discount)) {
+  public addDiscount(discount: number): this {
+    if (!this._discounts.includes(discount)) {
       this._discounts.push(discount);
-    } else {
-      this._discounts.push(discount.id);
+      this._updatedAt = new Date();
     }
 
-    this._updatedAt = new Date();
     return this;
   }
 
-  public removeDiscount(discountId: number): this {
-    if (!Array.isArray(this._discounts)) {
-      return this;
-    }
+  public removeDiscount(discount: number): this {
+    const initialLength = this._discounts.length;
+    this._discounts = this._discounts.filter((d) => d !== discount);
 
-    const index = this._discounts.findIndex((d) => {
-      if (d instanceof Discount) {
-        return d.id === discountId;
-      }
-      return d === discountId;
-    });
-
-    if (index !== -1) {
-      this._discounts.splice(index, 1);
+    if (this._discounts.length < initialLength) {
       this._updatedAt = new Date();
     }
 
