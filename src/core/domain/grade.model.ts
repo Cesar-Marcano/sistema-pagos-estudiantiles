@@ -8,7 +8,7 @@ export class Grade {
     private _maxLevel: number | null,
     private _fee: number,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -23,7 +23,7 @@ export class Grade {
     _hasLevels: boolean,
     _maxLevel: number | null,
     _fee: number,
-    _createdBy: number | User
+    _createdBy: number
   ): Grade {
     const name = _name.trim();
     let maxLevel = _maxLevel;
@@ -85,7 +85,7 @@ export class Grade {
     return this._fee;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
