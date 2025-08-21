@@ -21,7 +21,7 @@ export class AuditLog {
     private _action: AuditLogActions,
     private _changes: string,
 
-    private _performedBy: number | User,
+    private _performedBy: number,
 
     private _createdAt: Date,
     private readonly _id: number
@@ -47,7 +47,7 @@ export class AuditLog {
     return this._changes;
   }
 
-  public get performedBy(): number | User {
+  public get performedBy(): number {
     return this._performedBy;
   }
 
