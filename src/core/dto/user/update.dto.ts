@@ -1,22 +1,26 @@
 export class UpdateUsernameDTO {
-  constructor(public readonly username: string) {}
+  constructor(
+    public readonly userId: number,
+    public readonly username: string
+  ) {}
 }
 
 export class UpdateNameDTO {
-  constructor(public readonly name: string) {}
+  constructor(public readonly userId: number, public readonly name: string) {}
 }
 
 export class UpdatePasswordDTO {
   constructor(
+    public readonly userId: number,
     public readonly oldPassword: string,
     public readonly newPassword: string
   ) {}
 }
 
 export class UpdateEmailDTO {
-  constructor(public readonly email: string) {}
+  constructor(public readonly userId: number, public readonly email: string) {}
 }
 
 export class UpdateRoleDTO {
-  constructor(public readonly role: number) {}
+  constructor(public readonly userId: number, public readonly role: number) {}
 }
