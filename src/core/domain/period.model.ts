@@ -5,7 +5,7 @@ export class Period {
     private readonly _year: number,
     private readonly _month: number,
 
-    private readonly _createdBy: number | User,
+    private readonly _createdBy: number,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -16,7 +16,7 @@ export class Period {
   public static create(
     _year: number,
     _month: number,
-    _createdBy: User | number
+    _createdBy: number
   ) {
     if (_year < 1900) {
       throw new Error("Invalid year");
@@ -43,7 +43,7 @@ export class Period {
     return this._year;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
