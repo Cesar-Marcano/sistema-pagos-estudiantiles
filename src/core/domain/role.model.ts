@@ -155,6 +155,10 @@ export class Role {
     return this;
   }
 
+  public hasPermission(permission: Permission): boolean {
+    return this._permissions.includes(permission);
+  }
+
   public delete(): this {
     if (this._deletedAt === null) {
       this._deletedAt = new Date();
