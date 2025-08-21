@@ -207,9 +207,34 @@ export class Student {
     return this;
   }
 
-  public updateDiscounts(discounts: number[] | Discount[]): this {
-    this._discounts = discounts;
-    this._updatedAt = new Date();
+  public addDiscount(discount: Discount): this {
+    if (Array.isArray(this._discounts)) {
+      if (this._discounts.every((d) => d instanceof Discount)) {
+        (this._discounts as Discount[]).push(discount);
+      } else {
+        if (!discount.id) {
+          throw new Error("Discount id is needed on this context.");
+        }
+        (this._discounts as number[]).push(discount.id);
+      }
+      this._updatedAt = new Date();
+    }
+    return this;
+  }
+
+  public removeDiscount(discountId: number): this {
+    if (Array.isArray(this._discounts)) {
+      if (this._discounts.every((d) => d instanceof Discount)) {
+        this._discounts = (this._discounts as Discount[]).filter(
+          (d) => d.id !== discountId
+        );
+      } else {
+        this._discounts = (this._discounts as number[]).filter(
+          (d) => d !== discountId
+        );
+      }
+      this._updatedAt = new Date();
+    }
     return this;
   }
 
