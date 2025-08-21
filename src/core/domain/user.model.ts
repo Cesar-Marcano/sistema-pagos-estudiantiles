@@ -6,13 +6,13 @@ import { Role } from "./role.model";
 
 export class User {
   constructor(
-    private _role: number | Role,
+    private _role: number,
     private _username: Username,
     private _name: string,
     private _password: Password,
     private _email: Email,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -21,13 +21,13 @@ export class User {
   ) {}
 
   public static create(
-    _role: number | Role,
+    _role: number,
     _username: Username,
     _name: string,
     _password: Password,
     _email: Email,
 
-    _createdBy: number | User
+    _createdBy: number
   ) {
     const name = _name.trim();
     const now = new Date();
@@ -53,7 +53,7 @@ export class User {
     return this._name;
   }
 
-  public get role(): number | Role {
+  public get role(): number {
     return this._role;
   }
 
@@ -65,7 +65,7 @@ export class User {
     return this._email;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
@@ -116,7 +116,7 @@ export class User {
     return this;
   }
 
-  public updateRole(val: Role | number): this {
+  public updateRole(val: number): this {
     this._role = val;
 
     this._updatedAt = new Date();
