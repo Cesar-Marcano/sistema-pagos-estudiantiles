@@ -3,13 +3,13 @@ import { User } from "./user.model";
 export class Session {
   constructor(
     private _jti: string,
-    private _user: number | User,
+    private _user: number,
 
     private readonly _createdAt: Date,
     private readonly _id?: number
   ) {}
 
-  public static create(_jti: string, _user: number | User): Session {
+  public static create(_jti: string, _user: number): Session {
     return new Session(_jti, _user, new Date());
   }
 
@@ -21,7 +21,7 @@ export class Session {
     return this._jti;
   }
 
-  public get user(): number | User {
+  public get user(): number {
     return this._user;
   }
 
