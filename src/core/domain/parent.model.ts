@@ -10,7 +10,7 @@ export class Parent {
     private _phoneNumber: string | null,
     private _email: string | null,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -23,7 +23,7 @@ export class Parent {
     _document: string,
     _phoneNumber: string | null,
     _email: string | null,
-    _createdBy: number | User
+    _createdBy: number
   ): Parent {
     const now = new Date();
 
@@ -76,7 +76,7 @@ export class Parent {
     return this._email;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
