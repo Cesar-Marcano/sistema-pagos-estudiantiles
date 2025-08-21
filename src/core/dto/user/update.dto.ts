@@ -16,3 +16,7 @@ export class UpdatePasswordDTO {
 export class UpdateEmailDTO {
   constructor(public readonly email: string) {}
 }
+
+export class UpdateRoleDTO {
+  constructor(public readonly role: number) {}
+}
