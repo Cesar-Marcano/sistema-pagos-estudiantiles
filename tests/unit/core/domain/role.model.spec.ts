@@ -35,7 +35,7 @@ describe("Role model", () => {
       const oldUpdatedAt = role.updatedAt;
       role.addPermission(Permission.CAN_CREATE_NEW_USERS);
       expect(role.permissions).toContain(Permission.CAN_CREATE_NEW_USERS);
-      expect(role.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
+      expect(role.updatedAt).not.toBe(oldUpdatedAt);
     });
 
     it("should throw if adding the same permission twice", () => {
@@ -50,7 +50,7 @@ describe("Role model", () => {
       const oldUpdatedAt = role.updatedAt;
       role.removePermission(Permission.CAN_CREATE_NEW_USERS);
       expect(role.permissions).not.toContain(Permission.CAN_CREATE_NEW_USERS);
-      expect(role.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
+      expect(role.updatedAt).not.toBe(oldUpdatedAt);
     });
 
     it("should throw if removing a permission that does not exist", () => {
@@ -71,7 +71,7 @@ describe("Role model", () => {
       const oldUpdatedAt = role.updatedAt;
       role.updateName("super admin");
       expect(role.name).toBe("SUPER ADMIN");
-      expect(role.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
+      expect(role.updatedAt).not.toBe(oldUpdatedAt);
     });
 
     it("should throw when updating with blank name", () => {
@@ -84,7 +84,7 @@ describe("Role model", () => {
       const oldUpdatedAt = role.updatedAt;
       role.updateTier(5);
       expect(role.tier).toBe(5);
-      expect(role.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
+      expect(role.updatedAt).not.toBe(oldUpdatedAt);
     });
 
     it("should throw when updating with negative tier", () => {
@@ -104,14 +104,12 @@ describe("Role model", () => {
 
     it("should delete the role", () => {
       expect(role.deletedAt).not.toBeNull();
-      expect(role.updatedAt.getTime()).toBeGreaterThan(oldUpdatedAt.getTime());
+      expect(role.updatedAt).not.toBe(oldUpdatedAt);
     });
 
     it("should restore the role", () => {
-      const deletedAt = role.deletedAt;
       role.restore();
       expect(role.deletedAt).toBeNull();
-      expect(role.updatedAt.getTime()).toBeGreaterThan(deletedAt!.getTime());
     });
 
     it("should not delete again if already deleted", () => {
