@@ -17,18 +17,18 @@ export class Student {
     private _document: string | null,
     private _status: StudentStatus,
 
-    private _grade: number | Grade,
+    private _grade: number,
     private _gradeLevel: number | null,
 
-    private _joinGrade: number | Grade,
+    private _joinGrade: number,
     private _joinGradeLevel: number | null,
-    private _joinPeriod: number | Period,
+    private _joinPeriod: number,
 
-    private _discounts: number[] | Discount[],
+    private _discounts: number[],
 
-    private _parent: number | Parent,
+    private _parent: number,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -43,18 +43,18 @@ export class Student {
     _document: string | null,
     _status: StudentStatus,
 
-    _grade: number | Grade,
+    _grade: number,
     _gradeLevel: number | null,
 
-    _joinGrade: number | Grade,
+    _joinGrade: number,
     _joinGradeLevel: number | null,
-    _joinPeriod: number | Period,
+    _joinPeriod: number,
 
-    _discounts: number[] | Discount[],
+    _discounts: number[],
 
-    _parent: number | Parent,
+    _parent: number,
 
-    _createdBy: number | User
+    _createdBy: number
   ): Student {
     const now = new Date();
 
@@ -115,7 +115,7 @@ export class Student {
     return this._status;
   }
 
-  public get grade(): number | Grade {
+  public get grade(): number {
     return this._grade;
   }
 
@@ -123,7 +123,7 @@ export class Student {
     return this._gradeLevel;
   }
 
-  public get joinGrade(): number | Grade {
+  public get joinGrade(): number {
     return this._joinGrade;
   }
 
@@ -131,19 +131,19 @@ export class Student {
     return this._joinGradeLevel;
   }
 
-  public get joinPeriod(): number | Period {
+  public get joinPeriod(): number {
     return this._joinPeriod;
   }
 
-  public get discounts(): number[] | Discount[] {
+  public get discounts(): number[] {
     return this._discounts;
   }
 
-  public get parent(): number | Parent {
+  public get parent(): number {
     return this._parent;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
@@ -187,60 +187,57 @@ export class Student {
     return this;
   }
 
-  public updateGrade(grade: number | Grade, level: number | null): this {
+  public updateGrade(grade: number, level: number | null): this {
     this._grade = grade;
     this._gradeLevel = level;
+
     this._updatedAt = new Date();
+
     return this;
   }
 
-  public updateJoinGrade(grade: number | Grade, level: number | null): this {
+  public updateJoinGrade(grade: number, level: number | null): this {
     this._joinGrade = grade;
     this._joinGradeLevel = level;
+
     this._updatedAt = new Date();
+
     return this;
   }
 
-  public updateJoinPeriod(period: number | Period): this {
+  public updateJoinPeriod(period: number): this {
     this._joinPeriod = period;
+
     this._updatedAt = new Date();
+
     return this;
   }
 
-  public addDiscount(discount: Discount): this {
-    if (Array.isArray(this._discounts)) {
-      if (this._discounts.every((d) => d instanceof Discount)) {
-        (this._discounts as Discount[]).push(discount);
-      } else {
-        if (!discount.id) {
-          throw new Error("Discount id is needed on this context.");
-        }
-        (this._discounts as number[]).push(discount.id);
-      }
+  public addDiscount(discount: number): this {
+    if (!this._discounts.includes(discount)) {
+      this._discounts.push(discount);
       this._updatedAt = new Date();
     }
+
     return this;
   }
 
-  public removeDiscount(discountId: number): this {
-    if (Array.isArray(this._discounts)) {
-      if (this._discounts.every((d) => d instanceof Discount)) {
-        this._discounts = (this._discounts as Discount[]).filter(
-          (d) => d.id !== discountId
-        );
-      } else {
-        this._discounts = (this._discounts as number[]).filter(
-          (d) => d !== discountId
-        );
-      }
+  public removeDiscount(discount: number): this {
+    const initialLength = this._discounts.length;
+    this._discounts = this._discounts.filter((d) => d !== discount);
+
+    if (this._discounts.length < initialLength) {
       this._updatedAt = new Date();
     }
+
     return this;
   }
 
-  public updateParent(parent: number | Parent): this {
+  public updateParent(parent: number): this {
     this._parent = parent;
+
     this._updatedAt = new Date();
+
     return this;
   }
 
