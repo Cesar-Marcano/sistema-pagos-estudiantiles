@@ -1,5 +1,3 @@
-import { User } from "./user.model";
-
 export class PaymentMethod {
   constructor(
     private _name: string,
@@ -7,7 +5,7 @@ export class PaymentMethod {
     private _requiresManualVerification: boolean,
     private _requiresReferenceNumber: boolean,
 
-    private _createdBy: number | User,
+    private _createdBy: number,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -20,7 +18,7 @@ export class PaymentMethod {
     _description: string | null,
     _requiresManualVerification: boolean,
     _requiresReferenceNumber: boolean,
-    _createdBy: number | User
+    _createdBy: number
   ) {
     const name = _name.trim();
     const description = _description?.trim() ?? null;
@@ -67,7 +65,7 @@ export class PaymentMethod {
     return this._requiresReferenceNumber;
   }
 
-  public get createdBy(): number | User {
+  public get createdBy(): number {
     return this._createdBy;
   }
 
