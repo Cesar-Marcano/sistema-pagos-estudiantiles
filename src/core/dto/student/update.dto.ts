@@ -37,3 +37,7 @@ export class UpdateJoinGradeLevelDTO {
     private readonly joinGradeLevel: number | null
   ) {}
 }
+
+export class UpdateParentDTO {
+  constructor(private readonly id: number, private readonly parent: number) {}
+}
