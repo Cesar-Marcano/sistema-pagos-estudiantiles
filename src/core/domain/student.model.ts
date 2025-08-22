@@ -46,8 +46,6 @@ export class Student {
     _joinGradeLevel: number | null,
     _joinPeriod: number,
 
-    _discounts: number[],
-
     _parent: number,
 
     _createdBy: number
@@ -78,7 +76,7 @@ export class Student {
       _joinGrade,
       _joinGradeLevel,
       _joinPeriod,
-      _discounts,
+      [],
       _parent,
       _createdBy,
       now,
