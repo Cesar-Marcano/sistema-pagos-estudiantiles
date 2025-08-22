@@ -11,7 +11,7 @@ export class User {
     private _password: Password,
     private _email: Email,
 
-    private _createdBy: number,
+    private _createdBy: number | null,
 
     private readonly _createdAt: Date,
     private _updatedAt: Date,
@@ -26,7 +26,7 @@ export class User {
     _password: Password,
     _email: Email,
 
-    _createdBy: number
+    _createdBy: number | null
   ) {
     const name = _name.trim();
     const now = new Date();
@@ -64,7 +64,7 @@ export class User {
     return this._email;
   }
 
-  public get createdBy(): number {
+  public get createdBy(): number | null {
     return this._createdBy;
   }
 
