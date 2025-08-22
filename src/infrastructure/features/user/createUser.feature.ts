@@ -4,12 +4,14 @@ import { Username } from "../../../core/datavalues/username.datavalue";
 import { User } from "../../../core/domain/user.model";
 import { CreateUserDTO } from "../../../core/dto/user/create.dto";
 import { ICreateUserFeature } from "../../../core/ports/in/user/createUser.port";
+import { IRoleRepository } from "../../../core/ports/out/repositories/role.repository.port";
 import { IUserRepository } from "../../../core/ports/out/repositories/user.repository.port";
 import { IHasherService } from "../../../core/ports/out/services/hasher.service.port";
 
 export class CreateUserFeature implements ICreateUserFeature {
   constructor(
     private readonly userRepository: IUserRepository,
+    private readonly roleRepository: IRoleRepository,
     private readonly hasherService: IHasherService
   ) {}
 
@@ -18,13 +20,18 @@ export class CreateUserFeature implements ICreateUserFeature {
     const password = await Password.create(input.password, this.hasherService);
     const email = new Email(input.email);
 
+    const roleExists = await this.roleRepository.roleExists(input.role);
+
+    if (!roleExists)
+      throw new Error("CreateUserFeature error: the role doesn't exist.");
+
     const user = User.create(
       input.role,
       username,
       input.name,
       password,
       email,
-      input.createdBy
+      null
     );
 
     const newUser = await this.userRepository.create(user);
