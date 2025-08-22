@@ -5,7 +5,7 @@ export class CreateStudentDTO {
     public readonly fullname: string,
     public readonly birthday: Date,
     public readonly section: null,
-    public readonly document: string,
+    public readonly document: string | null,
     public readonly status: StudentStatus,
     public readonly grade: number,
     public readonly gradeLevel: number | null,
