@@ -1,8 +1,8 @@
 import { Feature } from "../../../../shared/interfaces/feature";
 import { Student } from "../../../domain/student.model";
-import { SoftDeleteStudentDTO } from "../../../dto/student/softDelete.dto";
+import { FindStudentByIdDTO } from "../../../dto/student/findById.dto";
 
 export type ISoftDeleteStudentFeature = Feature<
-  SoftDeleteStudentDTO,
+  FindStudentByIdDTO,
   Promise<Student>
 >;
