@@ -21,7 +21,10 @@ export interface IRoleRepository {
 
   upsert(role: Role): Promise<Role>;
 
+  findById(roleId: number): Promise<Role>;
   search(criteria: IRoleSearchCriteria): Promise<Paginated<Role>>;
+
+  roleExists(roleId: number): Promise<boolean>;
 
   softDelete(id: number): Promise<Role>;
   restore(id: number): Promise<Role>;
