@@ -1,3 +1,3 @@
-export class SoftDeleteStudentDTO {
+export class FindStudentByIdDTO {
   constructor(public readonly studentId: number) {}
 }
