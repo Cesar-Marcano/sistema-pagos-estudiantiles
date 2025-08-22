@@ -30,8 +30,7 @@ export interface IStudentRepository {
   search(criteria: IStudentSearchCriteria): Promise<Paginated<Student>>;
   findById(id: number): Promise<Student>;
 
-  upsert(student: Student): Promise<Student>;
+  update(student: Student): Promise<Student>;
 
-  softDelete(id: number): Promise<Student>;
-  restore(id: number): Promise<Student>;
+  studentExists(id: number): Promise<boolean>;
 }
