@@ -25,10 +25,7 @@ export class UpdateGradeLevelDTO {
 }
 
 export class UpdateJoinGradeDTO {
-  constructor(
-    public readonly id: number,
-    public readonly joinGrade: number
-  ) {}
+  constructor(public readonly id: number, public readonly joinGrade: number) {}
 }
 
 export class UpdateJoinGradeLevelDTO {
@@ -36,6 +33,10 @@ export class UpdateJoinGradeLevelDTO {
     public readonly id: number,
     public readonly joinGradeLevel: number | null
   ) {}
+}
+
+export class UpdateStudentPeriodDTO {
+  constructor(public readonly id: number, public readonly period: number) {}
 }
 
 export class UpdateParentDTO {
