@@ -1,8 +1,8 @@
 import { Feature } from "../../../../shared/interfaces/feature";
 import { Student } from "../../../domain/student.model";
-import { RestoreStudentDTO } from "../../../dto/student/restore.dto";
+import { FindStudentByIdDTO } from "../../../dto/student/findById.dto";
 
 export type IRestoreStudentFeature = Feature<
-  RestoreStudentDTO,
+  FindStudentByIdDTO,
   Promise<Student>
 >;
