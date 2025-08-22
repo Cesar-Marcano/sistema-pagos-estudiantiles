@@ -1,43 +1,43 @@
 export class UpdateFullnameDTO {
-  constructor(private readonly id: number, private readonly fullname: string) {}
+  constructor(public readonly id: number, public readonly fullname: string) {}
 }
 
 export class UpdateBirthdayDTO {
-  constructor(private readonly id: number, private readonly birthday: Date) {}
+  constructor(public readonly id: number, public readonly birthday: Date) {}
 }
 
 export class UpdateSectionDTO {
   constructor(
-    private readonly id: number,
-    private readonly section: string | null
+    public readonly id: number,
+    public readonly section: string | null
   ) {}
 }
 
 export class UpdateGradeDTO {
-  constructor(private readonly id: number, private readonly grade: number) {}
+  constructor(public readonly id: number, public readonly grade: number) {}
 }
 
 export class UpdateGradeLevelDTO {
   constructor(
-    private readonly id: number,
-    private readonly gradeLevel: number | null
+    public readonly id: number,
+    public readonly gradeLevel: number | null
   ) {}
 }
 
 export class UpdateJoinGradeDTO {
   constructor(
-    private readonly id: number,
-    private readonly joinGrade: number
+    public readonly id: number,
+    public readonly joinGrade: number
   ) {}
 }
 
 export class UpdateJoinGradeLevelDTO {
   constructor(
-    private readonly id: number,
-    private readonly joinGradeLevel: number | null
+    public readonly id: number,
+    public readonly joinGradeLevel: number | null
   ) {}
 }
 
 export class UpdateParentDTO {
-  constructor(private readonly id: number, private readonly parent: number) {}
+  constructor(public readonly id: number, public readonly parent: number) {}
 }
