@@ -13,7 +13,7 @@ export class UpdatePasswordFeature implements IUpdatePasswordFeature {
   async execute(input: UpdatePasswordDTO): Promise<User> {
     const user = await this.userRepository.findById(input.userId);
 
-    if (!user) throw new Error("UpdateNameFeature failed: user doesn't exist.");
+    if (!user) throw new Error("UpdatePasswordFeature failed: user doesn't exist.");
 
     user.changePassword(input.newPassword, this.hasherService);
 
