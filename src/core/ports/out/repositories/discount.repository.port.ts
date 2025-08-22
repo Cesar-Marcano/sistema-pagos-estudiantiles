@@ -21,7 +21,9 @@ export interface IDiscountRepository {
   search(criteria: IDiscountSearchCriteria): Promise<Paginated<Discount>>;
   findById(id: number): Promise<Discount>;
 
-  upsert(discount: Discount): Promise<Discount>;
+  update(discount: Discount): Promise<Discount>;
+
+  exists(id: number): Promise<boolean>;
 
   softDelete(id: number): Promise<Discount>;
   restore(id: number): Promise<Discount>;
