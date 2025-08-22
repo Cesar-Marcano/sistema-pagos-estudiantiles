@@ -24,6 +24,8 @@ export interface IParentRepository {
 
   upsert(parent: Parent): Promise<Parent>;
 
+  parentExists(id: number): Promise<boolean>;
+
   softDelete(id: number): Promise<Parent>;
   restore(id: number): Promise<Parent>;
 }
