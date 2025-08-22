@@ -7,6 +7,13 @@ export class SoftDeleteStudentFeature implements ISoftDeleteStudentFeature {
   constructor(private readonly studentRepository: IStudentRepository) {}
 
   async execute(input: SoftDeleteStudentDTO): Promise<Student> {
-    return await this.studentRepository.softDelete(input.studentId);
+    const student = await this.studentRepository.findById(input.studentId);
+
+    if (!student)
+      throw new Error("SoftDeleteStudentFeature error: student doesn't exist.");
+
+    student.delete();
+
+    return await this.studentRepository.update(student);
   }
 }
