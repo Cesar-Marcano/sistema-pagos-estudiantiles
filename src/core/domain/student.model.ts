@@ -169,6 +169,17 @@ export class Student {
     return this;
   }
 
+  public updateBirthday(val: Date): this {
+    if (!(val instanceof Date) || isNaN(val.getTime())) {
+      throw new Error("Invalid birthday date");
+    }
+
+    this._birthday = val;
+    this._updatedAt = new Date();
+
+    return this;
+  }
+
   public updateDocument(val: IdentificationDocument | null): this {
     this._document = val;
     this._updatedAt = new Date();
