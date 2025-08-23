@@ -5,5 +5,5 @@ import { FindStudentByIdDTO } from "../../../dto/student/findById.dto";
 
 export type IFindStudentByIdFeature = Feature<
   FindStudentByIdDTO,
-  Promise<Paginated<Student>>
+  Promise<Student>
 >;
