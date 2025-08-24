@@ -208,9 +208,8 @@ export class Student {
     return this;
   }
 
-  public updateJoinGrade(grade: number, level: number | null): this {
+  public updateJoinGrade(grade: number): this {
     this._joinGrade = grade;
-    this._joinGradeLevel = level;
 
     this._updatedAt = new Date();
 
