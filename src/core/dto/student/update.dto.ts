@@ -14,24 +14,29 @@ export class UpdateSectionDTO {
 }
 
 export class UpdateGradeDTO {
-  constructor(public readonly id: number, public readonly grade: number) {}
-}
-
-export class UpdateGradeLevelDTO {
   constructor(
     public readonly id: number,
-    public readonly gradeLevel: number | null
+    public readonly grade: number,
+    public readonly gradeLevel: number | null = null
   ) {}
 }
 
+export class UpdateGradeLevelDTO {
+  constructor(public readonly id: number, public readonly gradeLevel: number) {}
+}
+
 export class UpdateJoinGradeDTO {
-  constructor(public readonly id: number, public readonly joinGrade: number) {}
+  constructor(
+    public readonly id: number,
+    public readonly joinGrade: number,
+    public readonly joinGradeLevel: number | null = null
+  ) {}
 }
 
 export class UpdateJoinGradeLevelDTO {
   constructor(
     public readonly id: number,
-    public readonly joinGradeLevel: number | null
+    public readonly joinGradeLevel: number
   ) {}
 }
 
