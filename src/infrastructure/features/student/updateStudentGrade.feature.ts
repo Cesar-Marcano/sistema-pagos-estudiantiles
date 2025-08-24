@@ -33,7 +33,7 @@ export class UpdateStudentGradeFeature implements IUpdateStudentGradeFeature {
         (grade.maxLevel && input.gradeLevel > grade.maxLevel)
       ) {
         throw new Error(
-          `UpdateStudentGrade error: grade level must be between ${grade.maxLevel} and 1.`
+          `UpdateStudentGrade error: grade level must be between 1 and ${grade.maxLevel}.`
         );
       }
 
