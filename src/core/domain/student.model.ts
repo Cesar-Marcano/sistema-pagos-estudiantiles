@@ -192,9 +192,16 @@ export class Student {
     return this;
   }
 
-  public updateGrade(grade: number, level: number | null): this {
+  public updateGrade(grade: number): this {
     this._grade = grade;
-    this._gradeLevel = level;
+
+    this._updatedAt = new Date();
+
+    return this;
+  }
+
+  public updateGradeLevel(gradeLevel: number): this {
+    this._gradeLevel = gradeLevel;
 
     this._updatedAt = new Date();
 
@@ -204,6 +211,14 @@ export class Student {
   public updateJoinGrade(grade: number, level: number | null): this {
     this._joinGrade = grade;
     this._joinGradeLevel = level;
+
+    this._updatedAt = new Date();
+
+    return this;
+  }
+
+  public updateJoinGradeLevel(gradeLevel: number): this {
+    this._joinGradeLevel = gradeLevel;
 
     this._updatedAt = new Date();
 
