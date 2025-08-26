@@ -40,7 +40,7 @@ export class UpdateJoinGradeLevelDTO {
   ) {}
 }
 
-export class UpdateStudentPeriodDTO {
+export class UpdateStudentJoinPeriodDTO {
   constructor(public readonly id: number, public readonly period: number) {}
 }
 
