@@ -73,20 +73,18 @@ describe("User model", () => {
       it("should update the grade", () => {
         const oldUpdatedAt = student.updatedAt;
         const newGrade = 5;
-        student.updateGrade(newGrade, null);
+        student.updateGrade(newGrade);
 
         expect(student.grade).toBe(newGrade);
-        expect(student.gradeLevel).toBeNull();
         expect(student.updatedAt).not.toBe(oldUpdatedAt);
       });
 
       it("should update the join grade", () => {
         const oldUpdatedAt = student.updatedAt;
         const newJoinGrade = 5;
-        student.updateJoinGrade(newJoinGrade, 2);
+        student.updateJoinGrade(newJoinGrade);
 
         expect(student.joinGrade).toBe(newJoinGrade);
-        expect(student.joinGradeLevel).toBe(2);
         expect(student.updatedAt).not.toBe(oldUpdatedAt);
       });
 
