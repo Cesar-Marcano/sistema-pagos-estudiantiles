@@ -54,7 +54,7 @@ export enum Permission {
 }
 
 export class Role {
-  private constructor(
+  constructor(
     private _name: string,
     private _tier: number,
     private _permissions: Permission[],
