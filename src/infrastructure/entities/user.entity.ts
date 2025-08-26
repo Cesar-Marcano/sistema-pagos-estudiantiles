@@ -8,11 +8,15 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
 } from "typeorm";
+import { RoleEntity } from "./role.entity";
 
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => RoleEntity, (role) => role.users)
+  role: RoleEntity;
 
   @Column({ unique: true })
   username: string;
