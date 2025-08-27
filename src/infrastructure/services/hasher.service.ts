@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import { IHasherService } from "../../core/ports/out/services/hasher.service.port";
+import { injectable } from "inversify";
 
+@injectable()
 export class HasherService implements IHasherService {
   constructor(private saltRounds = 10) {}
 
